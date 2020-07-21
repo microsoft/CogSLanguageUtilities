@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import org.apache.tika.exception.TikaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,17 +21,18 @@ public class Parser {
     ParsingService parsingService;
 
     @Autowired
-    StorageService StorageService;
+    StorageService storageService;
 
     @GetMapping("/test")
-    public String test()
-    {
+    public String test() {
         return "test";
     }
 
     @GetMapping("/parse")
-	public String parseDocument(@RequestParam String fileName) throws IOException, SAXException, TikaException {
-        byte[] file = StorageService.getFileAsByteArray(fileName);
-		return parsingService.parseToPlainText(file);
+    public ResponseEntity<?> parseDocument(@RequestParam String fileName) throws IOException, SAXException, TikaException {
+        byte[] file = storageService.getFileAsByteArray(fileName);
+        String text = parsingService.parseToPlainText(file);
+        storageService.writeFile(fileName + ".txt", text);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

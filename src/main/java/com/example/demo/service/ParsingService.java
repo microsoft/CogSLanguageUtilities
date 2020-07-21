@@ -17,7 +17,7 @@ public class ParsingService {
     public String parseToPlainText(byte[] file) throws IOException, SAXException, TikaException {
         long start =  System.currentTimeMillis();
         
-        BodyContentHandler handler = new BodyContentHandler();
+        BodyContentHandler handler = new BodyContentHandler(1000000);
      
         AutoDetectParser parser = new AutoDetectParser();
         Metadata metadata = new Metadata();
