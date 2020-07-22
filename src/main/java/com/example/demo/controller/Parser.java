@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.example.demo.service.ParsingService;
 import com.example.demo.service.StorageService;
@@ -31,7 +33,8 @@ public class Parser {
     }
 
     @GetMapping("/text")
-    public ResponseEntity<?> parseDocumentToPlainText(@RequestParam String fileName) throws IOException, SAXException, TikaException {
+    public ResponseEntity<?> parseDocumentToPlainText(@RequestParam String fileName)
+            throws IOException, SAXException, TikaException {
         byte[] file = storageService.getFileAsByteArray(fileName);
         String text = parsingService.parseToPlainText(file);
         storageService.writeFile(fileName + ".txt", text);
@@ -39,10 +42,23 @@ public class Parser {
     }
 
     @GetMapping("/xhtml")
-    public ResponseEntity<?> parseDocumentToXHTML(@RequestParam String fileName) throws IOException, SAXException, TikaException {
+    public ResponseEntity<?> parseDocumentToXHTML(@RequestParam String fileName)
+            throws IOException, SAXException, TikaException {
         byte[] file = storageService.getFileAsByteArray(fileName);
         String text = parsingService.parseToXHTML(file);
         storageService.writeFile(fileName + ".xhtml", text);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/performanceTest")
+    public Map<String, Long> runTest() throws IOException, SAXException, TikaException {
+        Map<String, Long> map = new HashMap<>();
+        for (String fileName : storageService.getBlobNames()) {
+            byte[] file = storageService.getFileAsByteArray(fileName);
+            System.out.println("fileName: " + fileName);
+            String text = parsingService.parseToPlainTextPerformance(file, fileName, map);
+            storageService.writeFile(fileName + ".txt", text);
+        }
+        return map;
     }
 }
