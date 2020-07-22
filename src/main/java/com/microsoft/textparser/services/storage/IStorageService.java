@@ -1,19 +1,20 @@
-package com.example.demo.services.StorageService;
+package com.microsoft.textparser.services.storage;
 
 import java.util.List;
-
 
 public interface IStorageService {
 
     /**
-     * list blobs in the specified container
+     * list files in the specified container
+     * 
      * @param containerName
      * @return
      */
-    public List<String> listBlobs(String containerName);
+    public List<String> listFiles(String containerName);
 
     /**
      * downloads a file form specified container as Byte Array
+     * 
      * @param containerName
      * @param fileName
      * @return
@@ -22,12 +23,11 @@ public interface IStorageService {
 
     /**
      * stores given textData as text file in given container
-     * @param toContainerName
+     * 
+     * @param destinationContainerName
      * @param fileName
      * @param textData
      */
-    public void storeFile(String toContainerName, String fileName, String textData);
-
-    
+    public void storeFile(String destinationContainerName, String fileName, String textData);
 
 }

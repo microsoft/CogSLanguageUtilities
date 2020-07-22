@@ -1,4 +1,4 @@
-package com.example.demo.services.StorageService;
+package com.microsoft.textparser.services.storage;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -12,23 +12,20 @@ import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class StorageService {
+public class AzureStorageService implements IStorageService {
 
     // attributes
     private BlobServiceClient storageClient;
 
     // constructor
-    public StorageService(String connectionString)
+    public AzureStorageService(String connectionString)
     {
         // establish connection
         this.storageClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
     }
 
     // interface methods
-    public List<String> listBlobs(String containerName)
+    public List<String> listFiles(String containerName)
     {
         BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient(containerName);
         return blobContainerClient.listBlobs().stream().map(a -> a.getName()).collect(Collectors.toList());
@@ -43,9 +40,9 @@ public class StorageService {
         return outputStream.toByteArray();
     }
 
-    public void storeFile(String toContainerName, String fileName, String textData)
+    public void storeFile(String destinationContainerName, String fileName, String textData)
     {
-        BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient(toContainerName);
+        BlobContainerClient blobContainerClient = storageClient.getBlobContainerClient(destinationContainerName);
         BlockBlobClient blobClient = blobContainerClient.getBlobClient(fileName).getBlockBlobClient();
         byte[] textByteArray = textData.getBytes();
         InputStream textStream = new ByteArrayInputStream(textByteArray);
