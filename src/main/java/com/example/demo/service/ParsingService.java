@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -19,7 +20,7 @@ public class ParsingService {
     public String parseToPlainText(byte[] file) throws IOException, SAXException, TikaException {
         long start = System.currentTimeMillis();
 
-        BodyContentHandler handler = new BodyContentHandler(1000000);
+        BodyContentHandler handler = new BodyContentHandler(10000000);
 
         AutoDetectParser parser = new AutoDetectParser();
         Metadata metadata = new Metadata();
@@ -42,6 +43,23 @@ public class ParsingService {
             parser.parse(stream, handler, metadata);
             long end = System.currentTimeMillis();
             System.out.println("time taken: " + (end - start));
+            return handler.toString();
+        }
+    }
+
+    public String parseToPlainTextPerformance(byte[] file, String fileName, Map<String, Long> map)
+            throws IOException, SAXException, TikaException {
+        long start = System.currentTimeMillis();
+
+        BodyContentHandler handler = new BodyContentHandler(10000000);
+
+        AutoDetectParser parser = new AutoDetectParser();
+        Metadata metadata = new Metadata();
+        try (InputStream stream = new ByteArrayInputStream(file)) {
+            parser.parse(stream, handler, metadata);
+            long end = System.currentTimeMillis();
+            System.out.println("time taken: " + (end - start));
+            map.put(fileName, end - start);
             return handler.toString();
         }
     }
