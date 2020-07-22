@@ -1,4 +1,4 @@
-package com.example.demo.services.ParsingService;
+package com.microsoft.textparser.services.parsing;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
