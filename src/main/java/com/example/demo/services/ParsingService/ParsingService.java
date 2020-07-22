@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.services.ParsingService;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,19 +15,14 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ContentHandler;
 
 @Component
-public class ParsingService {
+public class ParsingService implements IParsingService {
 
     public String parseToPlainText(byte[] file) throws IOException, SAXException, TikaException {
-        long start = System.currentTimeMillis();
-
         BodyContentHandler handler = new BodyContentHandler(10000000);
-
         AutoDetectParser parser = new AutoDetectParser();
         Metadata metadata = new Metadata();
         try (InputStream stream = new ByteArrayInputStream(file)) {
             parser.parse(stream, handler, metadata);
-            long end = System.currentTimeMillis();
-            System.out.println("time taken: " + (end - start));
             return handler.toString();
         }
     }
