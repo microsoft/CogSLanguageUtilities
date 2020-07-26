@@ -1,0 +1,32 @@
+########################
+> Locally
+########################
+- required software
+    - install java jre
+
+- download tool
+    - download "LuisDocumentCracking" jar file
+
+- use tool
+    - run jar file
+    - java -jar app.jar
+
+
+########################
+> Azure App
+########################
+- ???????????????????
+
+
+########################
+> Virtual Machine
+########################
+- required software
+    - install java jre
+
+- download tool
+    - download "LuisDocumentCracking" jar file
+
+- use tool
+    - run jar file
+    - java -jar app.jar
