@@ -1,9 +1,69 @@
 ##########################
-> Sample design docs
+> Design Document
 ##########################
-- https://microsoft.sharepoint.com/:f:/t/luis_core/EmV-PwebjRxEm9ZYWvc8UPMB9c9eFCvVjLzAPqklVcHVwA?e=cW2zWL
-- https://microsoft.sharepoint.com/:f:/t/luis_core/Et3Qko9wR_FKkLhWJljiOvIBil3dBKh1diZleAugL1_FiA?e=3fkIP6
-- https://microsoft.sharepoint.com/:f:/t/luis_core/Ehof-WOQsmNNvAePzkn2dJoBnF596uNrYp5mnNR-r7mW1w?e=8dX8Gx
-- https://microsoft.sharepoint.com/:w:/t/luis_core/EbHwoVod5GJAqK-s2Y8cfnsB5CT_i8ExT2646Z8E8UdFOQ?e=Ng4eVF
-- https://microsoft.sharepoint.com/teams/luis_core/Shared%20Documents/LUIS%20for%20Documents/Design%20Document%20Template.docx
-- https://microsoft.sharepoint.com/:w:/t/luis_core/EQMppr8FGOhFirihgDZjLFEBn_nQqX8erIQ9vbnAOC3boQ?e=DecHC9
+> Problem Definition
+    - retiring KED
+    - create a tool to crack documents to text for consumption using LUIS.
+      This was initially done using KED internally but it got cut from the public preview.
+
+> Use Cases
+    - LUIS-D
+        - extract text from documents before submitting to LUIS-D
+
+> Proposal
+    - overview
+        - what the app does
+            - mainly extracts text from documents (docs or scans)
+        - scope
+            - documents (pdf, word, text, ppt, ..)
+            - scans (images, scanned pdfs, ..)
+        - how to use
+            - this tool is supposed to be a web server
+            - users can run them locally, or deploy to a hosting service
+
+    - apis
+        - api/parseAll
+            - description
+                - parse all docs in source Blob store and stores extracted text in tagret Blob store
+            - header
+                - Connection-String
+                    - azure blob store key
+            - parameters
+                - sourceContainerName
+                - destinationContainerName
+            - response
+            
+        - api/parseSingle
+            - description
+                - parse single doc in source Blob store and stores extracted text in tagret Blob store
+            - header
+                - Connection-String
+                    - azure blob store key
+            - parameters
+                - sourceContainerName
+                - destinationContainerName
+                - fileName
+            - response
+
+        - api/container/{containerName}/blobs
+            - description
+                - list all files in given blob store
+            - header
+                - Connection-String
+                    - azure blob store key
+            - parameters
+                - containerName
+            - response
+
+    > architecture
+        - apis
+            - api/parseAll
+            - api/parseSingle
+            - api/container/{containerName}/blobs
+        - controllers
+            - storage
+            - performance
+            - parser
+        - services
+            - storage
+            - parser (TIKA)
