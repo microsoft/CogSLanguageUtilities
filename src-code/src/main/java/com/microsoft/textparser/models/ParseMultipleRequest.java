@@ -1,22 +1,24 @@
 package com.microsoft.textparser.models;
 
+import java.util.List;
+
 /**
  * ParseSingleRequest
  */
-public class ParseSingleRequest {
+public class ParseMultipleRequest {
 
-    private String fileName;
+    private List<String> fileNames;
 
     private String sourceContainerName;
 
     private String destinationContainerName;
 
-    public String getFileName() {
-        return fileName;
+    public List<String> getFileNames() {
+        return fileNames;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFileName(List<String> fileNames) {
+        this.fileNames = fileNames;
     }
 
     public String getSourceContainerName() {
@@ -37,7 +39,7 @@ public class ParseSingleRequest {
 
     @Override
     public String toString() {
-        return "ParseSingleRequest: {fileName: " + fileName + ", sourceContainerName: " + sourceContainerName
+        return "ParseSingleRequest: {fileName: " + fileNames.toString() + ", sourceContainerName: " + sourceContainerName
                 + ", destinationContainerName: " + destinationContainerName + "}";
     }
 }
