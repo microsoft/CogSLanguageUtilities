@@ -29,4 +29,6 @@ public interface IParsingService {
 
     public String parseToPlainTextPerformance(byte[] file, String fileName, Map<String, Long> map)
             throws IOException, SAXException, TikaException;
+
+    public String parsePdfWithOcr() throws IOException, SAXException, TikaException;
 }

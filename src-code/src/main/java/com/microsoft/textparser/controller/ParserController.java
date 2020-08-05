@@ -55,4 +55,11 @@ public class ParserController {
         return true;
     }
 
+    @GetMapping("/parser/parseOCR")
+    public String parseORC() throws IOException, SAXException, TikaException {
+
+        return parsingService.parsePdfWithOcr();
+    }
+    
+
 }
