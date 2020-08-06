@@ -2,10 +2,9 @@ package com.microsoft.textparser.models;
 
 import java.util.List;
 
-/**
- * ParseSingleRequest
- */
-public class ParseMultipleRequest {
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+
+public class ParseRequest {
 
     private List<String> fileNames;
 
@@ -13,11 +12,14 @@ public class ParseMultipleRequest {
 
     private String destinationContainerName;
 
+    @JsonUnwrapped
+    private ParseConfiguration parseConfiguration; 
+
     public List<String> getFileNames() {
         return fileNames;
     }
 
-    public void setFileName(List<String> fileNames) {
+    public void setFileNames(List<String> fileNames) {
         this.fileNames = fileNames;
     }
 
@@ -35,6 +37,14 @@ public class ParseMultipleRequest {
 
     public void setDestinationContainerName(String destinationContainerName) {
         this.destinationContainerName = destinationContainerName;
+    }
+
+    public ParseConfiguration getParseConfiguration() {
+        return parseConfiguration;
+    }
+
+    public void setParseConfiguration(ParseConfiguration parseConfiguration) {
+        this.parseConfiguration = parseConfiguration;
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.microsoft.textparser.models.ParseConfiguration;
 import com.microsoft.textparser.services.parsing.IParsingService;
 import com.microsoft.textparser.services.storage.AzureStorageService;
 import com.microsoft.textparser.services.storage.IStorageService;
@@ -34,7 +35,7 @@ public class PerformanceController {
             byte[] file = storageService.getFileAsByteArray(sourceContainerName, fileName);
             // parse file into text
             long start = System.currentTimeMillis();
-            String text = parsingService.parseToPlainText(file);
+            String text = parsingService.parseToPlainText(file, new ParseConfiguration());
             long totalTime = System.currentTimeMillis() - start;
             monitor.put(fileName, totalTime);
             // store file in blob storage
