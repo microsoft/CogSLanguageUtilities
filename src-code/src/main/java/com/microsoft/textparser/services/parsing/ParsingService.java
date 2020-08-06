@@ -5,11 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import org.apache.tika.config.TikaConfig;
+import com.microsoft.textparser.models.ParseConfiguration;
+
+import java.nio.charset.Charset;
+
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -25,16 +25,6 @@ import org.xml.sax.ContentHandler;
 
 @Component
 public class ParsingService implements IParsingService {
-
-    public String parseToPlainText(byte[] file) throws IOException, SAXException, TikaException {
-        BodyContentHandler handler = new BodyContentHandler(10000000);
-        AutoDetectParser parser = new AutoDetectParser();
-        Metadata metadata = new Metadata();
-        try (InputStream stream = new ByteArrayInputStream(file)) {
-            parser.parse(stream, handler, metadata);
-            return handler.toString();
-        }
-    }
 
     public String parseToXHTML(byte[] file) throws IOException, SAXException, TikaException {
         long start = System.currentTimeMillis();
@@ -68,41 +58,41 @@ public class ParsingService implements IParsingService {
         }
     }
 
-    public String parsePdfWithOcr() throws IOException, SAXException, TikaException {
+    public String parseToPlainText(byte[] file, ParseConfiguration parseConfig)
+            throws IOException, SAXException, TikaException {
 
+        Parser parser = new AutoDetectParser();
+        ParseContext parsecontext = prepareParseContext(parser, parseConfig);
 
+        InputStream inputFile = new ByteArrayInputStream(file);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        BodyContentHandler handler = new BodyContentHandler(out);
+        Metadata meta = new Metadata();
+
+        parser.parse(inputFile, handler, meta, parsecontext);
+        return new String(out.toByteArray(), Charset.defaultCharset());
+    }
+
+    private ParseContext prepareParseContext(Parser parser, ParseConfiguration parseConfig) {
         // pdf configs
         PDFParserConfig pdfConfig = new PDFParserConfig();
-        pdfConfig.setOcrDPI(100); //scalastyle:ignore magic.number
-        //pdfConfig.setDetectAngles(true);
-        pdfConfig.setExtractInlineImages(true);
+        pdfConfig.setOcrDPI(100); // scalastyle:ignore magic.number
+        pdfConfig.setExtractInlineImages(parseConfig.getExtractInlineImages());
         pdfConfig.setExtractUniqueInlineImagesOnly(false);
         pdfConfig.setOcrStrategy(PDFParserConfig.OCR_STRATEGY.OCR_AND_TEXT_EXTRACTION);
+        pdfConfig.setDetectAngles(parseConfig.getDetectAngles());
+        pdfConfig.setSortByPosition(parseConfig.getSortByPosition());
 
-        // tesserect
+        // tesseract
         TesseractOCRConfig tessConf = new TesseractOCRConfig();
-        tessConf.setLanguage("eng");
         tessConf.setEnableImageProcessing(1);
 
-        // tika configs
-        TikaConfig config = TikaConfig.getDefaultConfig();
-
-        Parser parser = new AutoDetectParser(config);
+        // tika parse context
         ParseContext parsecontext = new ParseContext();
         parsecontext.set(Parser.class, parser);
         parsecontext.set(PDFParserConfig.class, pdfConfig);
         parsecontext.set(TesseractOCRConfig.class, tessConf);
-
-        // asd
-        InputStream pdf = Files.newInputStream(Paths.get("C:\\Users\\a-moshab\\Desktop\\LUIS-D Tool\\src-code\\src\\test\\resources\\sample.png"));
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-  
-        // adsd
-        BodyContentHandler handler = new BodyContentHandler(out);
-        Metadata meta = new Metadata();
-        
-        // dsa
-        parser.parse(pdf, handler, meta, parsecontext);
-        return new String(out.toByteArray(), Charset.defaultCharset());
+        return parsecontext;
     }
 }

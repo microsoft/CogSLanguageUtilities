@@ -2,6 +2,8 @@ package com.microsoft.textparser.jobs.parsing;
 
 import java.util.List;
 
+import com.microsoft.textparser.models.ParseConfiguration;
+
 public class ParsingJobMessage {
 
     private String id;
@@ -14,16 +16,19 @@ public class ParsingJobMessage {
 
     private List<String> fileNames;
 
+    private ParseConfiguration parseConfiguration;
+
     public ParsingJobMessage() {
     }
 
     public ParsingJobMessage(String id, String connectionString, String sourceContainerName,
-            String destinationContainerName, List<String> fileNames) {
+            String destinationContainerName, List<String> fileNames, ParseConfiguration parseConfiguration) {
         this.id = id;
         this.connectionString = connectionString;
         this.sourceContainerName = sourceContainerName;
         this.destinationContainerName = destinationContainerName;
         this.fileNames = fileNames;
+        this.parseConfiguration = parseConfiguration;
     }
 
     public String getId() {
@@ -66,9 +71,18 @@ public class ParsingJobMessage {
         this.fileNames = fileNames;
     }
 
+    public ParseConfiguration getParseConfiguration() {
+        return parseConfiguration;
+    }
+
+    public void setParseConfiguration(ParseConfiguration parseConfiguration) {
+        this.parseConfiguration = parseConfiguration;
+    }
+
     @Override
     public String toString() {
         return "ParsingOperationMessage{ " + "connectionString: " + connectionString + ", sourceContainerName: "
-                + sourceContainerName + ", destinationContainerName: " + destinationContainerName + " }";
+                + sourceContainerName + ", destinationContainerName: " + destinationContainerName + ", fileNames: "
+                + fileNames.toString() + ", parseConfiguration: " + parseConfiguration.toString() + " }";
     }
 }

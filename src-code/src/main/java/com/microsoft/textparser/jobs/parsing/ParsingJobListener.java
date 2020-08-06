@@ -31,7 +31,7 @@ public class ParsingJobListener {
             // parse file into text
             String text;
             try {
-                text = parsingService.parseToPlainText(file);
+                text = parsingService.parseToPlainText(file, message.getParseConfiguration());
                 // store file in blob storage
                 storageService.storeFile(message.getDestinationContainerName(), fileName + ".txt", text);
             } catch (IOException | SAXException | TikaException e) {
