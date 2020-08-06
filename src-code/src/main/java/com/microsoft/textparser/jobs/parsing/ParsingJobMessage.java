@@ -4,6 +4,8 @@ import java.util.List;
 
 public class ParsingJobMessage {
 
+    private String id;
+
     private String connectionString;
 
     private String sourceContainerName;
@@ -15,12 +17,21 @@ public class ParsingJobMessage {
     public ParsingJobMessage() {
     }
 
-    public ParsingJobMessage(String connectionString, String sourceContainerName,
+    public ParsingJobMessage(String id, String connectionString, String sourceContainerName,
             String destinationContainerName, List<String> fileNames) {
+        this.id = id;
         this.connectionString = connectionString;
         this.sourceContainerName = sourceContainerName;
         this.destinationContainerName = destinationContainerName;
         this.fileNames = fileNames;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getConnectionString() {
