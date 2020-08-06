@@ -1,6 +1,7 @@
 package com.microsoft.textparser.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.microsoft.textparser.config.Constants;
 import com.microsoft.textparser.jobs.parsing.ParsingJobMessage;
@@ -33,25 +34,27 @@ public class ParserController {
 
     @GetMapping("/parser/parseAll")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public boolean parseAll(@RequestHeader("Connection-String") String connectionString,
+    public String parseAll(@RequestHeader("Connection-String") String connectionString,
             @RequestParam String sourceContainerName, @RequestParam String destinationContainerName)
             throws IOException, SAXException, TikaException {
         // get files in from container
         IStorageService storageService = new AzureStorageService(connectionString);
-        ParsingJobMessage message = new ParsingJobMessage(connectionString, sourceContainerName,
+        String id = UUID.randomUUID().toString();
+        ParsingJobMessage message = new ParsingJobMessage(id, connectionString, sourceContainerName,
                 destinationContainerName, storageService.listFiles(sourceContainerName));
         jmsTemplate.convertAndSend(Constants.QUEUE_NAME, message);
-        return true;
+        return id;
     }
 
     @GetMapping("/parser/parseMultiple")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public boolean parseSingle(@RequestHeader("Connection-String") String connectionString,
+    public String parseSingle(@RequestHeader("Connection-String") String connectionString,
             ParseMultipleRequest parseSingleRequest) throws IOException, SAXException, TikaException {
-        ParsingJobMessage message = new ParsingJobMessage(connectionString, parseSingleRequest.getSourceContainerName(),
+        String id = UUID.randomUUID().toString();
+        ParsingJobMessage message = new ParsingJobMessage(id, connectionString, parseSingleRequest.getSourceContainerName(),
                 parseSingleRequest.getDestinationContainerName(), parseSingleRequest.getFileNames());
         jmsTemplate.convertAndSend(Constants.QUEUE_NAME, message);
-        return true;
+        return id;
     }
 
     @GetMapping("/parser/parseOCR")
