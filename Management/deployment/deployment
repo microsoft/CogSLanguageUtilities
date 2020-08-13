@@ -1,0 +1,29 @@
+###########################
+> deployment
+###########################
+- azure app
+    - deployed but no response
+    - ???????????
+- virtual machine
+    - ssh
+        - private keys (download here)
+        - ssh -i "C:\Users\a-moshab\Downloads\LuisDocCracking_key.pem" azureuser@104.45.234.238
+    - setup env
+        - update env
+            - sudo apt-get update
+            - sudo apt-get dist-upgrade
+        - install java
+            - open-jdk
+    - deploy project
+        - secure ssh
+            - scp [-i (private key)] src dest
+            - scp -i "C:\Users\a-moshab\Downloads\LuisDocCracking_key.pem" "C:\Users\a-moshab\Desktop\LUIS-D Tool\repo\target\demo-0.0.1-SNAPSHOT.jar" "azureuser@104.45.234.238:/home/azureuser/app.jar"
+        - github
+            - pull changes
+            - rebuild
+    - test apis
+        - run jar
+            - java -jar app.jar
+        - unable to expose ports
+        - we use curl
+            - curl -H "Connection-String:DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=jAAYWwUed9ZubOY0jnwus2FjibBflOIKpAg8voQFxjE7ZSpFErdUg4H801wY2/1PeUuOXEhZ5MxuyevXCuDEQQ==;EndpointSuffix=core.windows.net" "http://localhost:8007/api/performance/parser/parseAll?sourceContainerName=container1&destinationContainerName=container2"
