@@ -1,0 +1,45 @@
+###############################
+> exceptions
+###############################
+- storage service
+    - dir not found
+        - local folder
+        - container
+    - invalid credentials
+        - connection string
+    - no rights
+        - read or write
+    - network connection
+
+- parsing service
+    - invalid configs
+        - endpoint-url
+        - azure-resource-key
+    - file type
+        - pdf, png, jpeg, tiff, bmp
+    - network connection
+
+- prediction service
+    - configs
+        - endpoint-url
+        - apim-subscription-key
+        - app-id
+        - version-id
+    - network connection
+
+- config
+    - invalid key or value type
+
+- chunking
+    - ?
+
+- parsing
+    - storage exception
+    - parsing exception
+    - chunking exception
+
+- prediction
+    - storage exception
+    - parsing exception
+    - chunking exception
+
