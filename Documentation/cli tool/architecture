@@ -1,0 +1,55 @@
+- orchestrator
+    - takes user arguments
+    - routes to specific command controller
+
+- command controller
+    - config
+        - pattern matching
+        - call config service specific function
+    - parser
+        - pattern matching
+        - call parser api specific function
+    - chunker
+        - pattern matching
+        - call chunker api specific function
+
+- api controllers
+    - config
+        - set model
+        - update config file
+            - storage service
+    - parser
+        - read files from source
+            - storage service
+        - actual parsing
+            - parsing service
+        - chunking [optional]
+            - chunker service
+        - store result
+            - storage service
+    - chunker
+        - read files from source
+            - storage service
+        - chunking
+            - chunker service
+        - store result
+            - storage service
+    - prediction
+        - read file from source
+            - storage service
+        - parse file
+            - parsing service
+        - chunking
+            - chunker service
+        - prediction
+            - prediction service
+        - logging
+            - logger service
+
+- services (API)
+    - parse
+    - chunker
+    - storage
+
+- models
+    - config
