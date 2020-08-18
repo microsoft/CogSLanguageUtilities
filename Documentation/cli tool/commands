@@ -22,7 +22,7 @@
     - storage
         - tool config:show:storage
         - tool config:set:storage:local --source-dir {ABSOLUTE_PATH} --destination-dir {ABSOLUTE_PATH} 
-        - tool config:set:storage:blob --source-container {CONTAINER_NAME} --destination-container {CONTAINER_NAME} 
+        - tool config:set:storage:blob --connection-string {CONNECTION_STRING} --source-container {CONTAINER_NAME} --destination-container {CONTAINER_NAME} 
     - chunker
         - tool config:show:chunker
         - tool config:set:chunker --char-limit {NUMBER}
