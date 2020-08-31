@@ -1,15 +1,21 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
-using CustomTextCliUtils.ApplicationLayer.Services.Prediction;
-using CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextErrorResponse;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
+using Microsoft.CustomTextCliUtils.Tests.Configs;
 using Moq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using Xunit;
 
-namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Prediction
+namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Prediction
 {
     public class CustomTextPredictionServiceTest
     {
@@ -17,32 +23,47 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Predictio
         // ######################################################################
         public static TheoryData TestParsingData()
         {
-            return new TheoryData<string, string, string, System.Net.HttpStatusCode, string, string , CliException>
+            var customTextKey = Secrets.CustomTextKey;
+            var invalidCustomTextKey = "cc0c5afc3ddc123e96cbdcdd4fceef40";
+            var invalidAppId = "3b42f28e-335a-8cf7-1310-91172fd57533";
+            var customTextEndpoint = Secrets.CustomTextEndpoint;
+            var appId = Secrets.CustomTextAppId;
+            return new TheoryData<string, string, string, string, CliException>
             {
                 {
-                    "cc0c5afc3ddc475e96cbdccd4fceef40",
+                    customTextKey,
                     "https://nayergroup.cognitiveservices.azure.com",
-                    "5c0df28e-335a-4ff7-8580-91172fd57422",
-                    System.Net.HttpStatusCode.Accepted,
-                    "{   \"prediction\":{      \"positiveClassifiers\":[               ],      \"classifiers\":{         \"MergerArticle\":{            \"score\":0.0531884171         }      },      \"extractors\":{               }   }}",
+                    appId,
                     "asdasdasd",
                     null
                 },
                 {
-                    "cc0c5afc3ddc475e96cbdccd4fceef40",
-                    "https://nayergroup.cognitiveservices.azure.com",
-                    "5c0df28e-335a-4ff7-8580-91172fd57422",
-                    System.Net.HttpStatusCode.Unauthorized,
-                    "{   \"prediction\":{      \"positiveClassifiers\":[               ],      \"classifiers\":{         \"MergerArticle\":{            \"score\":0.0531884171         }      },      \"extractors\":{               }   }}",
+                    invalidCustomTextKey,
+                    customTextEndpoint,
+                    appId,
                     "asdasdasd",
                     new UnauthorizedRequestException("asd", "asd")
+                },
+                {
+                    invalidAppId,
+                    customTextEndpoint,
+                    appId,
+                    "asdasdasd",
+                    new ResourceNotFoundExcption(appId)
+                },
+                {
+                    customTextKey,
+                    customTextEndpoint,
+                    appId,
+                    "",
+                    new BadRequestException("Bad Request Exception Message")
                 }
             };
         }
 
-        [Theory(Skip = "not yet fully mocked!" )]
+        [Theory]
         [MemberData(nameof(TestParsingData))]
-        public void TestPrediction(string customTextKey, string endpointUrl, string appId, System.Net.HttpStatusCode statusCode, string responseContentMsg, string inputText, CliException expectedException)
+        public void TestPrediction(string customTextKey, string endpointUrl, string appId, string inputText, CliException expectedException)
         {
             /* TEST NOTES
              * *************
@@ -57,16 +78,28 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Predictio
 
             // arrange
             var mockHttpHandler = new Mock<IHttpHandler>();
-            var response = new HttpResponseMessage();
-            response.StatusCode = statusCode;
-            response.Content = new StringContent(responseContentMsg, Encoding.UTF8, "application/json");
-            mockHttpHandler.Setup(handler => handler.SendJsonPostRequest(It.IsAny<string>(),
+            // mock post submit prediction request
+            mockHttpHandler.Setup(handler => handler.SendJsonPostRequest(
+                It.IsAny<string>(),
                 It.IsAny<Object>(),
                 It.IsAny<Dictionary<string, string>>(),
                 It.IsAny<Dictionary<string, string>>()
                 )
-            ).Returns(response);
-
+            ).Returns(GetPredictionRequestHttpResponseMessage(expectedException));
+            // mock get operation status 
+            mockHttpHandler.Setup(handler => handler.SendGetRequest(
+                It.Is<string>(s => s.Contains("status")),
+                It.IsAny<Dictionary<string, string>>(),
+                It.IsAny<Dictionary<string, string>>()
+                )
+            ).Returns(GetStatusHttpResponseMessage(expectedException));
+            // mock get prediction result
+            mockHttpHandler.Setup(handler => handler.SendGetRequest(
+                It.Is<string>(s => !s.Contains("status")),
+                It.IsAny<Dictionary<string, string>>(),
+                It.IsAny<Dictionary<string, string>>()
+                )
+            ).Returns(GetResultHttpResponseMessage(expectedException));
 
             // act
             if (expectedException == null)
@@ -85,6 +118,77 @@ namespace CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Predictio
                     predictionService.GetPrediction(inputText);
                 });
             }
+        }
+        private HttpResponseMessage GetPredictionRequestHttpResponseMessage(CliException exception)
+        {
+            var errorResponseContentMsg = JsonConvert.SerializeObject(new CustomTextErrorResponse
+            {
+                Error = new Error()
+            });
+            if (exception == null)
+            {
+                string postResponseContentMsg = JsonConvert.SerializeObject(new CustomTextQueryResponse
+                {
+                    OperationId = "816fadd6-fe81-458b-b7f8-007fdc270440_637343424000000000",
+                    Status = CustomTextPredictionResponseStatus.notstarted
+                });
+                var postResponse = new HttpResponseMessage();
+                postResponse.StatusCode = HttpStatusCode.Accepted;
+                postResponse.Content = new StringContent(postResponseContentMsg, Encoding.UTF8, "application/json");
+                return postResponse;
+            }
+            if (exception.GetType().Equals(typeof(UnauthorizedRequestException)))
+            {
+                var postResponse = new HttpResponseMessage();
+                postResponse.StatusCode = HttpStatusCode.Unauthorized;
+                postResponse.Content = new StringContent(errorResponseContentMsg, Encoding.UTF8, "application/json");
+                return postResponse;
+            }
+            if (exception.GetType().Equals(typeof(ResourceNotFoundExcption)))
+            {
+                var postResponse = new HttpResponseMessage();
+                postResponse.StatusCode = HttpStatusCode.NotFound;
+                postResponse.Content = new StringContent(errorResponseContentMsg, Encoding.UTF8, "application/json");
+                return postResponse;
+            }
+            if (exception.GetType().Equals(typeof(BadRequestException)))
+            {
+                var postResponse = new HttpResponseMessage();
+                postResponse.StatusCode = HttpStatusCode.BadRequest;
+                postResponse.Content = new StringContent(errorResponseContentMsg, Encoding.UTF8, "application/json");
+                return postResponse;
+            }
+            return null;
+        }
+        private HttpResponseMessage GetStatusHttpResponseMessage(CliException exception)
+        {
+            if (exception == null)
+            {
+                // get status response
+                string getStatusResponseContentMsg = JsonConvert.SerializeObject(new CustomTextQueryResponse
+                {
+                    OperationId = "816fadd6-fe81-458b-b7f8-007fdc270440_637343424000000000",
+                    Status = CustomTextPredictionResponseStatus.succeeded
+                });
+                var getStatusResponse = new HttpResponseMessage();
+                getStatusResponse.StatusCode = HttpStatusCode.OK;
+                getStatusResponse.Content = new StringContent(getStatusResponseContentMsg, Encoding.UTF8, "application/json");
+                return getStatusResponse;
+            }
+            return null;
+        }
+        private HttpResponseMessage GetResultHttpResponseMessage(CliException exception)
+        {
+            if (exception == null)
+            {
+                // get result response
+                string getResultResponseContentMsg = "{ \"prediction\":{ \"positiveClassifiers\":[ ], \"classifiers\":{ \"MergerArticle\":{ \"score\":0.0531884171 } }, \"extractors\":{ } }}";
+                var getResultResponse = new HttpResponseMessage();
+                getResultResponse.StatusCode = HttpStatusCode.OK;
+                getResultResponse.Content = new StringContent(getResultResponseContentMsg, Encoding.UTF8, "application/json");
+                return getResultResponse;
+            }
+            return null;
         }
     }
 }
