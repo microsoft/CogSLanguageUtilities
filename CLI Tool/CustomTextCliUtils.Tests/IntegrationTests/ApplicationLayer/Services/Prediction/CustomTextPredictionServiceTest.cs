@@ -1,7 +1,7 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Exceptions;
-using CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
-using CustomTextCliUtils.ApplicationLayer.Services.Prediction;
-using CustomTextCliUtils.ApplicationLayer.SystemServices.HttpHandler;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Xunit;
 
 namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Prediction
