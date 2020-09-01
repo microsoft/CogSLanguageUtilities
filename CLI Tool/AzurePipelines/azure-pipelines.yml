@@ -6,9 +6,6 @@ pool:
   - visualstudio
   - vstest
 
-#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-
 steps:
 - task: NuGetToolInstaller@1
   displayName: 'Use NuGet 4.9.2'
@@ -46,7 +43,3 @@ steps:
     MSREAD_COGNITIVE_SERVICES_ENDPOINT: $(msread.cognitive.services.endpoint)
     MSREAD_COGNITIVE_SERVICES_KEY: $(msread.cognitive.services.key)
     STORAGE_ACCOUNT_CONNECTION_STRING: $(storage.account.connection.string)
-
-- task: PostBuildCleanup@3
-  displayName: 'Clean Agent Directories'
-  condition: always()
