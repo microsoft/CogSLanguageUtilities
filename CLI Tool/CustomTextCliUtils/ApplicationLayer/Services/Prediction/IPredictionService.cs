@@ -4,6 +4,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
     public interface IPredictionService
     {
-        public CustomTextPredictionResponse GetPrediction(string query);
+        CustomTextPredictionResponse GetPrediction(string query);
     }
 }
