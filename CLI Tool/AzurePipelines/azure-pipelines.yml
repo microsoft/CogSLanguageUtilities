@@ -40,9 +40,10 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
 
-- task: VSTest@2
+- task: VSTest@1
   displayName: 'Run Tests'
   inputs:
+    testAssembly: 'CLI Tool\CustomTextCliUtils.Tests\bin\Release\*CustomTextCliUtils.Tests*.dll;=:CLI Tool\CustomTextCliUtils.Tests\obj\**'
     otherConsoleOptions: '/Framework:.NETCoreApp,Version=v3.1'
   env:
     CUSTOM_TEXT_APP_ID: $(custom.text.app.id)
