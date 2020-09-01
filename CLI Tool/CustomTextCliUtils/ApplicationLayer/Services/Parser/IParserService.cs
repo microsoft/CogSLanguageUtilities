@@ -7,8 +7,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {
     public interface IParserService
     {
-        public Task<ParseResult> ParseFile(Stream file);
+        Task<ParseResult> ParseFile(Stream file);
 
-        public void ValidateFileType(string fileType);
+        void ValidateFileType(string fileType);
     }
 }
