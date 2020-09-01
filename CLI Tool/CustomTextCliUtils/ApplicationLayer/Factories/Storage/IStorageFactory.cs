@@ -7,6 +7,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {
     public interface IStorageFactory
     {
-        public IStorageService CreateStorageService(StorageType targetStorage, StorageConfigModel storageConfigModel);
+        IStorageService CreateStorageService(StorageType targetStorage, StorageConfigModel storageConfigModel);
     }
 }
