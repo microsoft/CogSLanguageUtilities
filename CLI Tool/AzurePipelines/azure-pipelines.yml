@@ -46,3 +46,7 @@ steps:
     MSREAD_COGNITIVE_SERVICES_ENDPOINT: $(msread.cognitive.services.endpoint)
     MSREAD_COGNITIVE_SERVICES_KEY: $(msread.cognitive.services.key)
     STORAGE_ACCOUNT_CONNECTION_STRING: $(storage.account.connection.string)
+
+- task: PostBuildCleanup@3
+  displayName: 'Clean Agent Directories'
+  condition: always()
