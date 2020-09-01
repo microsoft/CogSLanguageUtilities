@@ -43,12 +43,6 @@ steps:
 - task: VSTest@2
   displayName: 'Run Tests'
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
     otherConsoleOptions: '/Framework:.NETCoreApp,Version=v3.1'
   env:
     CUSTOM_TEXT_APP_ID: $(custom.text.app.id)
