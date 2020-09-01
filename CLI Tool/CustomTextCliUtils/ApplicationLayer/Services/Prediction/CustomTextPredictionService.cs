@@ -1,4 +1,5 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Prediction;
@@ -18,7 +19,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
         private readonly string _customTextKey;
         private readonly string _endpointUrl;
         private readonly string _appId;
-        private static IHttpHandler _httpHandler;
+        private readonly IHttpHandler _httpHandler;
 
         public CustomTextPredictionService(IHttpHandler httpHandler, string customTextKey, string endpointUrl, string appId)
         {
@@ -69,10 +70,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
         private string SendPredictionRequest(string queryText)
         {
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/predictText?log=true&%24expand=classifier%2Cextractor", _endpointUrl, _appId);
-            var requestBody = new Dictionary<string, string>
-                {
-                    { "query", queryText }
-                };
+            var requestBody = new CustomTextQueryRequest(queryText);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
