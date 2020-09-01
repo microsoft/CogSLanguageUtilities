@@ -17,7 +17,7 @@ using Xunit;
 
 namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Prediction
 {
-    public class CustomTextPredictionServiceTest
+    public class CustomTextPredictionServiceUnitTest
     {
         // Test Prediction Mapping
         // ######################################################################
@@ -60,7 +60,6 @@ namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services
                 }
             };
         }
-
         [Theory]
         [MemberData(nameof(TestParsingData))]
         public void TestPrediction(string customTextKey, string endpointUrl, string appId, string inputText, CliException expectedException)
