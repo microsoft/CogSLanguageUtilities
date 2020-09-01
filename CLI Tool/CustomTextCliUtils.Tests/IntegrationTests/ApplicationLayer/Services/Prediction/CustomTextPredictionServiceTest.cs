@@ -3,6 +3,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Xunit;
+using Microsoft.CustomTextCliUtils.Tests.Configs;
 
 namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Prediction
 {
@@ -13,22 +14,25 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Pr
         public static TheoryData TestParsingData()
         {
             var httpHandler = new HttpHandler();
+            var customTextKey = Secrets.CustomTextKey;
+            var invalidCustomTextKey = "cc0c5afc3ddc123e96cbdcdd4fceef40";
+            var customTextEndpoint = Secrets.CustomTextEndpoint;
+            var appId = Secrets.CustomTextAppId;
 
             return new TheoryData<string, string, string, IHttpHandler, string, CliException>
             {
                 {
-                    "cc0c5afc3ddc475e96cbdccd4fceef40",
-                    "https://nayergroup.cognitiveservices.azure.com",
-                    "5c0df28e-335a-4ff7-8580-91172fd57422",
+                    customTextKey,
+                    customTextEndpoint,
+                    appId,
                     httpHandler,
                     "asdasdasd",
                     null
                 },
                 {
-                    // wrong key
-                    "cc0c5afc3ddc471236cbdccd4fceef40",
-                    "https://nayergroup.cognitiveservices.azure.com",
-                    "5c0df28e-335a-4ff7-8580-91172fd57422",
+                    invalidCustomTextKey,
+                    customTextEndpoint,
+                    appId,
                     httpHandler,
                     "asdasdasd",
                     new UnauthorizedRequestException("asd", "asd")
