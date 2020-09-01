@@ -6,6 +6,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {
     public interface IStorageFactoryFactory
     {
-        IStorageFactory CreateStorageFactory(TargetStorage targetStorage);
+        public IStorageFactory CreateStorageFactory(TargetStorage targetStorage);
     }
 }
