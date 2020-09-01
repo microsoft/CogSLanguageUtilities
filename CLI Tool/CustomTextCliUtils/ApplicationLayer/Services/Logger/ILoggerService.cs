@@ -6,11 +6,11 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
 {
     public interface ILoggerService
     {
-        void Log(string message);
+        public void Log(string message);
 
-        void LogError(Exception e);
+        public void LogError(Exception e);
 
-        void LogOperation(OperationType operationType, string message);
+        public void LogOperation(OperationType operationType, string message);
 
         public void LogParsingResult(IEnumerable<string> convertedFiles, IDictionary<string, string> failedFiles);
     }
