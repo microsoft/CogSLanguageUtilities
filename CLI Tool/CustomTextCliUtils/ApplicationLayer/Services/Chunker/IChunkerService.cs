@@ -7,10 +7,10 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {
     public interface IChunkerService
     {
-        List<ChunkInfo> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit);
+        public List<ChunkInfo> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit);
 
-        List<ChunkInfo> Chunk(string text, int charLimit);
+        public List<ChunkInfo> Chunk(string text, int charLimit);
 
-        void ValidateFileType(string fileName);
+        public void ValidateFileType(string fileName);
     }
 }
