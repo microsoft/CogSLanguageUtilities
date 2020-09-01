@@ -6,6 +6,12 @@ pool:
   - visualstudio
   - vstest
 
+trigger: none
+
+pr:
+- main
+- dev
+
 steps:
 - task: NuGetToolInstaller@1
   displayName: 'Use NuGet 4.9.2'
