@@ -3,7 +3,6 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -20,26 +19,26 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             _loggerService = loggerService;
             _storageService = storageService;
             var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
-            if (File.Exists(filePath))
+            try
             {
-                ReadConfigsFromFile(filePath).ConfigureAwait(false).GetAwaiter().GetResult();
+                ReadConfigsFromFile(filePath);
             }
-            else
+            catch (Exceptions.Storage.FileNotFoundException)
             {
                 _configModel = new ConfigModel();
                 StoreConfigsModelAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
 
-        private async Task ReadConfigsFromFile(string filePath)
+        private void ReadConfigsFromFile(string filePath)
         {
-            var configsFile = await _storageService.ReadFileAsStringAsync(filePath);
+            var configsFile = _storageService.ReadAsStringFromAbsolutePath(filePath);
             _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
         }
 
         public async Task LoadConfigsFromFile(string configsFilePath)
         {
-            await ReadConfigsFromFile(configsFilePath);
+            ReadConfigsFromFile(configsFilePath);
             await StoreConfigsModelAsync();
             _loggerService.Log("Configs loaded from file");
         }
