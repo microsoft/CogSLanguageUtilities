@@ -1,4 +1,5 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
@@ -260,6 +261,42 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
             var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
             Assert.Equal(charLimit, configModel.Chunker.CharLimit);
+        }
+
+        public static TheoryData ConfigLoadTestData()
+        {
+            return new TheoryData<string, CliException>
+            {
+                {
+                    @".\TestData\Config\configs.json",
+                    null
+                },
+                {
+                    @".\TestData\Config\invalidConfigs.json",
+                    new CustomTextCliUtils.ApplicationLayer.Exceptions.Storage.FileNotFoundException(".\\TestData\\Config\\invalidConfigs.json")
+                }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(ConfigLoadTestData))]
+        public void ConfigLoadTest(string filePath, CliException expectedException)
+        {
+            if (expectedException == null)
+            {
+                _controller.LoadConfigsFromFile(filePath);
+                _controller.ShowAllConfigs();
+
+                // assert
+                var configsFile = _storageService.ReadFileAsString(filePath);
+                var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+                var expectedString = JsonConvert.SerializeObject(configModel, Formatting.Indented);
+                Assert.Contains(expectedString, _stringWriter.ToString().Trim());
+            }
+            else
+            {
+                Assert.Throws(expectedException.GetType(), () => _controller.LoadConfigsFromFile(filePath));
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
 {
-    class FileNotFoundException : CliException
+    public class FileNotFoundException : CliException
     {
         public FileNotFoundException(string filePath)
             : base(ConstructMessage(filePath))
