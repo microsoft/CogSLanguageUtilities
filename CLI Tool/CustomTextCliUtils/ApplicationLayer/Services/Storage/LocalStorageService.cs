@@ -28,6 +28,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
         public Task<Stream> ReadFileAsync(string fileName)
         {
             string filePath = Path.Combine(_targetDirectory, fileName);
+            CheckFileExists(filePath);
             var tcs = new TaskCompletionSource<Stream>();
             try
             {
@@ -43,7 +44,9 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 
         public async Task<string> ReadFileAsStringAsync(string fileName)
         {
-            return await File.ReadAllTextAsync(Path.Combine(_targetDirectory, fileName));
+            var filePath = Path.Combine(_targetDirectory, fileName);
+            CheckFileExists(filePath);
+            return await File.ReadAllTextAsync(filePath);
         }
 
         public async Task StoreDataAsync(string data, string fileName)
@@ -56,6 +59,20 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             catch (UnauthorizedAccessException)
             {
                 throw new UnauthorizedFileAccessException(AccessType.Write.ToString(), fileName);
+            }
+        }
+
+        public string ReadAsStringFromAbsolutePath(string filePath)
+        {
+            CheckFileExists(filePath);
+            return File.ReadAllText(filePath);
+        }
+
+        private void CheckFileExists(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new Exceptions.Storage.FileNotFoundException(filePath);
             }
         }
     }

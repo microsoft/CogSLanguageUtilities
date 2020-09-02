@@ -38,6 +38,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 
         public async Task<Stream> ReadFileAsync(string fileName)
         {
+            CheckFileExists(fileName);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = await blobClient.DownloadAsync();
             return download.Content;
@@ -45,6 +46,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 
         public async Task<string> ReadFileAsStringAsync(string fileName)
         {
+            CheckFileExists(fileName);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = await blobClient.DownloadAsync();
             using (StreamReader sr = new StreamReader(download.Content))
@@ -65,6 +67,19 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
                     stream.Position = 0;
                     await blobClient.UploadAsync(stream, overwrite: true);
                 }
+            }
+        }
+
+        public string ReadAsStringFromAbsolutePath(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CheckFileExists(string fileName)
+        {
+            if (!_blobContainerClient.GetBlobClient(fileName).Exists())
+            {
+                throw new Exceptions.Storage.FileNotFoundException(fileName);
             }
         }
     }
