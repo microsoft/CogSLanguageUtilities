@@ -68,13 +68,13 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.S
         }
 
         [Fact]
-        public void StoreDataTest()
+        public async Task StoreDataTest()
         {
             string fileName = "storageTest.txt";
             string expected = "StoreDataTest text for testing";
             string actual = "";
             IStorageService storageService = new BlobStorageService(_connectionString, _testContainerName);
-            storageService.StoreDataAsync(expected, fileName);
+            await storageService.StoreDataAsync(expected, fileName);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             BlobDownloadInfo download = blobClient.Download();
             using (StreamReader sr = new StreamReader(download.Content))

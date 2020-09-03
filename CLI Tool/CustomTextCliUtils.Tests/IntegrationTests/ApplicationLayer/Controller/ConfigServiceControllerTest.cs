@@ -272,30 +272,30 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
                     null
                 },
                 {
-                    @".\TestData\Config\invalidConfigs.json",
-                    new CustomTextCliUtils.ApplicationLayer.Exceptions.Storage.FileNotFoundException(".\\TestData\\Config\\invalidConfigs.json")
+                    @".\TestData\Config\asdasd.json",
+                    new CustomTextCliUtils.ApplicationLayer.Exceptions.Storage.FileNotFoundException(".\\TestData\\Config\\asdasd.json")
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(ConfigLoadTestData))]
-        public void ConfigLoadTest(string filePath, CliException expectedException)
+        public async Task ConfigLoadTest(string filePath, CliException expectedException)
         {
             if (expectedException == null)
             {
-                _controller.LoadConfigsFromFile(filePath);
+                await _controller.LoadConfigsFromFile(filePath);
                 _controller.ShowAllConfigs();
 
                 // assert
-                var configsFile = _storageService.ReadFileAsString(filePath);
+                var configsFile = await _storageService.ReadFileAsStringAsync(filePath);
                 var configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
                 var expectedString = JsonConvert.SerializeObject(configModel, Formatting.Indented);
                 Assert.Contains(expectedString, _stringWriter.ToString().Trim());
             }
             else
             {
-                Assert.Throws(expectedException.GetType(), () => _controller.LoadConfigsFromFile(filePath));
+                await Assert.ThrowsAsync(expectedException.GetType(), async () => await _controller.LoadConfigsFromFile(filePath));
             }
         }
     }

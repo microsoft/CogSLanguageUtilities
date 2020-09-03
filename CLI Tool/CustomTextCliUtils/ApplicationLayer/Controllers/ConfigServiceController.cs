@@ -21,7 +21,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             var filePath = Path.Combine(Constants.ConfigsFileLocalDirectory, Constants.ConfigsFileName);
             try
             {
-                ReadConfigsFromFile(filePath);
+                ReadConfigsFromFile(filePath).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             catch (Exceptions.Storage.FileNotFoundException)
             {
@@ -30,15 +30,15 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             }
         }
 
-        private void ReadConfigsFromFile(string filePath)
+        private async Task ReadConfigsFromFile(string filePath)
         {
-            var configsFile = _storageService.ReadAsStringFromAbsolutePath(filePath);
+            var configsFile = await _storageService.ReadAsStringFromAbsolutePathAsync(filePath);
             _configModel = JsonConvert.DeserializeObject<ConfigModel>(configsFile);
         }
 
         public async Task LoadConfigsFromFile(string configsFilePath)
         {
-            ReadConfigsFromFile(configsFilePath);
+            await ReadConfigsFromFile(configsFilePath);
             await StoreConfigsModelAsync();
             _loggerService.Log("Configs loaded from file");
         }

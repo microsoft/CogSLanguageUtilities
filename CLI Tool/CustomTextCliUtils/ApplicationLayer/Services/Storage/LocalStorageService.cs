@@ -62,10 +62,10 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             }
         }
 
-        public string ReadAsStringFromAbsolutePath(string filePath)
+        public async Task<string> ReadAsStringFromAbsolutePathAsync(string filePath)
         {
             CheckFileExists(filePath);
-            return File.ReadAllText(filePath);
+            return await File.ReadAllTextAsync(filePath);
         }
 
         private void CheckFileExists(string filePath)
