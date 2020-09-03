@@ -70,7 +70,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
             }
         }
 
-        public string ReadAsStringFromAbsolutePath(string filePath)
+        public Task<string> ReadAsStringFromAbsolutePathAsync(string filePath)
         {
             throw new NotImplementedException();
         }

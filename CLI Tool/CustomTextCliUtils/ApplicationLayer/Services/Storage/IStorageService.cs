@@ -9,6 +9,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
         public Task<Stream> ReadFileAsync(string fileName);
         public Task StoreDataAsync(string data, string fileName);
         public Task<string> ReadFileAsStringAsync(string fileName);
-        public string ReadAsStringFromAbsolutePath(string filePath);
+        public Task<string> ReadAsStringFromAbsolutePathAsync(string filePath);
     }
 }
