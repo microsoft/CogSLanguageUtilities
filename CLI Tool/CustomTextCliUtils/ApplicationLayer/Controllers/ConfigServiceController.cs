@@ -30,6 +30,12 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             }
         }
 
+        public void ShowTextAnalyticsConfigs()
+        {
+            var configString = JsonConvert.SerializeObject(_configModel.TextAnalytics, Formatting.Indented);
+            _loggerService.Log(configString);
+        }
+
         private async Task ReadConfigsFromFile(string filePath)
         {
             var configsFile = await _storageService.ReadAsStringFromAbsolutePathAsync(filePath);
@@ -41,6 +47,19 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             await ReadConfigsFromFile(configsFilePath);
             await StoreConfigsModelAsync();
             _loggerService.Log("Configs loaded from file");
+        }
+
+        public async Task SetTextAnalyticsConfigsAsync(string azureResourceKey, string azureResourceEndpoint, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault)
+        {
+            _configModel.TextAnalytics.AzureResourceKey = azureResourceKey ?? _configModel.TextAnalytics.AzureResourceKey;
+            _configModel.TextAnalytics.AzureResourceEndpoint = azureResourceEndpoint ?? _configModel.TextAnalytics.AzureResourceEndpoint;
+
+            _configModel.TextAnalytics.DefaultOperations.Sentiment = enableSentimentByDefault ?? _configModel.TextAnalytics.DefaultOperations.Sentiment;
+            _configModel.TextAnalytics.DefaultOperations.Ner = enableNerByDefault ?? _configModel.TextAnalytics.DefaultOperations.Ner;
+            _configModel.TextAnalytics.DefaultOperations.Keyphrase = enableKeyphraseByDefault ?? _configModel.TextAnalytics.DefaultOperations.Keyphrase;
+
+            await StoreConfigsModelAsync();
+            _loggerService.Log("Updated Text Analytics configs");
         }
 
         private async Task StoreConfigsModelAsync()
@@ -105,7 +124,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             _loggerService.Log("Updated Local Storage configs");
         }
 
-        public async Task SetPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId, string versionId)
+        public async Task SetPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId)
         {
             if (!string.IsNullOrEmpty(customTextKey))
             {
@@ -118,10 +137,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             if (!string.IsNullOrEmpty(appId))
             {
                 _configModel.Prediction.AppId = appId;
-            }
-            if (!string.IsNullOrEmpty(versionId))
-            {
-                _configModel.Prediction.VersionId = versionId;
             }
             await StoreConfigsModelAsync();
             _loggerService.Log("Updated Custom Text prediction configs");
