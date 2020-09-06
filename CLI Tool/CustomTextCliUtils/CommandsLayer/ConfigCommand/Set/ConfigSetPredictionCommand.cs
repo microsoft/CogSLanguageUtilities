@@ -3,6 +3,7 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
@@ -16,7 +17,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
         [Option(CommandOptionTemplate.CustomTextAppId, Description = "custom text app id")]
         public string AppId { get; }
 
-        private int OnExecute(CommandLineApplication app)
+        private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -25,10 +26,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetPredictionConfigsAsync(CustomTextKey, EndpointUrl, AppId).ConfigureAwait(false).GetAwaiter().GetResult();
+                await controller.SetPredictionConfigsAsync(CustomTextKey, EndpointUrl, AppId);
             }
-
-            return 1;
         }
     }
 }
