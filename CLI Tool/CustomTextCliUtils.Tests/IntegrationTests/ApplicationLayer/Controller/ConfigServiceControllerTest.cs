@@ -277,11 +277,12 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         public static TheoryData TextAnalyticsConfigSetTestData()
         {
-            return new TheoryData<string, string, bool, bool, bool>
+            return new TheoryData<string, string, string, bool, bool, bool>
             {
                 {
                     "test1",
                     "test2",
+                    "en",
                     true,
                     false,
                     false
@@ -291,10 +292,10 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
 
         [Theory]
         [MemberData(nameof(TextAnalyticsConfigSetTestData))]
-        public async Task TextAnalyticsConfigSetTestAsync(string azureResourceKey, string azureResourceEndpoint, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault)
+        public async Task TextAnalyticsConfigSetTestAsync(string azureResourceKey, string azureResourceEndpoint, string defaultLanguage, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault)
         {
-            await _controller.SetTextAnalyticsConfigsAsync(azureResourceKey, azureResourceEndpoint, enableSentimentByDefault, enableNerByDefault, enableKeyphraseByDefault);
-            await _controller.SetTextAnalyticsConfigsAsync(null, null, null, null, null); // Value not affected if user doesn't pass it
+            await _controller.SetTextAnalyticsConfigsAsync(azureResourceKey, azureResourceEndpoint, defaultLanguage, enableSentimentByDefault, enableNerByDefault, enableKeyphraseByDefault);
+            await _controller.SetTextAnalyticsConfigsAsync(null, null, null, null, null, null); // Value not affected if user doesn't pass it
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);

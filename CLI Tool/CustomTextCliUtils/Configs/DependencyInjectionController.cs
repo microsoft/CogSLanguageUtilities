@@ -11,6 +11,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
@@ -95,12 +96,21 @@ namespace Microsoft.CustomTextCliUtils.Configs
         {
             var builder = BuildCommonDependencies();
             builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<ConcatenationService>().As<IConcatenationService>();
             builder.RegisterInstance<IChunkerService>(CreateChunkerService(parserType));
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
                 return CreateParserService(parserType, configService);
             }).As<IParserService>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                return new TextAnalyticsPredictionService(
+                    configService.GetTextAnalyticsConfigModel().AzureResourceKey,
+                    configService.GetTextAnalyticsConfigModel().AzureResourceEndpoint,
+                    configService.GetTextAnalyticsConfigModel().DefaultLanguage);
+            }).As<ITextAnalyticsPredictionService>();
             builder.RegisterType<TextAnalyticsPredictionService>().As<ITextAnalyticsPredictionService>();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
             builder.RegisterType<PredictionServiceController>();
