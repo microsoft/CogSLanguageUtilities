@@ -11,6 +11,9 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
         [JsonProperty("azure-resource-key")]
         public string AzureResourceKey { get; set; }
 
+        [JsonProperty("default-language")]
+        public string DefaultLanguage { get; set; }
+
         [JsonProperty("default_operations")]
         public TextAnalyticsDefaultOperationsConfigModel DefaultOperations { get; set; }
 
