@@ -49,10 +49,11 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             _loggerService.Log("Configs loaded from file");
         }
 
-        public async Task SetTextAnalyticsConfigsAsync(string azureResourceKey, string azureResourceEndpoint, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault)
+        public async Task SetTextAnalyticsConfigsAsync(string azureResourceKey, string azureResourceEndpoint, string defaultLanguage, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault)
         {
             _configModel.TextAnalytics.AzureResourceKey = azureResourceKey ?? _configModel.TextAnalytics.AzureResourceKey;
             _configModel.TextAnalytics.AzureResourceEndpoint = azureResourceEndpoint ?? _configModel.TextAnalytics.AzureResourceEndpoint;
+            _configModel.TextAnalytics.DefaultLanguage = defaultLanguage ?? _configModel.TextAnalytics.DefaultLanguage;
 
             _configModel.TextAnalytics.DefaultOperations.Sentiment = enableSentimentByDefault ?? _configModel.TextAnalytics.DefaultOperations.Sentiment;
             _configModel.TextAnalytics.DefaultOperations.Ner = enableNerByDefault ?? _configModel.TextAnalytics.DefaultOperations.Ner;

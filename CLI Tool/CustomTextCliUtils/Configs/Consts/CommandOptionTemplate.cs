@@ -30,6 +30,7 @@ namespace Microsoft.CustomTextCliUtils.Configs.Consts
         // text analytics
         public const string TextAnalyticsAzureResourceKey = "--" + ConfigKeys.TextAnalyticsAzureResourceKey + " <TEXT_ANALYTICS_KEY>";
         public const string TextAnalyticsAzureResourceEndpoint = "--" + ConfigKeys.TextAnalyticsAzureResourceEndpoint + " <TEXT_ANALYTICS_URL>";
+        public const string TextAnalyticsDefaultLanguage = "--" + ConfigKeys.TextAnalyticsDefaultLanguage + " <DEFAULT_LANGUAGE>";
 
         public const string TextAnalyticsEnableSentiment = "--" + ConfigKeys.TextAnalyticsSentiment + " <BOOL>";
         public const string TextAnalyticsEnableNer = "--" + ConfigKeys.TextAnalyticsNer + " <BOOL>";

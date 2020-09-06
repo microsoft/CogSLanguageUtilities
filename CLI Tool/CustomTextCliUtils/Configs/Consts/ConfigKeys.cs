@@ -28,6 +28,7 @@ namespace Microsoft.CustomTextCliUtils.Configs.Consts
         // text analytics
         public const string TextAnalyticsAzureResourceKey = "azure-resource-key";
         public const string TextAnalyticsAzureResourceEndpoint  = "azure-resource-endpoint";
+        public const string TextAnalyticsDefaultLanguage = "default-language";
         public const string TextAnalyticsSentiment = "sentiment";
         public const string TextAnalyticsNer = "ner";
         public const string TextAnalyticsKeyphrase = "keyphrase";
