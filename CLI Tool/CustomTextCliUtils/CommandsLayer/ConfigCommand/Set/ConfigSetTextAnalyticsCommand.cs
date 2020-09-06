@@ -14,6 +14,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
         public string? AzureResourceKey { get; }
         [Option(CommandOptionTemplate.TextAnalyticsAzureResourceEndpoint, Description = "text analytics azure resource endpoint")]
         public string? AzureResourceEndpoint { get; }
+        [Option(CommandOptionTemplate.TextAnalyticsDefaultLanguage, Description = "text analytics prediction default language")]
+        public string? DefaultLanguage { get; }
         [Option(CommandOptionTemplate.TextAnalyticsEnableSentiment, optionType: CommandOptionType.SingleValue, Description = "text analytics enable sentiment by default")]
         public bool? EnableSentimentByDefault { get; }
         [Option(CommandOptionTemplate.TextAnalyticsEnableNer, optionType: CommandOptionType.SingleValue, Description = "text analytics enable NER by default")]
@@ -30,7 +32,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetTextAnalyticsConfigsAsync(AzureResourceKey, AzureResourceEndpoint, EnableSentimentByDefault, EnableNerByDefault, EnableKeyphraseByDefault).ConfigureAwait(false).GetAwaiter().GetResult();
+                controller.SetTextAnalyticsConfigsAsync(AzureResourceKey, AzureResourceEndpoint, DefaultLanguage, EnableSentimentByDefault, EnableNerByDefault, EnableKeyphraseByDefault).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             return 1;
