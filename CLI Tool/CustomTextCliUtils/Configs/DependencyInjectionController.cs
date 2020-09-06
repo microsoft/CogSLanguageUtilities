@@ -10,6 +10,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
@@ -87,6 +88,22 @@ namespace Microsoft.CustomTextCliUtils.Configs
                 return new PredictionServiceController(configService, new StorageFactoryFactory(), parserservice,
                     loggerService, chunkerService, predictionService);
             }).As<PredictionServiceController>();
+            return builder.Build();
+        }
+
+        public static IContainer BuildTextAnalyticsCommandDependencies(ParserType parserType)
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterInstance<IChunkerService>(CreateChunkerService(parserType));
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                return CreateParserService(parserType, configService);
+            }).As<IParserService>();
+            builder.RegisterType<TextAnalyticsPredictionService>().As<ITextAnalyticsPredictionService>();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.RegisterType<PredictionServiceController>();
             return builder.Build();
         }
 
