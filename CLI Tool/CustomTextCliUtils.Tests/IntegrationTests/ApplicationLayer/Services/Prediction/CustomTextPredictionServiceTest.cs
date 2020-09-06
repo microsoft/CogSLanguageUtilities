@@ -4,6 +4,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Xunit;
 using Microsoft.CustomTextCliUtils.Tests.Configs;
+using System.Threading.Tasks;
 
 namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Prediction
 {
@@ -42,7 +43,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Pr
 
         [Theory]
         [MemberData(nameof(TestParsingData))]
-        public void TestPrediction(string customTextKey, string endpointUrl, string appId, IHttpHandler httpHandler, string inputText, CliException expectedException)
+        public async Task TestPredictionAsync(string customTextKey, string endpointUrl, string appId, IHttpHandler httpHandler, string inputText, CliException expectedException)
         {
             /* TEST NOTES
              * *************
@@ -58,7 +59,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Pr
             if (expectedException == null)
             {
                 var predictionService = new CustomTextPredictionService(httpHandler, customTextKey, endpointUrl, appId);
-                var actualResult = predictionService.GetPrediction(inputText);
+                var actualResult = await predictionService.GetPredictionAsync(inputText);
                 // validate object values aren't null
                 Assert.NotNull(actualResult.Prediction.PositiveClassifiers);
                 Assert.NotNull(actualResult.Prediction.Classifiers);
@@ -66,9 +67,9 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Pr
             }
             else
             {
-                Assert.Throws(expectedException.GetType(), () => {
+                await Assert.ThrowsAsync(expectedException.GetType(), async () => {
                     var predictionService = new CustomTextPredictionService(httpHandler, customTextKey, endpointUrl, appId);
-                    predictionService.GetPrediction(inputText);
+                    await predictionService.GetPredictionAsync(inputText);
                 });
             }
         }

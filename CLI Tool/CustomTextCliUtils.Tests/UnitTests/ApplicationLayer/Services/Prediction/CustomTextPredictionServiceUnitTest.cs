@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Prediction
@@ -62,7 +63,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services
         }
         [Theory]
         [MemberData(nameof(TestParsingData))]
-        public void TestPrediction(string customTextKey, string endpointUrl, string appId, string inputText, CliException expectedException)
+        public async Task TestPredictionAsync(string customTextKey, string endpointUrl, string appId, string inputText, CliException expectedException)
         {
             /* TEST NOTES
              * *************
@@ -78,33 +79,33 @@ namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services
             // arrange
             var mockHttpHandler = new Mock<IHttpHandler>();
             // mock post submit prediction request
-            mockHttpHandler.Setup(handler => handler.SendJsonPostRequest(
+            mockHttpHandler.Setup(handler => handler.SendJsonPostRequestAsync(
                 It.IsAny<string>(),
                 It.IsAny<Object>(),
                 It.IsAny<Dictionary<string, string>>(),
                 It.IsAny<Dictionary<string, string>>()
                 )
-            ).Returns(GetPredictionRequestHttpResponseMessage(expectedException));
+            ).Returns(Task.FromResult(GetPredictionRequestHttpResponseMessage(expectedException)));
             // mock get operation status 
-            mockHttpHandler.Setup(handler => handler.SendGetRequest(
+            mockHttpHandler.Setup(handler => handler.SendGetRequestAsync(
                 It.Is<string>(s => s.Contains("status")),
                 It.IsAny<Dictionary<string, string>>(),
                 It.IsAny<Dictionary<string, string>>()
                 )
-            ).Returns(GetStatusHttpResponseMessage(expectedException));
+            ).Returns(Task.FromResult(GetStatusHttpResponseMessage(expectedException)));
             // mock get prediction result
-            mockHttpHandler.Setup(handler => handler.SendGetRequest(
+            mockHttpHandler.Setup(handler => handler.SendGetRequestAsync(
                 It.Is<string>(s => !s.Contains("status")),
                 It.IsAny<Dictionary<string, string>>(),
                 It.IsAny<Dictionary<string, string>>()
                 )
-            ).Returns(GetResultHttpResponseMessage(expectedException));
+            ).Returns(Task.FromResult(GetResultHttpResponseMessage(expectedException)));
 
             // act
             if (expectedException == null)
             {
                 var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
-                var actualResult = predictionService.GetPrediction(inputText);
+                var actualResult = await predictionService.GetPredictionAsync(inputText);
                 // validate object values aren't null
                 Assert.NotNull(actualResult.Prediction.PositiveClassifiers);
                 Assert.NotNull(actualResult.Prediction.Classifiers);
@@ -112,9 +113,9 @@ namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services
             }
             else
             {
-                Assert.Throws(expectedException.GetType(), () => {
+                await Assert.ThrowsAsync(expectedException.GetType(), async () => {
                     var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
-                    predictionService.GetPrediction(inputText);
+                    await predictionService.GetPredictionAsync(inputText);
                 });
             }
         }
