@@ -15,7 +15,8 @@ namespace Microsoft.CustomTextCliUtils
         typeof(ParseCommand),
         typeof(PredictCommand),
         typeof(ConfigCommand),
-        typeof(ChunkCommand))]
+        typeof(ChunkCommand),
+        typeof(TextAnalyticsCommand))]
     public class Program
     {
         public static void Main(string[] args)
