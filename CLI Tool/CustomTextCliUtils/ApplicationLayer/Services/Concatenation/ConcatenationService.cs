@@ -1,4 +1,5 @@
 ﻿using Azure.AI.TextAnalytics;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.TextAnalytics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation
 {
     class ConcatenationService : IConcatenationService
     {
-        public List<TextAnalyticsPredictionChunkInfo> ConcatTextAnalytics(AnalyzeSentimentResultCollection sentimentResponse, RecognizeEntitiesResultCollection nerResponse, ExtractKeyPhrasesResultCollection keyphraseResponse)
+        public List<TextAnalyticsPredictionChunkInfo> ConcatTextAnalytics(ChunkInfo[] chunkedText, AnalyzeSentimentResultCollection sentimentResponse, RecognizeEntitiesResultCollection nerResponse, ExtractKeyPhrasesResultCollection keyphraseResponse)
         {
             // TODO: return size of each response must be equal!
             var sentimentCount = sentimentResponse != null ? sentimentResponse.Count : -1;
@@ -24,11 +25,15 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation
             var result = new List<TextAnalyticsPredictionChunkInfo>();
             for (int i = 0; i < listCount; i++)
             {
+                var baseChunk = chunkedText[i];
                 var currChunkInfo = new TextAnalyticsPredictionChunkInfo
                 {
-                    sentimentResponse = i < sentimentCount ? sentimentArr[i] : null,
-                    nerResponse = i < nerCount ? nerArr[i] : null,
-                    keyphraseResponse = i < keyphraseCount ? keyphraseArr[i] : null
+                    // chunk info
+                    ChunkInfo = baseChunk,
+                    // prediction info
+                    SentimentResponse = i < sentimentCount ? sentimentArr[i] : null,
+                    NerResponse = i < nerCount ? nerArr[i] : null,
+                    KeyphraseResponse = i < keyphraseCount ? keyphraseArr[i] : null
                 };
                 result.Add(currChunkInfo);
             }

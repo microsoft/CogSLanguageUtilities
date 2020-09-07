@@ -53,7 +53,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             var text = finalText.ToString().Trim();
             return new List<ChunkInfo>
             {
-                new ChunkInfo(text, 1, parsingResult.RecognitionResults.Count())
+                new ChunkInfo(1, text, 1, parsingResult.RecognitionResults.Count())
             };
         }
 
@@ -79,6 +79,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             var totalPageCount = parsingResult.RecognitionResults.Count;
             var currentPageStart = 1;
             var currentParagraphPageStart = 1;
+            var chunkCounter = 1;
             // loop over each page to create list of pages
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
@@ -92,7 +93,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                         // add existing page to result
                         if (pageText.Length > 0)
                         {
-                            resultPages.Add(new ChunkInfo(pageText.ToString(), currentPageStart, (int)rr.Page));
+                            resultPages.Add(new ChunkInfo(chunkCounter++, pageText.ToString(), currentPageStart, (int)rr.Page));
                             pageText.Clear();
                         }
                         // concatenate paragraph to current page
@@ -110,7 +111,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                         if (pageText.Length + currentParagraph.Length > Constants.CustomTextPredictionMaxCharLimit)
                         {
                             var text = pageText.ToString().Trim();
-                            var chunkInfo = new ChunkInfo(text, currentPageStart, (int)rr.Page);
+                            var chunkInfo = new ChunkInfo(chunkCounter++, text, currentPageStart, (int)rr.Page);
                             resultPages.Add(chunkInfo);
                             pageText.Clear();
                             currentPageStart = (int)rr.Page;
@@ -130,7 +131,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 if (pageText.Length > 0)
                 {
                     var text = pageText.ToString().Trim();
-                    var chunkInfo = new ChunkInfo(text, currentPageStart, (int)rr.Page);
+                    var chunkInfo = new ChunkInfo(chunkCounter++, text, currentPageStart, (int)rr.Page);
                     resultPages.Add(chunkInfo);
                     pageText.Clear();
                     currentPageStart = currentParagraph.Length > 0 ? (int)rr.Page : ((int)rr.Page + 1);
@@ -157,6 +158,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             var maxLineLength = CaluculateMaxLineLength(parsingResult);
             var currentChunkPageStart = 1;
             var currentParagraphPageStart = 1;
+            var chunkCounter = 1;
             foreach (TextRecognitionResult rr in parsingResult.RecognitionResults)
             {
                 // update paragraphPageStart if no overflowing paragraph in new page
@@ -169,7 +171,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                         // add existing chunk to result
                         if (currentChunk.Length > 0)
                         {
-                            resultChunks.Add(new ChunkInfo(currentChunk.ToString(), currentChunkPageStart, (int)rr.Page));
+                            resultChunks.Add(new ChunkInfo(chunkCounter++, currentChunk.ToString(), currentChunkPageStart, (int)rr.Page));
                             currentChunk.Clear();
                         }
                         // concatenate paragraph to current chunk
@@ -187,7 +189,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                         if (currentChunk.Length + currentParagraph.Length > charLimit)
                         {
                             var text = currentChunk.ToString().Trim();
-                            var chunkInfo = new ChunkInfo(text, currentChunkPageStart, (int)rr.Page);
+                            var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, (int)rr.Page);
                             resultChunks.Add(chunkInfo);
                             currentChunk.Clear();
                             currentChunkPageStart = (int)rr.Page;
@@ -203,7 +205,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
             {
                 currentChunk.Append(currentParagraph.ToString());
                 var text = currentChunk.ToString().Trim();
-                var chunkInfo = new ChunkInfo(text, currentChunkPageStart, parsingResult.RecognitionResults.Count);
+                var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, parsingResult.RecognitionResults.Count);
                 resultChunks.Add(chunkInfo);
             }
             return resultChunks;
