@@ -33,7 +33,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 case ChunkMethod.Char:
                     return ChunkCharacters(msReadparsingResult, charLimit);
                 case ChunkMethod.Page:
-                    return ChunkPages(msReadparsingResult);
+                    return ChunkPages(msReadparsingResult, charLimit);
                 default:
                     throw new NotSupportedException($"The chunk type {chunkMethod} isn't supported.");
             }
@@ -69,7 +69,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
          *      2- Paragraph length bigger than character limit
          *          - Paragraph will be split into different chunks
          */
-        private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult)
+        private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult, int charLimit)
         {
             var resultPages = new List<ChunkInfo>();
             var maxLineLength = CaluculateMaxLineLength(parsingResult);
@@ -88,7 +88,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 foreach (Line l in rr.Lines)
                 {
                     // Special case: paragraph length is bigger that character limit
-                    if (currentParagraph.Length + l.Text.Length > Constants.CustomTextPredictionMaxCharLimit)
+                    if (currentParagraph.Length + l.Text.Length > charLimit)
                     {
                         // add existing page to result
                         if (pageText.Length > 0)
@@ -108,7 +108,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                     {
                         // if adding the paragraph to the page exceeds the character limit
                         // current page will be added to result and the paragraph will be added to the next page
-                        if (pageText.Length + currentParagraph.Length > Constants.CustomTextPredictionMaxCharLimit)
+                        if (pageText.Length + currentParagraph.Length > charLimit)
                         {
                             var text = pageText.ToString().Trim();
                             var chunkInfo = new ChunkInfo(chunkCounter++, text, currentPageStart, (int)rr.Page);
@@ -166,18 +166,19 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                 foreach (Line l in rr.Lines)
                 {
                     // Special case: paragraph length is bigger that character limit
-                    if (currentParagraph.Length + l.Text.Length > Constants.CustomTextPredictionMaxCharLimit)
+                    if (currentParagraph.Length + l.Text.Length > charLimit)
                     {
                         // add existing chunk to result
                         if (currentChunk.Length > 0)
                         {
-                            resultChunks.Add(new ChunkInfo(chunkCounter++, currentChunk.ToString(), currentChunkPageStart, (int)rr.Page));
+                            resultChunks.Add(new ChunkInfo(chunkCounter++, currentChunk.ToString(), currentChunkPageStart, currentParagraphPageStart));
                             currentChunk.Clear();
                         }
                         // concatenate paragraph to current chunk
                         currentChunk.Append(currentParagraph.ToString());
                         currentParagraph.Clear();
                         currentChunkPageStart = currentParagraphPageStart;
+                        currentParagraphPageStart = (int)rr.Page;
                     }
                     // concatenate line to current paragraph
                     currentParagraph.Append($"{l.Text} ");
@@ -189,14 +190,15 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
                         if (currentChunk.Length + currentParagraph.Length > charLimit)
                         {
                             var text = currentChunk.ToString().Trim();
-                            var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, (int)rr.Page);
+                            var chunkInfo = new ChunkInfo(chunkCounter++, text, currentChunkPageStart, currentParagraphPageStart); // TODO: won't work when paragraph starts in new page
                             resultChunks.Add(chunkInfo);
                             currentChunk.Clear();
-                            currentChunkPageStart = (int)rr.Page;
+                            currentChunkPageStart = currentParagraphPageStart;
                         }
                         // concatenate paragraph to current chunk
                         currentChunk.Append(currentParagraph.ToString());
                         currentParagraph.Clear();
+                        currentParagraphPageStart = (int)rr.Page;
                     }
                 }
             }
