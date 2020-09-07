@@ -1,16 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Newtonsoft.Json;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
 {
     public class TextAnalyticsDefaultOperationsConfigModel
     {
-        [JsonProperty("sentiment")]
+        [JsonProperty(ConfigKeys.TextAnalyticsSentiment)]
         public bool Sentiment { get; set; }
 
-        [JsonProperty("ner")]
+        [JsonProperty(ConfigKeys.TextAnalyticsNer)]
         public bool Ner { get; set; }
 
-        [JsonProperty("keyphrase")]
+        [JsonProperty(ConfigKeys.TextAnalyticsKeyphrase)]
         public bool Keyphrase { get; set; }
     }
 }
