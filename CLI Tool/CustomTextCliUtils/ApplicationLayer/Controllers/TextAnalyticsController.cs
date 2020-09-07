@@ -84,16 +84,18 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     _loggerService.LogOperation(OperationType.ChunkingFile, fileName);
                     var chunkedText = _chunkerService.Chunk(parseResult, chunkType, charLimit);
                     // prediction service
+                    _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
                     var queries = chunkedText.Select(r => r.Text).ToList();
                     var sentimentResponse = defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries) : null;
-                    var nerResponse = defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
-                    var keyphraseResponse = defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
+                    var nerResponse = defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
+                    var keyphraseResponse = defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
                     // concatenation service
                     var concatenatedResponse = _concatenationService.ConcatTextAnalytics(sentimentResponse, nerResponse, keyphraseResponse);
                     var responseAsJson = JsonConvert.SerializeObject(concatenatedResponse, Formatting.Indented);
                     // store file
                     var newFileName = Path.GetFileNameWithoutExtension(fileName) + ".json";
                     await _destinationStorageService.StoreDataAsync(responseAsJson, newFileName);
+                    convertedFiles.Add(fileName);
                 }
                 catch (CliException e)
                 {

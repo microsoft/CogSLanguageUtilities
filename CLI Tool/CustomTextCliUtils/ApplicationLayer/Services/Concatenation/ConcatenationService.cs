@@ -17,9 +17,9 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation
             var listCount = Math.Max(sentimentCount, Math.Max(nerCount, keyphraseCount));
 
             // prepare
-            var sentimentArr = sentimentResponse.ToArray();
-            var nerArr = nerResponse.ToArray();
-            var keyphraseArr = keyphraseResponse.ToArray();
+            var sentimentArr = sentimentResponse?.ToArray();
+            var nerArr = nerResponse?.ToArray();
+            var keyphraseArr = keyphraseResponse?.ToArray();
 
             var result = new List<TextAnalyticsPredictionChunkInfo>();
             for (int i = 0; i < listCount; i++)
