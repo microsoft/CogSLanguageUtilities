@@ -2,6 +2,7 @@
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using Microsoft.CustomTextCliUtils.Configs;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
 {
@@ -11,7 +12,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
         [Option("--path <absolute_path>", Description = "absolute path to configs file")]
         public string configsFilePath { get; }
 
-        private int OnExecute(CommandLineApplication app)
+        private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -20,10 +21,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.LoadConfigsFromFile(configsFilePath);
+                await controller.LoadConfigsFromFile(configsFilePath);
             }
-
-            return 1;
         }
     }
 }
