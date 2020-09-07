@@ -1,5 +1,6 @@
 ﻿using Azure.AI.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 using Microsoft.CustomTextCliUtils.Tests.Configs;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Te
 {
     public class TextAnalyticsPredictionServiceTest
     {
-       public static TheoryData PredictSentimentBatchAsyncTestData()
+        public static TheoryData TextAnalyticsPredictTestData()
         {
             return new TheoryData<string, string, string, List<string>, CliException>
             {
@@ -20,20 +21,32 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Te
                     "en",
                     new List<string> {"Ahmed's restaurant is great. Let's go eath there soon.", "Book me a flight to Cairo"},
                     null
+                },
+                {
+                    "asdkjhfakds8asduf8audsf8as",
+                    Secrets.TextAnalyticsEndpoint,
+                    "en",
+                    new List<string> {"Ahmed's restaurant is great. Let's go eath there soon.", "Book me a flight to Cairo"},
+                    new TextAnalyticsConnectionException("")
+                },
+                {
+                    Secrets.TextAnalyticsKey,
+                    Secrets.TextAnalyticsEndpoint,
+                    "xx",
+                    new List<string> {"Ahmed's restaurant is great. Let's go eath there soon.", "Book me a flight to Cairo"},
+                    new TextAnalyticsException(TextAnalyticsErrorCode.UnsupportedLanguageCode, "")
                 }
             };
         }
 
         [Theory]
-        [MemberData(nameof(PredictSentimentBatchAsyncTestData))]
+        [MemberData(nameof(TextAnalyticsPredictTestData))]
         public async Task PredictSentimentBatchAsyncTest(string key, string endpoint, string language, List<string> queries, CliException expectedException)
         {
-            // prepare
-            ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
-
             if (expectedException == null)
             {
                 // act
+                ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
                 var result = await predictionService.PredictSentimentBatchAsync(queries);
 
                 // assert
@@ -49,34 +62,22 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Te
             }
             else
             {
-                await Assert.ThrowsAsync(expectedException.GetType(), async () => await predictionService.PredictSentimentBatchAsync(queries));
+                await Assert.ThrowsAsync(expectedException.GetType(), async () =>
+                {
+                    ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                    await predictionService.PredictSentimentBatchAsync(queries);
+                });
             }
         }
 
-        public static TheoryData PredictNerBatchAsyncTestData()
-        {
-            return new TheoryData<string, string, string, List<string>, CliException>
-            {
-                {
-                    Secrets.TextAnalyticsKey,
-                    Secrets.TextAnalyticsEndpoint,
-                    "en",
-                    new List<string> {"Ahmed's restaurant is great. Let's go eath there soon.", "Book me a flight to Cairo"},
-                    null
-                }
-            };
-        }
-
         [Theory]
-        [MemberData(nameof(PredictNerBatchAsyncTestData))]
+        [MemberData(nameof(TextAnalyticsPredictTestData))]
         public async Task PredictNerBatchAsyncTest(string key, string endpoint, string language, List<string> queries, CliException expectedException)
         {
-            // prepare
-            ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
-
             if (expectedException == null)
             {
                 // act
+                ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
                 var result = await predictionService.PredictNerBatchAsync(queries);
 
                 // assert
@@ -94,34 +95,22 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Te
             }
             else
             {
-                await Assert.ThrowsAsync(expectedException.GetType(), async () => await predictionService.PredictNerBatchAsync(queries));
+                await Assert.ThrowsAsync(expectedException.GetType(), async () =>
+                {
+                    ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                    await predictionService.PredictNerBatchAsync(queries);
+                });
             }
         }
 
-        public static TheoryData PredictKeyphraseBatchAsyncTestData()
-        {
-            return new TheoryData<string, string, string, List<string>, CliException>
-            {
-                {
-                    Secrets.TextAnalyticsKey,
-                    Secrets.TextAnalyticsEndpoint,
-                    "en",
-                    new List<string> {"Ahmed's restaurant is great. Let's go eath there soon.", "Book me a flight to Cairo"},
-                    null
-                }
-            };
-        }
-
         [Theory]
-        [MemberData(nameof(PredictSentimentBatchAsyncTestData))]
+        [MemberData(nameof(TextAnalyticsPredictTestData))]
         public async Task PredictKeyphraseBatchAsyncTest(string key, string endpoint, string language, List<string> queries, CliException expectedException)
         {
-            // prepare
-            ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
-
             if (expectedException == null)
             {
                 // act
+                ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
                 var result = await predictionService.PredictKeyphraseBatchAsync(queries);
 
                 // assert
@@ -135,7 +124,11 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Te
             }
             else
             {
-                await Assert.ThrowsAsync(expectedException.GetType(), async () => await predictionService.PredictKeyphraseBatchAsync(queries));
+                await Assert.ThrowsAsync(expectedException.GetType(), async () =>
+                {
+                    ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                    await predictionService.PredictKeyphraseBatchAsync(queries);
+                });
             }
         }
     }

@@ -45,11 +45,11 @@ namespace Microsoft.CustomTextCliUtils
             {
                 loggerService.LogError(ex);
             }
-            if (ex?.InnerException is CliException)
+            else if (ex?.InnerException is CliException)
             {
                 loggerService.LogError(ex.InnerException);
             }
-            if (ex?.InnerException?.InnerException is CliException)
+            else if (ex?.InnerException?.InnerException is CliException)
             {
                 loggerService.LogError(ex.InnerException.InnerException);
             }
