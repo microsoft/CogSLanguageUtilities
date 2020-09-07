@@ -90,7 +90,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                     var nerResponse = defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
                     var keyphraseResponse = defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
                     // concatenation service
-                    var concatenatedResponse = _concatenationService.ConcatTextAnalytics(sentimentResponse, nerResponse, keyphraseResponse);
+                    var concatenatedResponse = _concatenationService.ConcatTextAnalytics(chunkedText.ToArray(), sentimentResponse, nerResponse, keyphraseResponse);
                     var responseAsJson = JsonConvert.SerializeObject(concatenatedResponse, Formatting.Indented);
                     // store file
                     var newFileName = Path.GetFileNameWithoutExtension(fileName) + ".json";
