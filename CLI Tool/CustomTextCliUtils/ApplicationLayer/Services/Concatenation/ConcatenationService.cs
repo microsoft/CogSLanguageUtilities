@@ -3,13 +3,12 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.TextAnalytics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation
 {
     class ConcatenationService : IConcatenationService
     {
-        public List<TextAnalyticsPredictionChunkInfo> ConcatTextAnalytics(ChunkInfo[] chunkedText, AnalyzeSentimentResultCollection sentimentResponse, RecognizeEntitiesResultCollection nerResponse, ExtractKeyPhrasesResultCollection keyphraseResponse)
+        public List<TextAnalyticsPredictionChunkInfo> ConcatTextAnalytics(ChunkInfo[] chunkedText, List<AnalyzeSentimentResult> sentimentResponse, List<RecognizeEntitiesResult> nerResponse, List<ExtractKeyPhrasesResult> keyphraseResponse)
         {
             // TODO: return size of each response must be equal!
             var sentimentCount = sentimentResponse != null ? sentimentResponse.Count : -1;
