@@ -4,6 +4,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
 {
@@ -11,11 +12,11 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
     public class ConfigSetTextAnalyticsCommand
     {
         [Option(CommandOptionTemplate.TextAnalyticsAzureResourceKey, Description = "text analytics azure resource key")]
-        public string? AzureResourceKey { get; }
+        public string AzureResourceKey { get; }
         [Option(CommandOptionTemplate.TextAnalyticsAzureResourceEndpoint, Description = "text analytics azure resource endpoint")]
-        public string? AzureResourceEndpoint { get; }
+        public string AzureResourceEndpoint { get; }
         [Option(CommandOptionTemplate.TextAnalyticsDefaultLanguage, Description = "text analytics prediction default language")]
-        public string? DefaultLanguage { get; }
+        public string DefaultLanguage { get; }
         [Option(CommandOptionTemplate.TextAnalyticsEnableSentiment, optionType: CommandOptionType.SingleValue, Description = "text analytics enable sentiment by default")]
         public bool? EnableSentimentByDefault { get; }
         [Option(CommandOptionTemplate.TextAnalyticsEnableNer, optionType: CommandOptionType.SingleValue, Description = "text analytics enable NER by default")]
@@ -23,7 +24,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
         [Option(CommandOptionTemplate.TextAnalyticsEnableKeyphrase, optionType: CommandOptionType.SingleValue, Description = "text analytics enable keyphrase by default")]
         public bool? EnableKeyphraseByDefault { get; }
 
-        private int OnExecute(CommandLineApplication app)
+        private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -32,10 +33,8 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.SetTextAnalyticsConfigsAsync(AzureResourceKey, AzureResourceEndpoint, DefaultLanguage, EnableSentimentByDefault, EnableNerByDefault, EnableKeyphraseByDefault).ConfigureAwait(false).GetAwaiter().GetResult();
+                await controller.SetTextAnalyticsConfigsAsync(AzureResourceKey, AzureResourceEndpoint, DefaultLanguage, EnableSentimentByDefault, EnableNerByDefault, EnableKeyphraseByDefault);
             }
-
-            return 1;
         }
     }
 }
