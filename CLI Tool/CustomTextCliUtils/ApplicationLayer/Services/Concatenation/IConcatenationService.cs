@@ -7,6 +7,6 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation
 {
     public interface IConcatenationService
     {
-        public List<TextAnalyticsPredictionChunkInfo> ConcatTextAnalytics(ChunkInfo[] chunkedText, AnalyzeSentimentResultCollection sentimentResponse, RecognizeEntitiesResultCollection nerResponse, ExtractKeyPhrasesResultCollection keyphraseResponse);
+        public List<TextAnalyticsPredictionChunkInfo> ConcatTextAnalytics(ChunkInfo[] chunkedText, List<AnalyzeSentimentResult> sentimentResponse, List<RecognizeEntitiesResult> nerResponse, List<ExtractKeyPhrasesResult> keyphraseResponse);
     }
 }

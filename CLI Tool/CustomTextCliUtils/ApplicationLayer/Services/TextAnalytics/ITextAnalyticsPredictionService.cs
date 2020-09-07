@@ -6,8 +6,8 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
 {
     public interface ITextAnalyticsPredictionService
     {
-        public Task<AnalyzeSentimentResultCollection> PredictSentimentBatchAsync(List<string> queries);
-        public Task<RecognizeEntitiesResultCollection> PredictNerBatchAsync(List<string> queries);
-        public Task<ExtractKeyPhrasesResultCollection> PredictKeyphraseBatchAsync(List<string> queries);
+        public Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries);
+        public Task<List<RecognizeEntitiesResult>> PredictNerBatchAsync(List<string> queries);
+        public Task<List<ExtractKeyPhrasesResult>> PredictKeyphraseBatchAsync(List<string> queries);
     }
 }

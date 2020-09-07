@@ -3,6 +3,10 @@ using System;
 using Azure.AI.TextAnalytics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.TextAnalytics;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Utilities;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
 {
@@ -18,22 +22,60 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
             _textAnalyticsClient = new TextAnalyticsClient(endpoint, credentials);
             _predictionLanguage = predictionLanguage;
         }
-
-        public async Task<AnalyzeSentimentResultCollection> PredictSentimentBatchAsync(List<string> queries)
+        public async Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries)
         {
-            var response =  await _textAnalyticsClient.AnalyzeSentimentBatchAsync(queries, language: _predictionLanguage);
-            return response.Value;
+            // verify text analytics char limit
+            VerifyCharLimit(queries);
+            // paginate throw chunks to abide by "DocumentCountLimit" of the api call
+            var listPaginator = new Paginator<string>(queries, Constants.TextAnaylticsApiCallDocumentLimit);
+            var result = new List<AnalyzeSentimentResult>();
+            while (listPaginator.HasNext()) {
+                var subList = (listPaginator.GetNextPage()).ToList();
+                var response = await _textAnalyticsClient.AnalyzeSentimentBatchAsync(subList, language: _predictionLanguage);
+                result.AddRange(response.Value);
+            }
+            return result;
         }
-        public async Task<RecognizeEntitiesResultCollection> PredictNerBatchAsync(List<string> queries)
+        public async Task<List<RecognizeEntitiesResult>> PredictNerBatchAsync(List<string> queries)
         {
-            var response = await _textAnalyticsClient.RecognizeEntitiesBatchAsync(queries, language: _predictionLanguage);
-            return response.Value;
+            // verify text analytics char limit
+            VerifyCharLimit(queries);
+            // paginate throw chunks to abide by "DocumentCountLimit" of the api call
+            var listPaginator = new Paginator<string>(queries, Constants.TextAnaylticsApiCallDocumentLimit);
+            var result = new List<RecognizeEntitiesResult>();
+            while (listPaginator.HasNext())
+            {
+                var subList = (listPaginator.GetNextPage()).ToList();
+                var response = await _textAnalyticsClient.RecognizeEntitiesBatchAsync(subList, language: _predictionLanguage);
+                result.AddRange(response.Value);
+            }
+            return result;
         }
 
-        public async Task<ExtractKeyPhrasesResultCollection> PredictKeyphraseBatchAsync(List<string> queries)
+        public async Task<List<ExtractKeyPhrasesResult>> PredictKeyphraseBatchAsync(List<string> queries)
         {
-            var response = await _textAnalyticsClient.ExtractKeyPhrasesBatchAsync(queries, language: _predictionLanguage);
-            return response.Value;
+            // verify text analytics char limit
+            VerifyCharLimit(queries);
+            // paginate throw chunks to abide by "DocumentCountLimit" of the api call
+            var listPaginator = new Paginator<string>(queries, Constants.TextAnaylticsApiCallDocumentLimit);
+            var result = new List<ExtractKeyPhrasesResult>();
+            while (listPaginator.HasNext())
+            {
+                var subList = (listPaginator.GetNextPage()).ToList();
+                var response = await _textAnalyticsClient.ExtractKeyPhrasesBatchAsync(subList, language: _predictionLanguage);
+                result.AddRange(response.Value);
+            }
+            return result;
+        }
+        private void VerifyCharLimit(List<string> queries)
+        {
+            queries.ForEach(q =>
+            {
+                if (q.Length > Constants.TextAnalyticsPredictionMaxCharLimit)
+                {
+                    throw new TextAnalyticsExceededQueryLengthException();
+                }
+            });
         }
     }
 }
