@@ -21,6 +21,18 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
             var endpoint = new Uri(textAnalyticsEndpoint);
             _textAnalyticsClient = new TextAnalyticsClient(endpoint, credentials);
             _predictionLanguage = predictionLanguage;
+            TestConnection().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+        private async Task TestConnection()
+        {
+            try
+            {
+                await _textAnalyticsClient.AnalyzeSentimentAsync("This hotel is great");
+            }
+            catch (Exception e)
+            {
+                throw new TextAnalyticsConnectionException(e.Message);
+            }
         }
         public async Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries)
         {
@@ -32,6 +44,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
             while (listPaginator.HasNext()) {
                 var subList = (listPaginator.GetNextPage()).ToList();
                 var response = await _textAnalyticsClient.AnalyzeSentimentBatchAsync(subList, language: _predictionLanguage);
+                HandleError(response.Value);
                 result.AddRange(response.Value);
             }
             return result;
@@ -47,6 +60,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
             {
                 var subList = (listPaginator.GetNextPage()).ToList();
                 var response = await _textAnalyticsClient.RecognizeEntitiesBatchAsync(subList, language: _predictionLanguage);
+                HandleError(response.Value);
                 result.AddRange(response.Value);
             }
             return result;
@@ -63,6 +77,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
             {
                 var subList = (listPaginator.GetNextPage()).ToList();
                 var response = await _textAnalyticsClient.ExtractKeyPhrasesBatchAsync(subList, language: _predictionLanguage);
+                HandleError(response.Value);
                 result.AddRange(response.Value);
             }
             return result;
@@ -76,6 +91,16 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
                     throw new TextAnalyticsExceededQueryLengthException();
                 }
             });
+        }
+        private void HandleError(IEnumerable<TextAnalyticsResult> results)
+        {
+            foreach (TextAnalyticsResult r in results)
+            {
+                if (r.HasError)
+                {
+                    throw new TextAnalyticsException(r.Error.ErrorCode.ToString(), r.Error.Message);
+                }
+            }
         }
     }
 }
