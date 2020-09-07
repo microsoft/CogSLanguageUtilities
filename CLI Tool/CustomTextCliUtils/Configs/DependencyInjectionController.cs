@@ -111,7 +111,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
                     configService.GetTextAnalyticsConfigModel().AzureResourceEndpoint,
                     configService.GetTextAnalyticsConfigModel().DefaultLanguage);
             }).As<ITextAnalyticsPredictionService>();
-            builder.RegisterType<TextAnalyticsPredictionService>().As<ITextAnalyticsPredictionService>();
+            builder.RegisterType<TextAnalyticsController>();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
             builder.RegisterType<PredictionServiceController>();
             return builder.Build();
