@@ -1,17 +1,18 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs
 {
     public class TextAnalyticsConfigModel
     {
-        [JsonProperty("azure-resource-endpoint")]
+        [JsonProperty(ConfigKeys.TextAnalyticsAzureResourceEndpoint)]
         public string AzureResourceEndpoint { get; set; }
 
-        [JsonProperty("azure-resource-key")]
+        [JsonProperty(ConfigKeys.TextAnalyticsAzureResourceKey)]
         public string AzureResourceKey { get; set; }
 
-        [JsonProperty("default-language")]
+        [JsonProperty(ConfigKeys.TextAnalyticsDefaultLanguage)]
         public string DefaultLanguage { get; set; }
 
         [JsonProperty("default_operations")]
