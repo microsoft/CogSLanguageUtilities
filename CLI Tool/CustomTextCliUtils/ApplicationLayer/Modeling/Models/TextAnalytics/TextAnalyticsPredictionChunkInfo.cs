@@ -1,11 +1,13 @@
 ﻿using Azure.AI.TextAnalytics;
+using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.TextAnalytics
 {
     public class TextAnalyticsPredictionChunkInfo
     {
-        public AnalyzeSentimentResult sentimentResponse;
-        public RecognizeEntitiesResult nerResponse;
-        public ExtractKeyPhrasesResult keyphraseResponse;
+        public ChunkInfo ChunkInfo;
+        public AnalyzeSentimentResult SentimentResponse;
+        public RecognizeEntitiesResult NerResponse;
+        public ExtractKeyPhrasesResult KeyphraseResponse;
     }
 }
