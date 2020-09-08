@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser
+﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser
 {
     public class UnsupportedFileTypeException : CliException
     {

@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.TextAnalytics
+﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics
 {
     public class TextAnalyticsException : CliException
     {

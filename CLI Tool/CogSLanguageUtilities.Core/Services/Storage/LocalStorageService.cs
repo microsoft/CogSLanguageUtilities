@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
 using System;
 using System.IO;
 using System.Linq;

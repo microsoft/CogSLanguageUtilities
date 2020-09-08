@@ -1,5 +1,5 @@
 ﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;

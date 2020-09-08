@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.TextAnalytics;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Utilities;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics

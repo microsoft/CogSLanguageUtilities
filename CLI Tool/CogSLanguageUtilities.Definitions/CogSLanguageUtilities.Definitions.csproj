@@ -12,11 +12,4 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Configs\CustomText\" />
-    <Folder Include="Models\Configs\TextAnalytics\" />
-    <Folder Include="Models\Configs\Parser\" />
-    <Folder Include="Models\Configs\Storage\" />
-  </ItemGroup>
-
 </Project>

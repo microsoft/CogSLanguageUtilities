@@ -1,6 +1,6 @@
 ﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.TextAnalytics
+namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics
 {
     public class TextAnalyticsConnectionException : CliException
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Configs
+namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Configs
 {
     public class MissingConfigsException : CliException
     {

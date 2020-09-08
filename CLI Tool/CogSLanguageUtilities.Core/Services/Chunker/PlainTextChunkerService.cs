@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System;

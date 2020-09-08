@@ -1,5 +1,5 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CustomTextCliUtils.Configs.Consts;

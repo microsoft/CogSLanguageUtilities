@@ -1,5 +1,5 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Xunit;
