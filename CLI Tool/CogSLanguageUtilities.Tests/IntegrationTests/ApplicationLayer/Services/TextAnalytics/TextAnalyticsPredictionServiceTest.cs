@@ -47,7 +47,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             if (expectedException == null)
             {
                 // act
-                ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                ITextAnalyticsService predictionService = new TextAnalyticsService(key, endpoint, language);
                 var result = await predictionService.PredictSentimentBatchAsync(queries);
 
                 // assert
@@ -65,7 +65,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             {
                 await Assert.ThrowsAsync(expectedException.GetType(), async () =>
                 {
-                    ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                    ITextAnalyticsService predictionService = new TextAnalyticsService(key, endpoint, language);
                     await predictionService.PredictSentimentBatchAsync(queries);
                 });
             }
@@ -78,7 +78,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             if (expectedException == null)
             {
                 // act
-                ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                ITextAnalyticsService predictionService = new TextAnalyticsService(key, endpoint, language);
                 var result = await predictionService.PredictNerBatchAsync(queries);
 
                 // assert
@@ -98,7 +98,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             {
                 await Assert.ThrowsAsync(expectedException.GetType(), async () =>
                 {
-                    ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                    ITextAnalyticsService predictionService = new TextAnalyticsService(key, endpoint, language);
                     await predictionService.PredictNerBatchAsync(queries);
                 });
             }
@@ -111,7 +111,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             if (expectedException == null)
             {
                 // act
-                ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                ITextAnalyticsService predictionService = new TextAnalyticsService(key, endpoint, language);
                 var result = await predictionService.PredictKeyphraseBatchAsync(queries);
 
                 // assert
@@ -127,7 +127,7 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
             {
                 await Assert.ThrowsAsync(expectedException.GetType(), async () =>
                 {
-                    ITextAnalyticsPredictionService predictionService = new TextAnalyticsPredictionService(key, endpoint, language);
+                    ITextAnalyticsService predictionService = new TextAnalyticsService(key, endpoint, language);
                     await predictionService.PredictKeyphraseBatchAsync(queries);
                 });
             }

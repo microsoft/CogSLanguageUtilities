@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics
 {
-    public class TextAnalyticsPredictionService : ITextAnalyticsPredictionService
+    public class TextAnalyticsService : ITextAnalyticsService
     {
         private readonly TextAnalyticsClient _textAnalyticsClient;
         private readonly string _predictionLanguage;
 
-        public TextAnalyticsPredictionService(string textAnalyticsKey, string textAnalyticsEndpoint, string predictionLanguage)
+        public TextAnalyticsService(string textAnalyticsKey, string textAnalyticsEndpoint, string predictionLanguage)
         {
             var credentials = new AzureKeyCredential(textAnalyticsKey);
             var endpoint = new Uri(textAnalyticsEndpoint);

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
-    public interface ITextAnalyticsPredictionService
+    public interface ITextAnalyticsService
     {
         public Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries);
         public Task<List<RecognizeEntitiesResult>> PredictNerBatchAsync(List<string> queries);

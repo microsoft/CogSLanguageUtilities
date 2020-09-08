@@ -3,7 +3,7 @@
     public class Constants
     {
         // tool name
-        public const string ToolName = "CLUtils";
+        public const string ToolName = "clutils";
         // configs file
         public static readonly string ConfigsFileLocalDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
         public static readonly string ConfigsFileName = "configs.json";
