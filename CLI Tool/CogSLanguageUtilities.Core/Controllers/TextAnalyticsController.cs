@@ -1,20 +1,15 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Newtonsoft.Json;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 using System.Collections.Concurrent;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;
 using System.IO;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {

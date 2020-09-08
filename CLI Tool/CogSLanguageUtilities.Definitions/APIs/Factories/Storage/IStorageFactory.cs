@@ -1,8 +1,8 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
+namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage
 {
     public interface IStorageFactory
     {

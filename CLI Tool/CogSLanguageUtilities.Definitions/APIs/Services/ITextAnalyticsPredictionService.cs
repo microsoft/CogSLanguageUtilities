@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
+namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface ITextAnalyticsPredictionService
     {

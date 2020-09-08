@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface IStorageService
     {

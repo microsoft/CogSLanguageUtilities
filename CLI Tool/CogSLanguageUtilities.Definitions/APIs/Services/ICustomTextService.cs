@@ -1,9 +1,9 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
+namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
-    public interface IPredictionService
+    public interface ICustomTextService
     {
         public Task<CustomTextPredictionResponse> GetPredictionAsync(string query);
     }

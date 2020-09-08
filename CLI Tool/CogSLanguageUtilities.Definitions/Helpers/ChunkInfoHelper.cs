@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models
+namespace Microsoft.CogSLanguageUtilities.Definitions.Helpers
 {
     public class ChunkInfoHelper
     {

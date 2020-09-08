@@ -1,6 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
@@ -12,10 +11,12 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionAp
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
-    public class CustomTextPredictionService : IPredictionService
+    public class CustomTextPredictionService : ICustomTextService
     {
         private readonly string _customTextKey;
         private readonly string _endpointUrl;

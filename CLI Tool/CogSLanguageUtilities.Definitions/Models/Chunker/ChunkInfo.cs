@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
+using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker
 {

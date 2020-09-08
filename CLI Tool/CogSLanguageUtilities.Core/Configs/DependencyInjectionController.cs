@@ -12,6 +12,8 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
@@ -78,14 +80,14 @@ namespace Microsoft.CustomTextCliUtils.Configs
                 var predictionConfigs = configService.GetPredictionConfigModel();
                 return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
                     predictionConfigs.AppId);
-            }).As<IPredictionService>();
+            }).As<ICustomTextService>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
                 var loggerService = c.Resolve<ILoggerService>();
                 var parserservice = c.Resolve<IParserService>();
                 var chunkerService = CreateChunkerService(parserType);
-                var predictionService = c.Resolve<IPredictionService>();
+                var predictionService = c.Resolve<ICustomTextService>();
                 return new PredictionServiceController(configService, new StorageFactoryFactory(), parserservice,
                     loggerService, chunkerService, predictionService);
             }).As<PredictionServiceController>();

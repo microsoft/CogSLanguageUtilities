@@ -3,7 +3,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System.Collections.Generic;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
+namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface IChunkerService
     {

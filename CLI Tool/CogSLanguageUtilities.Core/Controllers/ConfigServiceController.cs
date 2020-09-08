@@ -1,6 +1,6 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
-    public class ConfigServiceController
+    public class ConfigServiceController : IConfigsController
     {
         private readonly ILoggerService _loggerService;
         private readonly IStorageService _storageService;

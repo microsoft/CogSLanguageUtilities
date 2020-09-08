@@ -1,22 +1,18 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Newtonsoft.Json;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
@@ -28,7 +24,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         private IStorageService _sourceStorageService;
         private readonly ILoggerService _loggerService;
         private readonly IChunkerService _chunkerService;
-        private readonly IPredictionService _predictionService;
+        private readonly ICustomTextService _predictionService;
 
         public PredictionServiceController(
             IConfigsLoader configurationService,
@@ -36,7 +32,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
             IParserService parserService,
             ILoggerService loggerService,
             IChunkerService chunkerService,
-            IPredictionService predictionService)
+            ICustomTextService predictionService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;
