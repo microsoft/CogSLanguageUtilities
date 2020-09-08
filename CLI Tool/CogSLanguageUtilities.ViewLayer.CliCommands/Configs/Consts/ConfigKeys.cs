@@ -1,6 +1,6 @@
 ﻿
 
-namespace Microsoft.CustomTextCliUtils.Configs.Consts
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
 {
     public class ConfigKeys
     {

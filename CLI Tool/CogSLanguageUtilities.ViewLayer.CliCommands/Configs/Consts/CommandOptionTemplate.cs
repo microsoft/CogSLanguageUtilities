@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.CustomTextCliUtils.Configs.Consts
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
 {
     public class CommandOptionTemplate
     {

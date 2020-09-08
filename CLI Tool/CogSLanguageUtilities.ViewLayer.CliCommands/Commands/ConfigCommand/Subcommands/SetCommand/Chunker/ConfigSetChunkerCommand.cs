@@ -2,7 +2,7 @@
 using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -12,7 +12,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
     public class ConfigSetChunkerCommand
     {
         [Required]
-        [Range(Constants.MinAllowedCharLimit, Constants.CustomTextPredictionMaxCharLimit)]
+        [Range(Core.Configs.Consts.Constants.MinAllowedCharLimit, Core.Configs.Consts.Constants.CustomTextPredictionMaxCharLimit)]
         [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "character limit for chunk")]
         public int CharLimit { get; }
 
