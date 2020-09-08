@@ -4,8 +4,9 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Storage
+namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Storage
 {
     public class LocalStorageServiceTest : IDisposable
     {

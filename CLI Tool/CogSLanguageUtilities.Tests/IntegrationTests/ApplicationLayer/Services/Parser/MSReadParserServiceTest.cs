@@ -2,12 +2,12 @@
 using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
-using Microsoft.CustomTextCliUtils.Tests.Configs;
+using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System.IO;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System.Linq;
 
-namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser
+namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Parser
 {
     public class MSReadParserServiceTest
     {

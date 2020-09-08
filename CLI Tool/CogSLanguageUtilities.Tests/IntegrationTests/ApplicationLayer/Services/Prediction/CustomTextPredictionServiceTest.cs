@@ -3,10 +3,11 @@ using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
 using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Xunit;
-using Microsoft.CustomTextCliUtils.Tests.Configs;
+using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System.Threading.Tasks;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 
-namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Prediction
+namespace CustomTextCliUtils.Tests.IntegrationTests.Services.Prediction
 {
     public class CustomTextPredictionServiceTest
     {

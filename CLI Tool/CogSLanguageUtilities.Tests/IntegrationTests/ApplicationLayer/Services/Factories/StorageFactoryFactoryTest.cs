@@ -1,9 +1,11 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System;
 using Xunit;
 
-namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Factories
+namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Factories
 {
     public class StorageFactoryFactoryTest
     {
