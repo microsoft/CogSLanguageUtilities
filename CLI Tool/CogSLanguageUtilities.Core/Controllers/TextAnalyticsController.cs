@@ -8,12 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Newtonsoft.Json;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 using System.Collections.Concurrent;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;
 using System.IO;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {

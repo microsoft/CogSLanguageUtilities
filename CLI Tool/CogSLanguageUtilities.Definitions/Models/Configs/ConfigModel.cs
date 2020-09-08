@@ -1,6 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.TextAnalytics;
+using Newtonsoft.Json;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs
 {
     public class ConfigModel
     {
@@ -14,7 +19,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs
         public ChunkerConfigModel Chunker { get; set; }
 
         [JsonProperty("prediction")]
-        public PredictionConfigModel Prediction { get; set; }
+        public CustomTextConfigModel Prediction { get; set; }
 
         [JsonProperty("textanalytics")]
         public TextAnalyticsConfigModel TextAnalytics { get; set; }
@@ -24,7 +29,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs
             Storage = new StorageConfigModel();
             Parser = new ParserConfigModel();
             Chunker = new ChunkerConfigModel();
-            Prediction = new PredictionConfigModel();
+            Prediction = new CustomTextConfigModel();
             TextAnalytics = new TextAnalyticsConfigModel();
         }
     }

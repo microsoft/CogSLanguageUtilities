@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker
 {
     public class ChunkInfo
     {

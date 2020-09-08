@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Parser
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Parser
 {
     public class MsReadParseResult : ParseResult
     {

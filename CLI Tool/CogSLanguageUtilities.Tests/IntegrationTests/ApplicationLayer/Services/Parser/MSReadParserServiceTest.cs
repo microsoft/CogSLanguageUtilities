@@ -4,7 +4,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
 using Microsoft.CustomTextCliUtils.Tests.Configs;
 using System.IO;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System.Linq;
 
 namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Parser

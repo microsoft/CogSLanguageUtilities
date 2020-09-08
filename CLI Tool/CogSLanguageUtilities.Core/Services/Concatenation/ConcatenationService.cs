@@ -1,6 +1,6 @@
 ﻿using Azure.AI.TextAnalytics;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.TextAnalytics;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation;
 using System;
 using System.Collections.Generic;
 

@@ -3,8 +3,8 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
 using System.Threading.Tasks;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand
 {

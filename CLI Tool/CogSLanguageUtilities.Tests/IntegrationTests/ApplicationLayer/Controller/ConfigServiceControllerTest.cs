@@ -1,6 +1,6 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs.Consts;

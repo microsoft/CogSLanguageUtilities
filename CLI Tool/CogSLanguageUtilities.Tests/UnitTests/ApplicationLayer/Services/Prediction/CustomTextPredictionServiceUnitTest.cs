@@ -2,8 +2,8 @@
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction.CustomTextErrorResponse;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.CustomTextErrorResponse;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.Tests.Configs;
 using Moq;

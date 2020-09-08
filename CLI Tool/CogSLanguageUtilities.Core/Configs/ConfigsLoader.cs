@@ -1,9 +1,14 @@
 ﻿
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Configs;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.TextAnalytics;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Chunker;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
@@ -45,7 +50,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return _configModel.Parser.MsRead;
         }
 
-        public PredictionConfigModel GetPredictionConfigModel()
+        public CustomTextConfigModel GetPredictionConfigModel()
         {
             return _configModel.Prediction;
         }
