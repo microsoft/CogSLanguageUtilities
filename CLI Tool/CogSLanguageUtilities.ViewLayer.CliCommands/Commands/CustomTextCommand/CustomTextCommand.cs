@@ -1,11 +1,10 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-namespace Microsoft.LanguageUtilities.ViewLayer.CliCommands.Commands.CustomTextCommand
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.CustomTextCommand
 {
-    [Command("utilities", Description = "shows help for utilities command")]
+    [Command("customtext", Description = "shows help for custom text command")]
     [Subcommand(
-        typeof(ParserCommand),
-        typeof(ChunkCommand))]
+        typeof(PredictCommand))]
     public class CustomTextCommand
     {
         private void OnExecute(CommandLineApplication app)

@@ -6,7 +6,7 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
     [Command("chunker", Description = "sets configs for chunker")]
     public class ConfigSetChunkerCommand

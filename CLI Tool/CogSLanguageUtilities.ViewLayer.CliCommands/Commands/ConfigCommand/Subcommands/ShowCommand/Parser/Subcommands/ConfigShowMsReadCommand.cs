@@ -3,10 +3,10 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("prediction", Description = "shows configs for all prediction")]
-    public class ConfigShowPredictionCommand
+    [Command("msread", Description = "shows configs for msread parser")]
+    public class ConfigShowMsReadCommand
     {
         private void OnExecute(CommandLineApplication app)
         {
@@ -17,7 +17,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowPredictionConfigs();
+                controller.ShowParserMsReadConfigs();
             }
         }
     }
