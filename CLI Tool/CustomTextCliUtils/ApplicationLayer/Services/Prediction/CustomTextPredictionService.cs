@@ -1,4 +1,4 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
+using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;

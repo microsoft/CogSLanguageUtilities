@@ -1,4 +1,4 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set;
 
 namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
