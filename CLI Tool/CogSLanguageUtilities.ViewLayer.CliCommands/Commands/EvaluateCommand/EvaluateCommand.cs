@@ -4,7 +4,9 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand
 {

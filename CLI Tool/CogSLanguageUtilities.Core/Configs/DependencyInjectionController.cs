@@ -11,7 +11,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
