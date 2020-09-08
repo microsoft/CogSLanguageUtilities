@@ -29,11 +29,20 @@ Like extracting text from documents, chunking text files, and integrating with p
         - ctcu config show prediction
         - ctcu config set prediction --customtext-endpoint <ENDPOINT_URL> --customtext-key <APIM_SUBSCRIPTION_ID> --app-id <APP_ID>
 
-- parsing
-    - ctcu parse --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunking-type <PAGE/CHAR> ]
-
-- prediction
-    - ctcu predict --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --file-name <FILENAME> [ --chunking-type <PAGE/CHAR> ]
-
-- chunker
-    - ctcu chunk --source <BLOB/LOCAL> --destination <BLOB/LOCAL>
+- config
+    - load file
+        - ctcu config load --path <FILE_PATH>
+    - show configs
+        - ctcu config show
+- utilities
+    - parse
+        - ctcu utilities parse --parser msread --source blob --destination blob --chunker page
+    - chunk
+        - ctcu utilities chunk --parser msread --source blob --destination blob --chunker page
+- customtext
+    - predict
+        - ctcu customtext predict --parser msread --source blob --destination blob --chunker page
+    - evaluate [batch testing]
+        - ctcu customtext evaluate --source blob --destination blob
+- textanalytics
+    - ctcu textanalytics --parser msread --source blob --destination blob -- chunker page
