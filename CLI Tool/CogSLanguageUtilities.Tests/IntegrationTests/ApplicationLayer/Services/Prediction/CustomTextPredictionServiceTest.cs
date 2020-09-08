@@ -5,7 +5,7 @@ using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Xunit;
 using Microsoft.CustomTextCliUtils.Tests.Configs;
 
-namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.Prediction
+namespace CustomTextCliUtils.Tests.IntegrationTests.Services.Prediction
 {
     public class CustomTextPredictionServiceTest
     {

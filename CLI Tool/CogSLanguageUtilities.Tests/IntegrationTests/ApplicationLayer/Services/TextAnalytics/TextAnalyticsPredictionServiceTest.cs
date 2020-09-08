@@ -2,12 +2,13 @@
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
-using Microsoft.CustomTextCliUtils.Tests.Configs;
+using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.Services.TextAnalytics
+namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
 {
     public class TextAnalyticsPredictionServiceTest
     {

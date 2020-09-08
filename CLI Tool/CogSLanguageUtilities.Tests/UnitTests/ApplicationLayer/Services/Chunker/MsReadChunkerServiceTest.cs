@@ -7,8 +7,11 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
+using Microsoft.CogSLanguageUtilities.Core.Configs.Consts;
 
-namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Chunker
+namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
 {
     public class MsReadChunkerServiceTest
     {

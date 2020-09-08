@@ -1,11 +1,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.CustomTextErrorResponse;
 using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
-using Microsoft.CustomTextCliUtils.Tests.Configs;
+using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using Moq;
 using Newtonsoft.Json;
 using System;
@@ -14,11 +10,17 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Xunit;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 
-namespace Microsoft.CustomTextCliUtils.Tests.UnitTests.ApplicationLayer.Services.Prediction
+namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
 {
     public class CustomTextPredictionServiceUnitTest
     {
+        public CustomTextPredictionResponseStatus CustomTextPredictionResponseStatus { get; private set; }
+
         // Test Prediction Mapping
         // ######################################################################
         public static TheoryData TestParsingData()
