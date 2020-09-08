@@ -106,7 +106,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
             // act
             if (expectedException == null)
             {
-                var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
+                var predictionService = new CustomTextService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
                 var actualResult = await predictionService.GetPredictionAsync(inputText);
                 // validate object values aren't null
                 Assert.NotNull(actualResult.Prediction.PositiveClassifiers);
@@ -117,7 +117,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
             {
                 await Assert.ThrowsAsync(expectedException.GetType(), async () =>
                 {
-                    var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
+                    var predictionService = new CustomTextService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
                     await predictionService.GetPredictionAsync(inputText);
                 });
             }

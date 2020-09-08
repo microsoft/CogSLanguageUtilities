@@ -3,6 +3,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,9 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
     [Command("predict", Description = "")]
     public class PredictCommand
     {
+        [Required]
+        [Option("--cognitive-service <customtext/textanalytics/both>", Description = "[required] indicates which cognitive service to use for prediction")]
+        public CognitiveServiceType CognitiveService { get; }
         [Required]
         [Option("--parser <msread/tika>", Description = "[required] indicates which parsing tool to use")]
         public ParserType Parser { get; }
@@ -28,13 +32,13 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Predict
         private async Task OnExecute(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildTextAnalyticsCommandDependencies(Parser);
+            var container = DependencyInjectionController.BuildPredictCommandDependencies(Parser);
 
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<TextAnalyticsController>();
-                await controller.Predict(Source, Destination, ChunkType);
+                var controller = scope.Resolve<PredictionController>();
+                await controller.Predict(Source, Destination, ChunkType, CognitiveService);
             }
         }
     }

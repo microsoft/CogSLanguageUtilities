@@ -16,14 +16,14 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Prediction
 {
-    public class CustomTextPredictionService : ICustomTextService
+    public class CustomTextService : ICustomTextService
     {
         private readonly string _customTextKey;
         private readonly string _endpointUrl;
         private readonly string _appId;
         private readonly IHttpHandler _httpHandler;
 
-        public CustomTextPredictionService(IHttpHandler httpHandler, string customTextKey, string endpointUrl, string appId)
+        public CustomTextService(IHttpHandler httpHandler, string customTextKey, string endpointUrl, string appId)
         {
             _customTextKey = customTextKey;
             _endpointUrl = endpointUrl;
@@ -71,6 +71,17 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Prediction
                 }
                 throw new PredictionOperationFailedException(operationId, operationStatus.ErrorDetails);
             }
+        }
+
+        public async Task<List<CustomTextPredictionResponse>> GetPredictionBatchAsync(List<string> queries)
+        {
+            var result = new List<CustomTextPredictionResponse>();
+            foreach (string query in queries)
+            {
+                var predictionResult = await GetPredictionAsync(query);
+                result.Add(predictionResult);
+            }
+            return result;
         }
 
         private async Task<string> SendPredictionRequestAsync(string queryText)

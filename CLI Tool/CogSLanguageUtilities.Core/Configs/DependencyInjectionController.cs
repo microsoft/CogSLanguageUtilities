@@ -70,6 +70,9 @@ namespace Microsoft.CustomTextCliUtils.Configs
         {
             var builder = BuildCommonDependencies();
             builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.RegisterInstance<IChunkerService>(CreateChunkerService(parserType));
+            builder.RegisterType<ConcatenationService>().As<IConcatenationService>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
@@ -79,44 +82,18 @@ namespace Microsoft.CustomTextCliUtils.Configs
             {
                 var configService = c.Resolve<IConfigsLoader>();
                 var predictionConfigs = configService.GetPredictionConfigModel();
-                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
+                return new CustomTextService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
                     predictionConfigs.AppId);
             }).As<ICustomTextService>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
-                var loggerService = c.Resolve<ILoggerService>();
-                var parserservice = c.Resolve<IParserService>();
-                var chunkerService = CreateChunkerService(parserType);
-                var predictionService = c.Resolve<ICustomTextService>();
-                return new PredictionsController(configService, new StorageFactoryFactory(), parserservice,
-                    loggerService, chunkerService, predictionService);
-            }).As<PredictionsController>();
-            return builder.Build();
-        }
-
-        public static IContainer BuildTextAnalyticsCommandDependencies(ParserType parserType)
-        {
-            var builder = BuildCommonDependencies();
-            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
-            builder.RegisterType<ConcatenationService>().As<IConcatenationService>();
-            builder.RegisterInstance<IChunkerService>(CreateChunkerService(parserType));
-            builder.Register(c =>
-            {
-                var configService = c.Resolve<IConfigsLoader>();
-                return CreateParserService(parserType, configService);
-            }).As<IParserService>();
-            builder.Register(c =>
-            {
-                var configService = c.Resolve<IConfigsLoader>();
-                return new TextAnalyticsPredictionService(
+                return new TextAnalyticsService(
                     configService.GetTextAnalyticsConfigModel().AzureResourceKey,
                     configService.GetTextAnalyticsConfigModel().AzureResourceEndpoint,
                     configService.GetTextAnalyticsConfigModel().DefaultLanguage);
-            }).As<ITextAnalyticsPredictionService>();
-            builder.RegisterType<TextAnalyticsController>();
-            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
-            builder.RegisterType<PredictionsController>();
+            }).As<ITextAnalyticsService>();
+            builder.RegisterType<PredictionController>();
             return builder.Build();
         }
 

@@ -1,9 +1,11 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
-    public class TextAnalyticsController
+    public class PredictionController : IPredictionController
     {
         private readonly IConfigsLoader _configurationService;
         private readonly IStorageFactoryFactory _storageFactoryFactory;
@@ -22,16 +24,18 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         private IStorageService _destinationStorageService;
         private readonly ILoggerService _loggerService;
         private readonly IChunkerService _chunkerService;
-        private readonly ITextAnalyticsPredictionService _textAnalyticsPredictionService;
+        private readonly ITextAnalyticsService _textAnalyticsPredictionService;
+        private readonly ICustomTextService _customTextPredictionService;
         private readonly IConcatenationService _concatenationService;
 
-        public TextAnalyticsController(
+        public PredictionController(
             IConfigsLoader configurationService,
             IStorageFactoryFactory storageFactoryFactory,
             IParserService parserService,
             ILoggerService loggerService,
             IChunkerService chunkerService,
-            ITextAnalyticsPredictionService textAnalyticsPredictionService,
+            ITextAnalyticsService textAnalyticsPredictionService,
+            ICustomTextService CustomTextPredictionService,
             IConcatenationService concatenationService)
         {
             _configurationService = configurationService;
@@ -40,6 +44,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService = loggerService;
             _chunkerService = chunkerService;
             _textAnalyticsPredictionService = textAnalyticsPredictionService;
+            _customTextPredictionService = CustomTextPredictionService;
             _concatenationService = concatenationService;
         }
 
@@ -52,14 +57,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _destinationStorageService = destinationFactory.CreateStorageService(destinationStorageType, storageConfigModel);
         }
 
-        public async Task Predict(StorageType sourceStorageType, StorageType destinationStorageType, ChunkMethod chunkType)
+        public async Task Predict(StorageType sourceStorageType, StorageType destinationStorageType, ChunkMethod chunkType, CognitiveServiceType service)
         {
-            // initialize storage
             InitializeStorage(sourceStorageType, destinationStorageType);
             var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
             var defaultOps = _configurationService.GetTextAnalyticsConfigModel().DefaultOperations;
             var convertedFiles = new ConcurrentBag<string>();
             var failedFiles = new ConcurrentDictionary<string, string>();
+            // Check which service to run
+            var runCustomText = CognitiveServiceType.CustomText.Equals(service) || CognitiveServiceType.Both.Equals(service);
+            var runTextAnalytics = service == CognitiveServiceType.TextAnalytics || service == CognitiveServiceType.Both;
 
             // read files from source storage
             var fileNames = await _sourceStorageService.ListFilesAsync();
@@ -82,11 +89,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     // prediction service
                     _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
                     var queries = chunkedText.Select(r => r.Text).ToList();
-                    var sentimentResponse = defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries) : null;
-                    var nerResponse = defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
-                    var keyphraseResponse = defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
+                    var customTextresponse = runCustomText ? await _customTextPredictionService.GetPredictionBatchAsync(queries) : null;
+                    var sentimentResponse = runTextAnalytics && defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries) : null;
+                    var nerResponse = runTextAnalytics && defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
+                    var keyphraseResponse = runTextAnalytics && defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
                     // concatenation service
-                    var concatenatedResponse = _concatenationService.ConcatTextAnalytics(chunkedText.ToArray(), sentimentResponse, nerResponse, keyphraseResponse);
+                    var concatenatedResponse = _concatenationService.ConcatPredictionResult(chunkedText.ToArray(), customTextresponse, sentimentResponse, nerResponse, keyphraseResponse);
                     var responseAsJson = JsonConvert.SerializeObject(concatenatedResponse, Formatting.Indented);
                     // store file
                     var newFileName = Path.GetFileNameWithoutExtension(fileName) + ".json";
