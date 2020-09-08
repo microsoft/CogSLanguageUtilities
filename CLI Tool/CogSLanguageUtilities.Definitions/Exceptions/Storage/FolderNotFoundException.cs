@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage
+﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage
 {
     public class FolderNotFoundException : CliException
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction
+namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction
 {
     public class CustomTextPredictionMaxCharExceededException : CliException
     {

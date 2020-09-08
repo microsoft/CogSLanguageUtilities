@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using McMaster.Extensions.CommandLineUtils;
 using System;

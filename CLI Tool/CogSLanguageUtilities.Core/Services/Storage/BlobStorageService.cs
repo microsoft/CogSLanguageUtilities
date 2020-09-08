@@ -1,7 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;

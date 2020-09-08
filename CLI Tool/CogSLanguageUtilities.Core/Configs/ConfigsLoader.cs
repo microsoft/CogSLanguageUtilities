@@ -1,5 +1,5 @@
 ﻿
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;

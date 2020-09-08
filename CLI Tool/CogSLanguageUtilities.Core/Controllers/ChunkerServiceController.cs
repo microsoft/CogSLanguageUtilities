@@ -1,5 +1,5 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
