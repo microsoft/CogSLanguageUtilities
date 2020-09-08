@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
+namespace Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler
 {
     public class HttpHandler : IHttpHandler
     {

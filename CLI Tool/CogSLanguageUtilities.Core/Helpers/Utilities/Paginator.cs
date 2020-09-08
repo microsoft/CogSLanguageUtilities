@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.Collections;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Utilities
+namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities
 {
     class Paginator<T> : IPaginator<T>
     {
