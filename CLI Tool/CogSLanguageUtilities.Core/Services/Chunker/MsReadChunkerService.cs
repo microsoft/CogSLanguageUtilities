@@ -1,6 +1,5 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 {

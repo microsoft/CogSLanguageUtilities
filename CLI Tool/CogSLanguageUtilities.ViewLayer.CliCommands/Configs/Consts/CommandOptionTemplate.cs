@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

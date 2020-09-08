@@ -21,7 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CogSLanguageUtilities.Core\CogSLanguageUtilities.Core.csproj" />
     <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
-    <ProjectReference Include="..\CustomTextCliUtils\CustomTextCliUtils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

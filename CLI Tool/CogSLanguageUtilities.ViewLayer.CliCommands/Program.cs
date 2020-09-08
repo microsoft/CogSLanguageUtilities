@@ -4,10 +4,10 @@ using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.Reflection;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.TextAnalyticsCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.CustomTextCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
 {
@@ -15,8 +15,8 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
     [Subcommand(
         typeof(UtilitiesCommand),
-        typeof(TextAnalyticsCommand),
-        typeof(CustomTextCommand))]
+        typeof(PredictCommand),
+        typeof(EvaluateCommand))]
     public class Program
     {
         public static void Main(string[] args)

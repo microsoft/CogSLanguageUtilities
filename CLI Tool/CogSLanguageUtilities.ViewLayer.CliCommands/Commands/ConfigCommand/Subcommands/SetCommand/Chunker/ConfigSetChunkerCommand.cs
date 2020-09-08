@@ -12,7 +12,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
     public class ConfigSetChunkerCommand
     {
         [Required]
-        [Range(Core.Configs.Consts.Constants.MinAllowedCharLimit, Core.Configs.Consts.Constants.CustomTextPredictionMaxCharLimit)]
+        [Range(Definitions.Configs.Consts.Constants.MinAllowedCharLimit, Definitions.Configs.Consts.Constants.CustomTextPredictionMaxCharLimit)]
         [Option(CommandOptionTemplate.ChunkerCharLimit, Description = "character limit for chunk")]
         public int CharLimit { get; }
 

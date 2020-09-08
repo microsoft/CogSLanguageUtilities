@@ -1,6 +1,4 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System;

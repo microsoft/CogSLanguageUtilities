@@ -1,11 +1,12 @@
-﻿namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
 {
-    public class Constants
+    class Constants
     {
-        // application
+        // tool name
         public const string ToolName = "CLUtils";
-        // configs file
-        public static readonly string ConfigsFileLocalDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
-        public static readonly string ConfigsFileName = "configs.json";
     }
 }

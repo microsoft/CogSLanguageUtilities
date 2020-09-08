@@ -71,7 +71,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
         {
             if (!File.Exists(filePath))
             {
-                throw new Exceptions.Storage.FileNotFoundException(filePath);
+                throw new Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage.FileNotFoundException(filePath);
             }
         }
     }

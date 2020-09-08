@@ -1,5 +1,4 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +10,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {

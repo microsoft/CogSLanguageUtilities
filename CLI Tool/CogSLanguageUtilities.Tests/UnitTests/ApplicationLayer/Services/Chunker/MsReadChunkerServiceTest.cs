@@ -1,15 +1,13 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
-using Microsoft.CogSLanguageUtilities.Core.Configs.Consts;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Chunker
 {

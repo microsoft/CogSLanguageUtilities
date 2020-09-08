@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction
 {

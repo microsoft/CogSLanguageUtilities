@@ -1,7 +1,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Newtonsoft.Json;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             {
                 ReadConfigsFromFile(filePath).ConfigureAwait(false).GetAwaiter().GetResult();
             }
-            catch (Exceptions.Storage.FileNotFoundException)
+            catch (Definitions.Exceptions.Storage.FileNotFoundException)
             {
                 _configModel = new ConfigModel();
                 StoreConfigsModelAsync().ConfigureAwait(false).GetAwaiter().GetResult();
