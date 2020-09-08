@@ -3,7 +3,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -319,7 +319,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
                 },
                 {
                     @".\TestData\Config\asdasd.json",
-                    new CustomTextCliUtils.ApplicationLayer.Exceptions.Storage.FileNotFoundException(".\\TestData\\Config\\asdasd.json")
+                    new Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage.FileNotFoundException(".\\TestData\\Config\\asdasd.json")
                 }
             };
         }

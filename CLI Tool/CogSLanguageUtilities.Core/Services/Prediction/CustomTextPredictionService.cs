@@ -1,7 +1,6 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
@@ -13,6 +12,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionAp
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Prediction
 {

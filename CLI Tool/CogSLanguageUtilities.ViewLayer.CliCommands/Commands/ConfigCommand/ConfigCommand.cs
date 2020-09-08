@@ -1,5 +1,4 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand.Subcommands;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {

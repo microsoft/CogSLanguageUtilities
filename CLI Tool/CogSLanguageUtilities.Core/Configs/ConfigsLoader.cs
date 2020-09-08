@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Newtonsoft.Json;
 using System.IO;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.TextAnalytics;
@@ -9,6 +9,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {

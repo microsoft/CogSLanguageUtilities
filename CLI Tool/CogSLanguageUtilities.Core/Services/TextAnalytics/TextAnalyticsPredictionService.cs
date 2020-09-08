@@ -4,7 +4,7 @@ using Azure.AI.TextAnalytics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;

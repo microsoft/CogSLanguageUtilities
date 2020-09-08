@@ -6,7 +6,6 @@ using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
@@ -86,7 +85,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
         {
             if (!_blobContainerClient.GetBlobClient(fileName).Exists())
             {
-                throw new Exceptions.Storage.FileNotFoundException(fileName);
+                throw new Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage.FileNotFoundException(fileName);
             }
         }
     }

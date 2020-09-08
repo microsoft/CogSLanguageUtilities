@@ -1,6 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System;
 using Xunit;

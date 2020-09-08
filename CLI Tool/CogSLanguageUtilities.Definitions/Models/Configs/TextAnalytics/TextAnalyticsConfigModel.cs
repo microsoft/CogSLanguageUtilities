@@ -1,5 +1,4 @@
-﻿using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Newtonsoft.Json;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.TextAnalytics

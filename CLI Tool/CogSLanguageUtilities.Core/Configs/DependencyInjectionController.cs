@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
@@ -14,6 +14,7 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Concatenation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CustomTextCliUtils.Configs;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -10,6 +9,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {

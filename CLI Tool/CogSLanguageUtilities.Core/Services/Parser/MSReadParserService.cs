@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.Configs.Consts;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
