@@ -3,10 +3,16 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("local", Description = "shows configs for local storage")]
-    public class ConfigShowLocalCommand
+    [Command("show", Description = "shows app configs")]
+    [Subcommand(
+        typeof(ConfigShowParserCommand),
+        typeof(ConfigShowStorageCommand),
+        typeof(ConfigShowChunkerCommand),
+        typeof(ConfigShowPredictionCommand),
+        typeof(ConfigShowTextAnalyticsCommand))]
+    public class ConfigShowCommand
     {
         private void OnExecute(CommandLineApplication app)
         {
@@ -17,7 +23,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowStorageLocalConfigs();
+                controller.ShowAllConfigs();
             }
         }
     }

@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Set
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
     [Command("prediction", Description = "sets configs for prediction")]
     public class ConfigSetPredictionCommand

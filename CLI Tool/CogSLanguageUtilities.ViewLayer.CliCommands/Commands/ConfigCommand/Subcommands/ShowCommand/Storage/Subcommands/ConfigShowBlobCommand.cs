@@ -3,12 +3,10 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("parser", Description = "shows configs for all parsers")]
-    [Subcommand(
-        typeof(ConfigShowMsReadCommand))]
-    public class ConfigShowParserCommand
+    [Command("blob", Description = "shows configs for blob storage")]
+    public class ConfigShowBlobCommand
     {
         private void OnExecute(CommandLineApplication app)
         {
@@ -19,7 +17,7 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowParserConfigs();
+                controller.ShowStorageBlobConfigs();
             }
         }
     }

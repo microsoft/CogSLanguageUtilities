@@ -1,6 +1,7 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand.Subcommands;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
     [Command("config", Description = "shows or sets app configs")]
     [Subcommand(

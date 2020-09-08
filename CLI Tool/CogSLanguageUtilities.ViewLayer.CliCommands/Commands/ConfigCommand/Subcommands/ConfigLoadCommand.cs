@@ -4,7 +4,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
     [Command("load", Description = "loads app configs from file")]
     public class ConfigLoadCommand

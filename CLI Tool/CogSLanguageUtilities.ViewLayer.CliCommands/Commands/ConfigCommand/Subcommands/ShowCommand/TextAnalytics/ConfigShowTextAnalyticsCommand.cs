@@ -3,12 +3,12 @@ using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("chunker", Description = "shows configs for chunker")]
-    public class ConfigShowChunkerCommand
+    [Command("textanalytics", Description = "shows configs for text analytics")]
+    public class ConfigShowTextAnalyticsCommand
     {
-        private void OnExecute(CommandLineApplication app)
+        private int OnExecute(CommandLineApplication app)
         {
             // build dependencies
             var container = DependencyInjectionController.BuildConfigCommandDependencies();
@@ -17,8 +17,9 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer.ConfigCommand.Show
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigServiceController>();
-                controller.ShowChunkerConfigs();
+                controller.ShowTextAnalyticsConfigs();
             }
+            return 1;
         }
     }
 }
