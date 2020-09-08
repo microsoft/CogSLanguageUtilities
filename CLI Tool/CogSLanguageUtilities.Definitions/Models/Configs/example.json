@@ -19,7 +19,7 @@
   "chunker": {
     "char-limit": 5000
   },
-  "prediction": {
+  "customtext": {
     "azure-resource-endpoint": "",
     "azure-resource-key": "",
     "app-id": ""

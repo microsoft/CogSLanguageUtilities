@@ -11,11 +11,10 @@ using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Newtonsoft.Json;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Parser;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {

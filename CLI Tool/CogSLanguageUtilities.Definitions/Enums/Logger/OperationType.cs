@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger
+﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Enums
 {
     public enum OperationType
     {

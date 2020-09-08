@@ -1,7 +1,7 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using System;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {

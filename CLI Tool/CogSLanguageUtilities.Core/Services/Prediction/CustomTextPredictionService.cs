@@ -1,17 +1,17 @@
-﻿using CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
+﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction.CustomTextErrorResponse;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction.CustomTextResponse;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Request;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
 {
@@ -75,7 +75,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
         private async Task<string> SendPredictionRequestAsync(string queryText)
         {
             var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/predictText?log=true&%24expand=classifier%2Cextractor", _endpointUrl, _appId);
-            var requestBody = new CustomTextQueryRequest(queryText);
+            var requestBody = new CustomTextPredictionRequest(queryText);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey

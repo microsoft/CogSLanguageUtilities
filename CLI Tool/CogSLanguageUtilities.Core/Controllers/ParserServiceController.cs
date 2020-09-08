@@ -6,12 +6,11 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {

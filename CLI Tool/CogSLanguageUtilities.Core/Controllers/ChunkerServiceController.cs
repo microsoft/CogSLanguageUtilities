@@ -1,9 +1,6 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
@@ -12,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {

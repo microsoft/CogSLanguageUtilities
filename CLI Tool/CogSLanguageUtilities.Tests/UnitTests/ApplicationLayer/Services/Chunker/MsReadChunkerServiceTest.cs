@@ -1,6 +1,6 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;

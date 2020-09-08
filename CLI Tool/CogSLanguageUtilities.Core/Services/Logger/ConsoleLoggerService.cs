@@ -1,4 +1,4 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

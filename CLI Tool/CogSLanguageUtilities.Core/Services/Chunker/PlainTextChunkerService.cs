@@ -1,12 +1,12 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
 {

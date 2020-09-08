@@ -1,9 +1,9 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {
