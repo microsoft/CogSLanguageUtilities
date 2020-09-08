@@ -1,7 +1,7 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions.Parser;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Parser;
 using System;
 using System.Collections.Generic;
 using System.IO;

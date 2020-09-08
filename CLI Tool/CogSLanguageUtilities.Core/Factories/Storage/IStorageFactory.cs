@@ -1,5 +1,5 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 
 

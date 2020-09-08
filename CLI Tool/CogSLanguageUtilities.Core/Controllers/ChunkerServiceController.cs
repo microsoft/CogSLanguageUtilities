@@ -1,9 +1,9 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;

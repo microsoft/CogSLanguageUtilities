@@ -1,6 +1,6 @@
 ﻿
 
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {

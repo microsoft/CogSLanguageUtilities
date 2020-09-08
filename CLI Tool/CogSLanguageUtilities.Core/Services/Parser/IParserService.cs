@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Parser;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using System.IO;
 using System.Threading.Tasks;

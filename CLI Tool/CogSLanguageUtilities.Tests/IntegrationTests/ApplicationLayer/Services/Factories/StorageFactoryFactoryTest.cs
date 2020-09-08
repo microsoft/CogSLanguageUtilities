@@ -1,5 +1,5 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
 using System;
 using Xunit;
 
