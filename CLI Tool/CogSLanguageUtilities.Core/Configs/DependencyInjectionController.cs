@@ -8,7 +8,7 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using System;
 using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
 using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Core.Services.Concatenation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
