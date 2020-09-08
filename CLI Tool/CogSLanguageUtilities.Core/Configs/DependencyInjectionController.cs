@@ -8,7 +8,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
 using System;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;

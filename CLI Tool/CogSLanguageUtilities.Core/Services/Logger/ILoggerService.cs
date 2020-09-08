@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Logger;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using System;
 using System.Collections.Generic;
 

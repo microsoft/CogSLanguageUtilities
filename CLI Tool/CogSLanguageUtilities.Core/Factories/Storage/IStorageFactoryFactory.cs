@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Misc;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
 {

@@ -1,0 +1,31 @@
+﻿using Newtonsoft.Json;
+
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Configs
+{
+    public class ConfigModel
+    {
+        [JsonProperty("storage")]
+        public StorageConfigModel Storage { get; set; }
+
+        [JsonProperty("parser")]
+        public ParserConfigModel Parser { get; set; }
+
+        [JsonProperty("chunker")]
+        public ChunkerConfigModel Chunker { get; set; }
+
+        [JsonProperty("prediction")]
+        public PredictionConfigModel Prediction { get; set; }
+
+        [JsonProperty("textanalytics")]
+        public TextAnalyticsConfigModel TextAnalytics { get; set; }
+
+        public ConfigModel()
+        {
+            Storage = new StorageConfigModel();
+            Parser = new ParserConfigModel();
+            Chunker = new ChunkerConfigModel();
+            Prediction = new PredictionConfigModel();
+            TextAnalytics = new TextAnalyticsConfigModel();
+        }
+    }
+}

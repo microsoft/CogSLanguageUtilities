@@ -1,0 +1,24 @@
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
+using Newtonsoft.Json;
+
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction
+{
+
+    public class CustomTextQueryResponse
+    {
+        [JsonProperty("operationId")]
+        public string OperationId { get; set; }
+
+        [JsonProperty("status")]
+        public CustomTextPredictionResponseStatus Status { get; set; }
+
+        [JsonProperty("createdDateTime")]
+        public string CreatedDateTime { get; set; }
+
+        [JsonProperty("lastActionDateTime")]
+        public string LastActionDateTime { get; set; }
+
+        [JsonProperty(PropertyName = "errorDetails", NullValueHandling = NullValueHandling.Ignore)]
+        public string ErrorDetails { get; set; }
+    }
+}

@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Models.Prediction.CustomTextResponse;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Models.Prediction.CustomTextResponse;
 using System.Threading.Tasks;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
