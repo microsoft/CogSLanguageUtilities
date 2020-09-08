@@ -1,11 +1,11 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
+﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
-using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
-using Xunit;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System.Threading.Tasks;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
+using Xunit;
 
 namespace CustomTextCliUtils.Tests.IntegrationTests.Services.Prediction
 {
@@ -68,7 +68,8 @@ namespace CustomTextCliUtils.Tests.IntegrationTests.Services.Prediction
             }
             else
             {
-                await Assert.ThrowsAsync(expectedException.GetType(), async () => {
+                await Assert.ThrowsAsync(expectedException.GetType(), async () =>
+                {
                     var predictionService = new CustomTextPredictionService(httpHandler, customTextKey, endpointUrl, appId);
                     await predictionService.GetPredictionAsync(inputText);
                 });

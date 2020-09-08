@@ -1,18 +1,18 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
@@ -75,7 +75,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                 _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
                 var tasks = chunkedText.Select(async (value, i) =>
                 {
-                    var customTextPredictionResponse = await _predictionService.GetPredictionAsync (value.Text);
+                    var customTextPredictionResponse = await _predictionService.GetPredictionAsync(value.Text);
                     var chunkInfo = new CustomTextPredictionChunkInfo
                     {
                         // chunk data

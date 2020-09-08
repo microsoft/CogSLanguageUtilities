@@ -1,11 +1,11 @@
-﻿using Xunit;
-using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
+﻿using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System.IO;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System.Linq;
+using Xunit;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Parser
 {

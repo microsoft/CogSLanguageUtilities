@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction
+﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction
 {
     public class ResourceNotFoundExcption : CliException
     {

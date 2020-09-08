@@ -1,9 +1,9 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
-using System;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using System;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Factories.Storage
 {

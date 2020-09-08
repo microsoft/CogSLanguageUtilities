@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
+using Newtonsoft.Json;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker
 {

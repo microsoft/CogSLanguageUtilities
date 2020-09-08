@@ -1,6 +1,10 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+﻿using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using Moq;
 using Newtonsoft.Json;
@@ -11,10 +15,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
 {
@@ -115,7 +115,8 @@ namespace Microsoft.CogSLanguageUtilities.Tests.UnitTests.Services.Prediction
             }
             else
             {
-                await Assert.ThrowsAsync(expectedException.GetType(), async () => {
+                await Assert.ThrowsAsync(expectedException.GetType(), async () =>
+                {
                     var predictionService = new CustomTextPredictionService(mockHttpHandler.Object, customTextKey, endpointUrl, appId);
                     await predictionService.GetPredictionAsync(inputText);
                 });

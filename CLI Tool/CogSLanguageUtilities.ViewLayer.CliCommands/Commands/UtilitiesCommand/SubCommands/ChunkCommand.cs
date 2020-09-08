@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using Microsoft.CustomTextCliUtils.Configs;
-using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.CogSLanguageUtilities.Core.Controllers;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
+using Microsoft.CustomTextCliUtils.Configs;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand
 {
