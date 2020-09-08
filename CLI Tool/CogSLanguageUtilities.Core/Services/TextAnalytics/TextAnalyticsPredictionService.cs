@@ -9,7 +9,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Utilities;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
+namespace Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics
 {
     public class TextAnalyticsPredictionService : ITextAnalyticsPredictionService
     {

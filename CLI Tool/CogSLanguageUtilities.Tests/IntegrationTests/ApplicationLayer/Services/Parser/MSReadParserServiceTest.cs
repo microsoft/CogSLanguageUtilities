@@ -1,5 +1,5 @@
 ﻿using Xunit;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
+using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
 using Microsoft.CustomTextCliUtils.Tests.Configs;

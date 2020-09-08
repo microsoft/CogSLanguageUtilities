@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 {
     public class LocalStorageService : IStorageService
     {

@@ -4,7 +4,7 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.CustomTextErrorResponse;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
+using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
 using Microsoft.CustomTextCliUtils.Tests.Configs;
 using Moq;
 using Newtonsoft.Json;
