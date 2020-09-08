@@ -9,7 +9,7 @@ using System.Text;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker
+namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 {
     public class PlainTextChunkerService : IChunkerService
     {

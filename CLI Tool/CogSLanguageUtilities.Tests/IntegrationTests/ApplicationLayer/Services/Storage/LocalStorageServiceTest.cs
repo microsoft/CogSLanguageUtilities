@@ -1,5 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using System;
 using System.IO;
 using System.Threading.Tasks;

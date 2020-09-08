@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
+namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 {
     public class BlobStorageService : IStorageService
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
+using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.Reflection;

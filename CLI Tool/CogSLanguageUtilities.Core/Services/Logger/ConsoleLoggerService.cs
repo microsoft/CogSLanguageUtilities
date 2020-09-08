@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger
+namespace Microsoft.CogSLanguageUtilities.Core.Services.Logger
 {
     public class ConsoleLoggerService : ILoggerService
     {

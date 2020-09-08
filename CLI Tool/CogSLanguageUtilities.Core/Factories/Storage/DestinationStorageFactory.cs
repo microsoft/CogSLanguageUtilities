@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using System;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;

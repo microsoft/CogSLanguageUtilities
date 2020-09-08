@@ -1,5 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
+using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
 using System.IO;
 using System.Threading.Tasks;
 

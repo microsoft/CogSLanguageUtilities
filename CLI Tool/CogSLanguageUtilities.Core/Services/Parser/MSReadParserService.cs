@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
+namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 {
     public class MSReadParserService : IParserService
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction;
+using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler;
 using Xunit;
 using Microsoft.CustomTextCliUtils.Tests.Configs;

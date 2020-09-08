@@ -5,7 +5,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation;
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation
+namespace Microsoft.CogSLanguageUtilities.Core.Services.Concatenation
 {
     class ConcatenationService : IConcatenationService
     {

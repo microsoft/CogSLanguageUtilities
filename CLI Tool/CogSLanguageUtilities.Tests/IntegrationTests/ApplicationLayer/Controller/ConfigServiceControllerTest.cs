@@ -1,8 +1,8 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
+using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 using System;

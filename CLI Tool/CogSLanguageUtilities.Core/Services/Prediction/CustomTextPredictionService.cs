@@ -14,7 +14,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionAp
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Prediction
+namespace Microsoft.CogSLanguageUtilities.Core.Services.Prediction
 {
     public class CustomTextPredictionService : ICustomTextService
     {
