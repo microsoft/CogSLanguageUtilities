@@ -5,7 +5,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
+namespace Microsoft.CogSLanguageUtilities.Core.Factories.Storage
 {
     public class SourceStorageFactory : IStorageFactory
     {

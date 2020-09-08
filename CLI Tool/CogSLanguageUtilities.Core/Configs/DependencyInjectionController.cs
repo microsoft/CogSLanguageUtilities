@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;

@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Newtonsoft.Json;
 

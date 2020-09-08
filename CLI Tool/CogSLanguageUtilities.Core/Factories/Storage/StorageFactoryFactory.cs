@@ -2,7 +2,7 @@
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage
+namespace Microsoft.CogSLanguageUtilities.Core.Factories.Storage
 {
     public class StorageFactoryFactory : IStorageFactoryFactory
     {
