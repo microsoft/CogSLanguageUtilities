@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Utilities;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics
 {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage
 {

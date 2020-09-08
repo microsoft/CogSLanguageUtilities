@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser
 {

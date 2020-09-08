@@ -1,9 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Models;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Chunker;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +7,14 @@ using System.Collections.Concurrent;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
-    public class ChunkerServiceController
+    public class ChunkerServiceController : IChunkerController
     {
         private readonly IConfigsLoader _configurationService;
         private readonly IStorageFactoryFactory _storageFactoryFactory;

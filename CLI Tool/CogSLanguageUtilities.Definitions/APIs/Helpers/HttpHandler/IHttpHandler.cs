@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.HttpHandler
+namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler
 {
     public interface IHttpHandler
     {

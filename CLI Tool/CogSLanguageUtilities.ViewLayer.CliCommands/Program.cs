@@ -7,6 +7,7 @@ using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCo
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.TextAnalyticsCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.CustomTextCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
 {

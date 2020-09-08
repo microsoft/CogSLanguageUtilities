@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.Collections;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Helpers.Utilities
 {
-    class Paginator<T>
+    class Paginator<T> : IPaginator<T>
     {
         private IEnumerable<T> _items;
         private int _currentPage;
