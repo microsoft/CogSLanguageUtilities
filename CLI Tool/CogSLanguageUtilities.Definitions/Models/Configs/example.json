@@ -27,7 +27,7 @@
   "textanalytics": {
     "azure-resource-endpoint": "",
     "azure-resource-key": "",
-    "default-language":  "",
+    "default-language": "",
     "default_operations": {
       "sentiment": true,
       "ner": false,

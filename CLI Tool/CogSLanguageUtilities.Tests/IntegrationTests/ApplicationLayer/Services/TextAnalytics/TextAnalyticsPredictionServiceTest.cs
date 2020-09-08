@@ -1,12 +1,12 @@
 ﻿using Azure.AI.TextAnalytics;
+using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
-using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace CustomTextCliUtils.Tests.IntegrationTests.Services.TextAnalytics
 {

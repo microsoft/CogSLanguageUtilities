@@ -10,7 +10,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics
 
         public static string ConstructMessage(string message)
         {
-            return $"Connection to Azure Cognitive Services failed with message: \n{message} \nCheck Text Analytics configs " + 
+            return $"Connection to Azure Cognitive Services failed with message: \n{message} \nCheck Text Analytics configs " +
                 $"{ConfigKeys.TextAnalyticsAzureResourceKey} and {ConfigKeys.TextAnalyticsAzureResourceEndpoint}";
         }
     }

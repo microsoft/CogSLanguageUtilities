@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
+﻿namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts
 {
     class Constants
     {

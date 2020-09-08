@@ -1,10 +1,10 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 {

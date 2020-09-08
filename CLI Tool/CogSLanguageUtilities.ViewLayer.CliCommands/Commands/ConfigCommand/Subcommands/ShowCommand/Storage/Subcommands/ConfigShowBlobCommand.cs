@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using Microsoft.CustomTextCliUtils.Configs;
-using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.CogSLanguageUtilities.Core.Controllers;
+using Microsoft.CustomTextCliUtils.Configs;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {

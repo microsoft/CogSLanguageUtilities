@@ -1,10 +1,10 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
-using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
+﻿using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Storage
 {

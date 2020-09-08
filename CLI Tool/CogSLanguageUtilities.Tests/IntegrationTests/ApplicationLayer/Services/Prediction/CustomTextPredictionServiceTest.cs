@@ -1,5 +1,4 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
+﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Xunit;

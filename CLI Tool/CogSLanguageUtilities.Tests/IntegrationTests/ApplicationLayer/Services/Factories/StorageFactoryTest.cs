@@ -1,12 +1,12 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CogSLanguageUtilities.Tests.Configs;
 using System;
 using Xunit;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Factories
 {

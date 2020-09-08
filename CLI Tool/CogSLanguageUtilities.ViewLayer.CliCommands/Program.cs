@@ -1,14 +1,14 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
-using McMaster.Extensions.CommandLineUtils;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand;
 using System;
 using System.Reflection;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
 {
@@ -23,7 +23,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
     {
         public static void Main(string[] args)
         {
-            System.AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
             CommandLineApplication.Execute<Program>(args);
         }
 

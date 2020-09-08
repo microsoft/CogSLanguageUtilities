@@ -10,7 +10,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser
 
         private static string ConstructMessage(string message)
         {
-            return $"Connection to Azure Cognitive Services failed with message: \"{message}\" \nCheck MsRead configs" + 
+            return $"Connection to Azure Cognitive Services failed with message: \"{message}\" \nCheck MsRead configs" +
                 $"{ConfigKeys.MSReadAzureResourceKey} and {ConfigKeys.MSReadAzureResourceEndpoint}";
         }
     }

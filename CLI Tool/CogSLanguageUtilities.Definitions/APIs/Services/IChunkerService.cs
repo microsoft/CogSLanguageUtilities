@@ -1,7 +1,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System.Collections.Generic;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {

@@ -1,18 +1,18 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Request;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Request;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Prediction
 {

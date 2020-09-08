@@ -1,20 +1,20 @@
 ﻿using Autofac;
-using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
+using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
+using Microsoft.CogSLanguageUtilities.Core.Services.Concatenation;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
-using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
-using System;
-using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
 using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
-using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
-using Microsoft.CogSLanguageUtilities.Core.Services.Concatenation;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
+using System;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {

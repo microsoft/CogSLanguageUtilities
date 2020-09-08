@@ -1,13 +1,13 @@
 ﻿using Azure;
-using System;
 using Azure.AI.TextAnalytics;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics
 {
@@ -42,7 +42,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics
             // paginate throw chunks to abide by "DocumentCountLimit" of the api call
             var listPaginator = new Paginator<string>(queries, Constants.TextAnaylticsApiCallDocumentLimit);
             var result = new List<AnalyzeSentimentResult>();
-            while (listPaginator.HasNext()) {
+            while (listPaginator.HasNext())
+            {
                 var subList = (listPaginator.GetNextPage()).ToList();
                 var response = await _textAnalyticsClient.AnalyzeSentimentBatchAsync(subList, language: _predictionLanguage);
                 HandleError(response.Value);

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
-using System;
 using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Parser

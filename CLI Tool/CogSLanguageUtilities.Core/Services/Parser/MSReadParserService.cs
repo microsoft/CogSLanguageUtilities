@@ -1,13 +1,13 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Parser;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Parser;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
 {
