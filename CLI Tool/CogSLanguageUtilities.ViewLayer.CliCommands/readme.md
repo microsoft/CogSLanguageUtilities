@@ -9,40 +9,36 @@ Like extracting text from documents, chunking text files, and integrating with p
 # Commands
 <!-- commands -->
 - help
-    - ctcu --help
+    - clutils --help
 
 - config
+    - load from file
+        - clutils config load --path <ABSOLUTE_PATH>
     - msread
-        - ctcu config show msread
-        - ctcu config set msread --cognitive-services-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
+        - clutils config show msread
+        - clutils config set msread --azure-resource-key <AZURE_RESOURCE_KEY> --cognitive-services-endpoint <ENDPOINT_URL>
     - tika (Not Supported Yet)
-        - ctcu config show tika
-        - ctcu config set tika --enable-ocr <BOOLEAN> --detect-titlted-text <BOOLEAN> --sort-by-position <BOOLEAN>
+        - clutils config show tika
+        - clutils config set tika --enable-ocr <BOOLEAN> --detect-titlted-text <BOOLEAN> --sort-by-position <BOOLEAN>
     - storage
-        - ctcu config show storage
-        - ctcu config set storage local --source-dir <ABSOLUTE_PATH> --destination-dir <ABSOLUTE_PATH> 
-        - ctcu config set storage blob --connection-string <CONNECTION_STRING> --source-container <CONTAINER_NAME> --destination-container <CONTAINER_NAME> 
+        - clutils config show storage
+        - clutils config set storage local --source-dir <ABSOLUTE_PATH> --destination-dir <ABSOLUTE_PATH> 
+        - clutils config set storage blob --connection-string <CONNECTION_STRING> --source-container <CONTAINER_NAME> --destination-container <CONTAINER_NAME> 
     - chunker
-        - ctcu config show chunker
-        - ctcu config set chunker --char-limit <NUMBER>
+        - clutils config show chunker
+        - clutils config set chunker --char-limit <NUMBER>
     - prediction
-        - ctcu config show prediction
-        - ctcu config set prediction --customtext-endpoint <ENDPOINT_URL> --customtext-key <APIM_SUBSCRIPTION_ID> --app-id <APP_ID>
+        - clutils config show prediction
+        - clutils config set prediction --azure-resource-endpoint <ENDPOINT_URL> --azure-resource-key <AZURE_RESOURCE_KEY> --app-id <APP_ID>
+    - textanalytics
+        - clutils config show textanalytics
+        - clutils config set textanalytics --azure-resource-key <AZURE_RESOURCE_KEY> --azure-resource-endpoint <ENDPOINT_URL> --default-language <LANGUAGE> --sentiment <BOOLEAN> --ner <BOOLEAN> --keyphrase <BOOLEAN>
 
-- config
-    - load file
-        - ctcu config load --path <FILE_PATH>
-    - show configs
-        - ctcu config show
-- utilities
-    - parse
-        - ctcu utilities parse --parser msread --source blob --destination blob --chunker page
-    - chunk
-        - ctcu utilities chunk --parser msread --source blob --destination blob --chunker page
-- customtext
-    - predict
-        - ctcu customtext predict --parser msread --source blob --destination blob --chunker page
-    - evaluate [batch testing]
-        - ctcu customtext evaluate --source blob --destination blob
-- textanalytics
-    - ctcu textanalytics --parser msread --source blob --destination blob -- chunker page
+- parsing
+    - clutils parse --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunk-type <PAGE/CHAR> ]
+
+- chunker
+    - clutils chunk --source <BLOB/LOCAL> --destination <BLOB/LOCAL>
+
+- prediction
+    - clutils predict --cognitive-service <customtext/textanalytics/both> --parser <MSREAD/TIKA> --source <BLOB/LOCAL> --destination <BLOB/LOCAL> [ --chunk-type <PAGE/CHAR> ]
