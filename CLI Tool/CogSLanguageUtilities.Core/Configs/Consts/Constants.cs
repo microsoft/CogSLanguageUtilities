@@ -1,12 +1,7 @@
-﻿namespace Microsoft.CustomTextCliUtils.Configs.Consts
+﻿namespace Microsoft.CogSLanguageUtilities.Core.Configs.Consts
 {
     public class Constants
     {
-        // application
-        public const string ToolName = "ctcu";
-        // configs file
-        public static readonly string ConfigsFileLocalDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
-        public static readonly string ConfigsFileName = "configs.json";
         // msread
         public static readonly string[] MsReadValidFileTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
         // chunker

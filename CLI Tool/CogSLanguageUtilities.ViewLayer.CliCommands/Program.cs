@@ -1,12 +1,12 @@
 ﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Exceptions;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
-using Microsoft.CustomTextCliUtils.Configs.Consts;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.Reflection;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.TextAnalyticsCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.CustomTextCommand;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
 {
