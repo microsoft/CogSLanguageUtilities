@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {

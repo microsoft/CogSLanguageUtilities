@@ -12,7 +12,9 @@ using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.TextAnalytics;
 using System.Collections.Concurrent;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Concatenation;
 using System.IO;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Chunker;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 
 namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
 {
