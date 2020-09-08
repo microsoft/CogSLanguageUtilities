@@ -1,4 +1,4 @@
-﻿using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+﻿using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
@@ -15,7 +15,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
     public class ConfigServiceControllerTest
     {
         StringWriter _stringWriter;
-        ConfigServiceController _controller;
+        ConfigsController _controller;
         IStorageService _storageService;
 
         public ConfigServiceControllerTest()
@@ -27,7 +27,7 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
             _storageService = new LocalStorageService(Constants.ConfigsFileLocalDirectory);
 
             // act
-            _controller = new ConfigServiceController(loggerService, _storageService);
+            _controller = new ConfigsController(loggerService, _storageService);
         }
 
         [Fact]

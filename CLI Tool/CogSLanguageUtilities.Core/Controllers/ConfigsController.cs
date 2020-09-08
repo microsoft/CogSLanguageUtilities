@@ -6,15 +6,15 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
-    public class ConfigServiceController : IConfigsController
+    public class ConfigsController : IConfigsController
     {
         private readonly ILoggerService _loggerService;
         private readonly IStorageService _storageService;
         private ConfigModel _configModel;
 
-        public ConfigServiceController(ILoggerService loggerService, IStorageService storageService)
+        public ConfigsController(ILoggerService loggerService, IStorageService storageService)
         {
             _loggerService = loggerService;
             _storageService = storageService;

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.CustomTextCliUtils.Configs;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -26,7 +26,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Utiliti
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<ChunkerServiceController>();
+                var controller = scope.Resolve<ChunkerController>();
                 await controller.ChunkTextAsync(Source, Destination);
             }
         }

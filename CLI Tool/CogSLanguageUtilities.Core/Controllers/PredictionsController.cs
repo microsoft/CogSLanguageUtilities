@@ -14,9 +14,9 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
-    public class PredictionServiceController
+    public class PredictionsController
     {
         private readonly IConfigsLoader _configurationService;
         private readonly IStorageFactoryFactory _storageFactoryFactory;
@@ -26,7 +26,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         private readonly IChunkerService _chunkerService;
         private readonly ICustomTextService _predictionService;
 
-        public PredictionServiceController(
+        public PredictionsController(
             IConfigsLoader configurationService,
             IStorageFactoryFactory storageFactoryFactory,
             IParserService parserService,

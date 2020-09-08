@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<ConfigServiceController>();
+                var controller = scope.Resolve<ConfigsController>();
                 await controller.LoadConfigsFromFile(configsFilePath);
             }
         }
