@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Modeling.Enums.Misc;
 
-namespace Microsoft.CustomTextCliUtils.CommandsLayer
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand
 {
-    [Command("textanalytics", Description = "uses text analytics to do NER, sentiment analysis, or keyphrase extraction")]
-    public class TextAnalyticsCommand
+    [Command("parse", Description = "extract text from all documents in source storage and stores result in destination storage")]
+    public class ParseCommand
     {
         [Required]
         [Option("--parser <msread/tika>", Description = "[required] indicates which parsing tool to use")]
@@ -23,16 +23,16 @@ namespace Microsoft.CustomTextCliUtils.CommandsLayer
         [Option("--chunk-type <page/char>", Description = "[optional] indicates chunking type. if not set, no chunking will be used")]
         public ChunkMethod ChunkType { get; } = ChunkMethod.NoChunking;
 
-        private async Task OnExecute(CommandLineApplication app)
+        private async Task OnExecuteAsync(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildTextAnalyticsCommandDependencies(Parser);
+            var container = DependencyInjectionController.BuildParseCommandDependencies(Parser);
 
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<TextAnalyticsController>();
-                await controller.Predict(Source, Destination, ChunkType);
+                var controller = scope.Resolve<ParserServiceController>();
+                await controller.ExtractText(Source, Destination, ChunkType);
             }
         }
     }

@@ -6,14 +6,16 @@ using Microsoft.CustomTextCliUtils.Configs.Consts;
 using McMaster.Extensions.CommandLineUtils;
 using System;
 using System.Reflection;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.TextAnalyticsCommand;
 
-namespace Microsoft.CustomTextCliUtils
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
 {
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
     [Subcommand(
-        typeof(ParseCommand),
-        typeof(PredictCommand),
+        typeof(UtilitiesCommand),
+        typeof(TextAnalyticsCommand),
         typeof(ConfigCommand),
         typeof(ChunkCommand),
         typeof(TextAnalyticsCommand))]

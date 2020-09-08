@@ -78,7 +78,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
                 _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
                 var tasks = chunkedText.Select(async (value, i) =>
                 {
-                    var customTextPredictionResponse = await _predictionService.GetPredictionAsync(value.Text);
+                    var customTextPredictionResponse = await _predictionService.GetPredictionAsync (value.Text);
                     var chunkInfo = new CustomTextPredictionChunkInfo
                     {
                         // chunk data
