@@ -12,9 +12,9 @@ using Microsoft.CogSLanguageUtilities.Definitions.Helpers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
-    public class ChunkerServiceController : IChunkerController
+    public class ChunkerController : IChunkerController
     {
         private readonly IConfigsLoader _configurationService;
         private readonly IStorageFactoryFactory _storageFactoryFactory;
@@ -23,7 +23,7 @@ namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
         private readonly ILoggerService _loggerService;
         private readonly IChunkerService _chunkerService;
 
-        public ChunkerServiceController(
+        public ChunkerController(
             IConfigsLoader configurationService,
             IStorageFactoryFactory storageFactoryFactory,
             ILoggerService loggerService,

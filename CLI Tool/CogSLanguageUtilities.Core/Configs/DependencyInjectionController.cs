@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Factories.Storage;
 using Microsoft.CustomTextCliUtils.Configs.Consts;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Logger;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Parser;
 using Microsoft.CustomTextCliUtils.ApplicationLayer.Services.Storage;
@@ -30,7 +30,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
         {
             var builder = BuildCommonDependencies();
             builder.RegisterInstance(new LocalStorageService(Constants.ConfigsFileLocalDirectory)).As<IStorageService>();
-            builder.RegisterType<ConfigServiceController>();
+            builder.RegisterType<ConfigsController>();
             return builder.Build();
         }
 
@@ -40,7 +40,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
             builder.RegisterType<PlainTextChunkerService>().As<IChunkerService>();
-            builder.RegisterType<ChunkerServiceController>();
+            builder.RegisterType<ChunkerController>();
             return builder.Build();
         }
 
@@ -59,9 +59,9 @@ namespace Microsoft.CustomTextCliUtils.Configs
                 var loggerService = c.Resolve<ILoggerService>();
                 var parserservice = c.Resolve<IParserService>();
                 var chunkerService = CreateChunkerService(parserType);
-                return new ParserServiceController(configService, new StorageFactoryFactory(), parserservice,
+                return new ParserController(configService, new StorageFactoryFactory(), parserservice,
                     loggerService, chunkerService);
-            }).As<ParserServiceController>();
+            }).As<ParserController>();
             return builder.Build();
         }
 
@@ -88,9 +88,9 @@ namespace Microsoft.CustomTextCliUtils.Configs
                 var parserservice = c.Resolve<IParserService>();
                 var chunkerService = CreateChunkerService(parserType);
                 var predictionService = c.Resolve<ICustomTextService>();
-                return new PredictionServiceController(configService, new StorageFactoryFactory(), parserservice,
+                return new PredictionsController(configService, new StorageFactoryFactory(), parserservice,
                     loggerService, chunkerService, predictionService);
-            }).As<PredictionServiceController>();
+            }).As<PredictionsController>();
             return builder.Build();
         }
 
@@ -115,7 +115,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             }).As<ITextAnalyticsPredictionService>();
             builder.RegisterType<TextAnalyticsController>();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
-            builder.RegisterType<PredictionServiceController>();
+            builder.RegisterType<PredictionsController>();
             return builder.Build();
         }
 

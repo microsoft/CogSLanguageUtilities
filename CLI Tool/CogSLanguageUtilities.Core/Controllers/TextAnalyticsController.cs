@@ -11,7 +11,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 
-namespace Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers
+namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
     public class TextAnalyticsController
     {

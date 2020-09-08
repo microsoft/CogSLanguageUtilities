@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.CustomTextCliUtils.Configs;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +24,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<ConfigServiceController>();
+                var controller = scope.Resolve<ConfigsController>();
                 await controller.SetChunkerConfigsAsync(CharLimit);
             }
         }

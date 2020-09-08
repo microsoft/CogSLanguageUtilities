@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.CustomTextCliUtils.Configs;
-using Microsoft.CustomTextCliUtils.ApplicationLayer.Controllers;
+using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 using System.Threading.Tasks;
