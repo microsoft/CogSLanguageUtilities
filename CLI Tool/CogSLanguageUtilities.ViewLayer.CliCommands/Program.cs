@@ -8,12 +8,14 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
 {
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
     [Subcommand(
+        typeof(ConfigCommand),
         typeof(UtilitiesCommand),
         typeof(PredictCommand),
         typeof(EvaluateCommand))]
