@@ -1,4 +1,4 @@
-﻿namespace Microsoft.LUIS.Endpoint.Operations.Models
+﻿namespace Microsoft.LuisModelEvaluation.Models.Input
 {
     public class Model
     {

@@ -1,8 +1,6 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-
-namespace Microsoft.LUIS.Runtime.DataStructures
+﻿namespace Microsoft.LuisModelEvaluation.Models.Evaluation
 {
-    public class ConfusionCount
+    public class ConfusionMatrix
     {
         public string ModelName { get; set; }
 
@@ -30,7 +28,7 @@ namespace Microsoft.LUIS.Runtime.DataStructures
         {
             double precision = CalculatePrecision();
             double recall = CalculateRecall();
-            return (2 * precision * recall) / (precision + recall);
+            return 2 * precision * recall / (precision + recall);
         }
     }
 }

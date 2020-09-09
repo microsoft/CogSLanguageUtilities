@@ -1,8 +1,6 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿using Newtonsoft.Json;
 
-using Newtonsoft.Json;
-
-namespace Microsoft.LUIS.Runtime.DataStructures
+namespace Microsoft.LuisModelEvaluation.Models.Result
 {
     public class EntityNameAndLocation
     {

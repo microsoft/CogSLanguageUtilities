@@ -1,6 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-
-namespace Microsoft.LUIS.Runtime.DataStructures
+﻿namespace Microsoft.LuisModelEvaluation.Models.Evaluation
 {
     /*
      * MUC stands for "Message Understanding Conference"
@@ -8,7 +6,8 @@ namespace Microsoft.LUIS.Runtime.DataStructures
      * Entity evaluation specifics can be found in the following paper
      * https://nlp.cs.nyu.edu/sekine/papers/li07.pdf
      */
-    public class MucEntityEvaluation
+    public class MucEntityConfusionMatrix
+
     {
         /// <summary>
         /// Gets or sets the model name
