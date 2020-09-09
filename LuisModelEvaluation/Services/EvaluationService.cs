@@ -1,12 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-
-using Microsoft.LUIS.Endpoint.Operations.Models;
-using Microsoft.LUIS.Runtime.DataStructures;
-using Microsoft.Research.DICE.Models;
+﻿using Microsoft.LuisModelEvaluation.Models.Evaluation;
+using Microsoft.LuisModelEvaluation.Models.Input;
+using Microsoft.LuisModelEvaluation.Models.Result;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.LUIS.Endpoint.Operations
+namespace Microsoft.LuisModelEvaluation.Services
 {
     /// <summary>
     /// This class is responsible for calculating and aggregating all the confusion values for a batch test.
@@ -22,16 +20,16 @@ namespace Microsoft.LUIS.Endpoint.Operations
     /// CorrectTypeCount: is the count of predicted entities that match in type and overlap in place with labeled ones.
     /// CorrectTextCount: is the count of predicted entities that exactly match in place with labeled ones.
     /// </summary>
-    public class LuisBatchTestOperationsHelper
+    public class EvaluationService
     {
-        public LuisBatchTestOperationsHelper(IEnumerable<Model> entities, IEnumerable<Model> classes)
+        public EvaluationService(IEnumerable<Model> entities, IEnumerable<Model> classes)
         {
             InitIntentAndEntityStats(entities, classes);
         }
 
-        public Dictionary<string, ConfusionCount> IntentsStats { get; } = new Dictionary<string, ConfusionCount>();
+        public Dictionary<string, ConfusionMatrix> IntentsStats { get; } = new Dictionary<string, ConfusionMatrix>();
 
-        public Dictionary<string, MucEntityEvaluation> EntityStats { get; } = new Dictionary<string, MucEntityEvaluation>();
+        public Dictionary<string, MucEntityConfusionMatrix> EntityStats { get; } = new Dictionary<string, MucEntityConfusionMatrix>();
 
         public List<UtteranceStats> UtterancesStats { get; } = new List<UtteranceStats>();
 
@@ -42,10 +40,10 @@ namespace Microsoft.LUIS.Endpoint.Operations
             string actualIntentName,
             string predictedIntentName)
         {
-            if (!IntentsStats.TryGetValue(actualIntentName, out ConfusionCount labeledConfusionCount))
+            if (!IntentsStats.TryGetValue(actualIntentName, out ConfusionMatrix labeledConfusionCount))
             {
                 // Initialize if not in dictionary to avoid null errors
-                labeledConfusionCount = new ConfusionCount();
+                labeledConfusionCount = new ConfusionMatrix();
             }
 
             if (actualIntentName == predictedIntentName)
@@ -55,7 +53,7 @@ namespace Microsoft.LUIS.Endpoint.Operations
             else
             {
                 labeledConfusionCount.FalseNegatives++;
-                if (IntentsStats.TryGetValue(predictedIntentName, out ConfusionCount predictedConfusionCount))
+                if (IntentsStats.TryGetValue(predictedIntentName, out ConfusionMatrix predictedConfusionCount))
                 {
                     predictedConfusionCount.FalsePositives++;
                 }
@@ -158,10 +156,10 @@ namespace Microsoft.LUIS.Endpoint.Operations
             var labeledEntityFullName = GetEntityFullName(labeledEntityPrefix, labeledEntity.Name);
 
             // Add up MUC actual/labeled count
-            if (!EntityStats.TryGetValue(labeledEntityFullName, out MucEntityEvaluation labeledEntityEvalObj))
+            if (!EntityStats.TryGetValue(labeledEntityFullName, out MucEntityConfusionMatrix labeledEntityEvalObj))
             {
                 // Create if not exists in dictionary
-                labeledEntityEvalObj = EntityStats[labeledEntityFullName] = new MucEntityEvaluation
+                labeledEntityEvalObj = EntityStats[labeledEntityFullName] = new MucEntityConfusionMatrix
                 {
                     ModelName = labeledEntityFullName,
                     ModelType = GetModelTypeString(labeledEntityFullName)
@@ -221,10 +219,10 @@ namespace Microsoft.LUIS.Endpoint.Operations
             var predictedEntityFullName = GetEntityFullName(predictedEntityPrefix, predictedEntity.Name);
 
             // Add up MUC possible/guessed count
-            if (!EntityStats.TryGetValue(predictedEntityFullName, out MucEntityEvaluation predictedEntityEvalObj))
+            if (!EntityStats.TryGetValue(predictedEntityFullName, out MucEntityConfusionMatrix predictedEntityEvalObj))
             {
                 // Create if not exists in dictionary
-                predictedEntityEvalObj = EntityStats[predictedEntityFullName] = new MucEntityEvaluation
+                predictedEntityEvalObj = EntityStats[predictedEntityFullName] = new MucEntityConfusionMatrix
                 {
                     ModelName = predictedEntityFullName,
                     ModelType = GetModelTypeString(predictedEntityFullName)
@@ -256,10 +254,10 @@ namespace Microsoft.LUIS.Endpoint.Operations
         {
             var predictedEntityFullName = GetEntityFullName(predictedEntityPrefix, predictedEntity.Name);
 
-            if (!EntityStats.TryGetValue(predictedEntityFullName, out MucEntityEvaluation predictedEntityEvalObj))
+            if (!EntityStats.TryGetValue(predictedEntityFullName, out MucEntityConfusionMatrix predictedEntityEvalObj))
             {
                 // Create if not exists in dictionary
-                predictedEntityEvalObj = EntityStats[predictedEntityFullName] = new MucEntityEvaluation
+                predictedEntityEvalObj = EntityStats[predictedEntityFullName] = new MucEntityConfusionMatrix
                 {
                     ModelName = predictedEntityFullName,
                     ModelType = GetModelTypeString(predictedEntityFullName)
@@ -375,21 +373,27 @@ namespace Microsoft.LUIS.Endpoint.Operations
         /// </summary>
         private void InitIntentAndEntityStats(IEnumerable<Model> entities, IEnumerable<Model> classes)
         {
-            foreach (var e in entities)
+            if (entities != null)
             {
-                IntentsStats[e.Name] = new ConfusionCount
+                foreach (var e in entities)
                 {
-                    ModelName = e.Name,
-                    ModelType = e.Type
-                };
+                    IntentsStats[e.Name] = new ConfusionMatrix
+                    {
+                        ModelName = e.Name,
+                        ModelType = e.Type
+                    };
+                }
             }
-            foreach (var c in classes)
+            if (classes != null)
             {
-                EntityStats[c.Name] = new MucEntityEvaluation
+                foreach (var c in classes)
                 {
-                    ModelName = c.Name,
-                    ModelType = c.Type
-                };
+                    EntityStats[c.Name] = new MucEntityConfusionMatrix
+                    {
+                        ModelName = c.Name,
+                        ModelType = c.Type
+                    };
+                }
             }
         }
 

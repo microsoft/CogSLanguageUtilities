@@ -1,9 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Microsoft.LUIS.Runtime.DataStructures
+namespace Microsoft.LuisModelEvaluation.Models.Result
 {
     public class BatchTestResponse
     {

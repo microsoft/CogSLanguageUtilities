@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-
+﻿using Microsoft.LuisModelEvaluation.Models.Input;
+using Microsoft.LuisModelEvaluation.Models.Result;
+using Microsoft.LuisModelEvaluation.Services;
 using System.Collections.Generic;
-using Microsoft.LUIS.Endpoint.Operations.Models;
-using Microsoft.LUIS.Runtime.DataStructures;
 
-namespace Microsoft.LUIS.Endpoint.Operations
+namespace Microsoft.LuisModelEvaluation.Controllers
 {
-    public class LuisBatchTestOperation
+    public class EvaluationController
+
     {
 
-        public LuisBatchTestOperation()
+        public EvaluationController()
         {
         }
 
@@ -21,7 +21,7 @@ namespace Microsoft.LUIS.Endpoint.Operations
         {
 
             // Intialize the batch test operation helper
-            var batchTestOperationHelper = new LuisBatchTestOperationsHelper(entities, classes);
+            var batchTestOperationHelper = new EvaluationService(entities, classes);
 
             foreach (var testCase in testData)
             {
