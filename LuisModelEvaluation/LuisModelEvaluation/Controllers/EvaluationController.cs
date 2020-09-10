@@ -23,18 +23,18 @@ namespace Microsoft.LuisModelEvaluation.Controllers
             foreach (var testCase in testData)
             {
                 // Intent model stats aggregation
-                evaluationService.AggregateIntentStats(testCase.LabeledData.Classification, testCase.ActualData.Classification);
+                evaluationService.AggregateIntentStats(testCase.LabeledData.Classification, testCase.PredictedData.Classification);
 
                 // Prepare utterance stats
                 var utteranceStats = new UtteranceStats
                 {
                     UtteranceText = testCase.Text,
                     LabeledIntentName = testCase.LabeledData.Classification,
-                    PredictedIntentName = testCase.ActualData.Classification
+                    PredictedIntentName = testCase.PredictedData.Classification
                 };
 
                 // Populate False entities and Aggregate Entity MUC model stats
-                evaluationService.PopulateUtteranceAndEntityStats(testCase.LabeledData.Entities, testCase.ActualData.Entities, utteranceStats);
+                evaluationService.PopulateUtteranceAndEntityStats(testCase.LabeledData.Entities, testCase.PredictedData.Entities, utteranceStats);
             }
 
             // Calculate precision, recall and fScore for Intent models
@@ -85,7 +85,7 @@ namespace Microsoft.LuisModelEvaluation.Controllers
             }
             foreach (var example in testData)
             {
-                if (example?.ActualData == null || example?.LabeledData == null)
+                if (example?.PredictedData == null || example?.LabeledData == null)
                 {
                     throw new InvalidInputException("ActualData and LabeledData");
                 }

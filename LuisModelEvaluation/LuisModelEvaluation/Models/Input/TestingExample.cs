@@ -4,6 +4,6 @@
     {
         public string Text { get; set; }
         public PredictionObject LabeledData { get; set; }
-        public PredictionObject ActualData { get; set; }
+        public PredictionObject PredictedData { get; set; }
     }
 }
