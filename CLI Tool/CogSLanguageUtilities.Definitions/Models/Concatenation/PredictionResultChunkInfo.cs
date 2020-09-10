@@ -7,6 +7,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation
 {
     public class PredictionResultChunkInfo
     {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ChunkInfo ChunkInfo;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public CustomTextPredictionResponse CustomTextResponse;

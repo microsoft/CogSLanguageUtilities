@@ -4,6 +4,7 @@ using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
 using Microsoft.CogSLanguageUtilities.Core.Services.Concatenation;
+using Microsoft.CogSLanguageUtilities.Core.Services.Evaluation;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
@@ -94,6 +95,32 @@ namespace Microsoft.CustomTextCliUtils.Configs
                     configService.GetTextAnalyticsConfigModel().DefaultLanguage);
             }).As<ITextAnalyticsService>();
             builder.RegisterType<PredictionController>();
+            return builder.Build();
+        }
+
+
+        public static IContainer BuildEvaluateCommandDependencies()
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.RegisterType<BatchTestingService>().As<IBatchTestingService>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                var predictionConfigs = configService.GetPredictionConfigModel();
+                return new CustomTextService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
+                    predictionConfigs.AppId);
+            }).As<ICustomTextService>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                return new TextAnalyticsService(
+                    configService.GetTextAnalyticsConfigModel().AzureResourceKey,
+                    configService.GetTextAnalyticsConfigModel().AzureResourceEndpoint,
+                    configService.GetTextAnalyticsConfigModel().DefaultLanguage);
+            }).As<ITextAnalyticsService>();
+            builder.RegisterType<BatchTestingController>();
             return builder.Build();
         }
 
