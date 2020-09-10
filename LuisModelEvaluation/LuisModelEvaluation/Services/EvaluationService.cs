@@ -43,7 +43,7 @@ namespace Microsoft.LuisModelEvaluation.Services
             if (!IntentsStats.TryGetValue(actualIntentName, out ConfusionMatrix labeledConfusionCount))
             {
                 // Initialize if not in dictionary to avoid null errors
-                labeledConfusionCount = new ConfusionMatrix();
+                labeledConfusionCount = IntentsStats[actualIntentName] = new ConfusionMatrix();
             }
 
             if (actualIntentName == predictedIntentName)
@@ -53,10 +53,11 @@ namespace Microsoft.LuisModelEvaluation.Services
             else
             {
                 labeledConfusionCount.FalseNegatives++;
-                if (IntentsStats.TryGetValue(predictedIntentName, out ConfusionMatrix predictedConfusionCount))
+                if (!IntentsStats.TryGetValue(predictedIntentName, out ConfusionMatrix predictedConfusionCount))
                 {
-                    predictedConfusionCount.FalsePositives++;
+                    predictedConfusionCount = IntentsStats[predictedIntentName] = new ConfusionMatrix();
                 }
+                predictedConfusionCount.FalsePositives++;
             }
         }
 
