@@ -12,7 +12,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Predicti
         [JsonProperty(PropertyName = "classifiers", Order = 1, NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, ClassifierV4Preview> Classifiers { get; set; }
 
-
         [JsonProperty(PropertyName = "extractors", Order = 2)]
         public JObject Extractors { get; set; }
     }
