@@ -31,7 +31,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
             {
                 new TestingExample
                 {
-                    ActualData = predictionData,
+                    PredictedData = predictionData,
                     LabeledData = predictionData
                 }
             };
@@ -72,7 +72,7 @@ namespace Microsoft.LuisModelEvaluation.Tests
                     {
                         new TestingExample
                         {
-                            ActualData = null
+                            PredictedData = null
                         }
                     }
                 }
