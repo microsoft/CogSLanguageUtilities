@@ -1,0 +1,136 @@
+{
+  "intentModelsStats": [
+    {
+      "modelName": "Introduction",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0
+    }
+  ],
+  "entityModelsStats": [
+    {
+      "modelName": "Authors",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 0.5,
+      "fScore": 0.6666666666666666,
+      "entityTextFScore": 0.6666666666666666,
+      "entityTypeFScore": 0.6666666666666666
+    },
+    {
+      "modelName": "Authors::Name",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 0.5,
+      "fScore": 0.6666666666666666,
+      "entityTextFScore": 0.6666666666666666,
+      "entityTypeFScore": 0.6666666666666666
+    },
+    {
+      "modelName": "Authors::Contact",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Affiliation",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Address",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Address::State",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    },
+    {
+      "modelName": "Authors::Address::Country",
+      "modelType": "Unknown Model Type",
+      "precision": 1.0,
+      "recall": 1.0,
+      "fScore": 1.0,
+      "entityTextFScore": 1.0,
+      "entityTypeFScore": 1.0
+    }
+  ],
+  "utterancesStats": [
+    {
+      "text": null,
+      "predictedIntentName": "Introduction",
+      "labeledIntentName": "Introduction",
+      "falsePositiveEntities": [
+        {
+          "entityName": "Authors::Address::State",
+          "startCharIndex": 265,
+          "endCharIndex": 267
+        },
+        {
+          "entityName": "Authors::Address::Country",
+          "startCharIndex": 269,
+          "endCharIndex": 272
+        },
+        {
+          "entityName": "Authors::Address::State",
+          "startCharIndex": 310,
+          "endCharIndex": 312
+        },
+        {
+          "entityName": "Authors::Address::Country",
+          "startCharIndex": 314,
+          "endCharIndex": 317
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19737,
+          "endCharIndex": 19742
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19751,
+          "endCharIndex": 19764
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19785,
+          "endCharIndex": 19791
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19818,
+          "endCharIndex": 19821
+        },
+        {
+          "entityName": "Authors::Name",
+          "startCharIndex": 19827,
+          "endCharIndex": 19834
+        },
+        {
+          "entityName": "Authors",
+          "startCharIndex": 19737,
+          "endCharIndex": 19845
+        }
+      ],
+      "falseNegativeEntities": []
+    }
+  ]
+}

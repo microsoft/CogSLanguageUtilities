@@ -29,4 +29,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="LuisModelEvaluation">
+      <HintPath>..\..\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
