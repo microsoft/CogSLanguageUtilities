@@ -82,28 +82,31 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                         string labeledFile = await _sourceStorageService.ReadFileAsStringAsync(fileName);
                         labeledData[fileNameWithoutExtension] = JsonConvert.DeserializeObject<PredictionObject>(labeledFile);
                     }
-                    // read file
-                    _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                    var fileString = await _sourceStorageService.ReadFileAsStringAsync(fileName);
-                    // prediction service
-                    _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
-                    var queries = new List<string> { fileString };
-                    var customTextresponse = runCustomText ? await _customTextPredictionService.GetPredictionBatchAsync(queries) : null;
-                    var sentimentResponse = runTextAnalytics && defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries) : null;
-                    var nerResponse = runTextAnalytics && defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
-                    var keyphraseResponse = runTextAnalytics && defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
-                    // concatenation service
-                    var concatenatedResponse = new PredictionResultChunkInfo
+                    else
                     {
-                        CustomTextResponse = customTextresponse[0]
-                    };
-                    var responseAsJson = JsonConvert.SerializeObject(concatenatedResponse, Formatting.Indented);
-                    // store file
-                    _loggerService.LogOperation(OperationType.StoringResult, fileName);
-                    var newFileName = fileNameWithoutExtension + ".json";
-                    await _destinationStorageService.StoreDataAsync(responseAsJson, newFileName);
-                    convertedFiles.Add(fileName);
-                    predictedData[fileNameWithoutExtension] = customTextresponse[0];
+                        // read file
+                        _loggerService.LogOperation(OperationType.ReadingFile, fileName);
+                        var fileString = await _sourceStorageService.ReadFileAsStringAsync(fileName);
+                        // prediction service
+                        _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
+                        var queries = new List<string> { fileString };
+                        var customTextresponse = runCustomText ? await _customTextPredictionService.GetPredictionBatchAsync(queries) : null;
+                        var sentimentResponse = runTextAnalytics && defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries) : null;
+                        var nerResponse = runTextAnalytics && defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
+                        var keyphraseResponse = runTextAnalytics && defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
+                        // concatenation service
+                        var concatenatedResponse = new PredictionResultChunkInfo
+                        {
+                            CustomTextResponse = customTextresponse[0]
+                        };
+                        var responseAsJson = JsonConvert.SerializeObject(concatenatedResponse, Formatting.Indented);
+                        // store file
+                        _loggerService.LogOperation(OperationType.StoringResult, fileName);
+                        var newFileName = fileNameWithoutExtension + ".json";
+                        await _destinationStorageService.StoreDataAsync(responseAsJson, newFileName);
+                        convertedFiles.Add(fileName);
+                        predictedData[fileNameWithoutExtension] = customTextresponse[0];
+                    }
                 }
                 catch (CliException e)
                 {
