@@ -11,6 +11,17 @@ using System.Text;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
 {
+    /*
+     *  Data structure: 
+     *      MsReadParseResult is a list of pages and each page contains a list of lines
+     *      Line.BoundingBox is an array of coordinates for current line (as OCR detetced)
+     * 
+     *           [0, 1] ------------------ [2, 3]
+     *                 -                  -
+     *                 -                  -
+     *                 -                  -
+     *           [4, 5] ------------------ [6, 7]
+    */
     public class MsReadChunkerService : IChunkerService
     {
         public List<ChunkInfo> Chunk(ParseResult parseResult, ChunkMethod chunkMethod, int charLimit)
@@ -48,8 +59,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         }
 
         /*
-         *  Data structure: 
-         *      MsReadParseResult is a list of pages and each page contains a list of lines
          *  Intuition:
          *      To construct a page, we concatenate paragraphs in the page to the chunk
          *  Considerations:
@@ -64,8 +73,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         private List<ChunkInfo> ChunkPages(MsReadParseResult parsingResult, int charLimit)
         {
             var resultPages = new List<ChunkInfo>();
-            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
-            var maxLineLength = linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.PercentageOfMaxLineLength;
+            var maxLineLength = CaluculateMaxLineLength(parsingResult);
             var currentParagraph = new StringBuilder();
             StringBuilder pageText = new StringBuilder();
             var currentPage = 0;
@@ -101,8 +109,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
         }
 
         /*
-         *  Data structure: 
-         *      MsReadParseResult is a list of pages and each page contains a list of lines
          *  Intuition:
          *      To construct a chunk, we concatenate paragraphs to the chunk without exceeding the character limit
          *  Considerations:
@@ -117,7 +123,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             StringBuilder currentParagraph = new StringBuilder();
             StringBuilder currentChunk = new StringBuilder();
             List<ChunkInfo> resultChunks = new List<ChunkInfo>();
-            double maxLineLength = CalculateMaxLineLength(parsingResult);
+            var maxLineLength = CaluculateMaxLineLength(parsingResult);
             var currentChunkPageStart = 1;
             var currentParagraphPageStart = 1;
             var chunkCounter = 1;
@@ -190,26 +196,28 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Chunker
             currentParagraphPageStart = currentPage;
         }
 
-        private static double CalculateMaxLineLength(MsReadParseResult parsingResult)
+        private double CaluculateMaxLineLength(MsReadParseResult parsingResult)
         {
-            /*
-             * Line.BoundingBox is an array of coordinates for current line (as OCR detetced)
-             * 
-             *   [0, 1] ------------------ [2, 3]
-             *         -                  -
-             *         -                  -
-             *         -                  -
-             *   [4, 5] ------------------ [6, 7]
-             */
-            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => l.BoundingBox[2] - l.BoundingBox[0]).OrderBy(l => l).ToArray();
+            var linesArray = parsingResult.RecognitionResults.SelectMany(p => p.Lines).Select(l => GetBoundingBoxTopRightX(l) - GetBoundingBoxTopLeftX(l)).OrderBy(l => l).ToArray();
             var maxLineLength = linesArray[(int)(linesArray.Length * Constants.MaxLineLengthPrecentile)] * Constants.PercentageOfMaxLineLength;
             return maxLineLength;
         }
 
         private bool IsLineEndOfParagraph(Line line, double maxLineLength)
         {
-            return line.BoundingBox[2] - line.BoundingBox[0] < maxLineLength;
+            return GetBoundingBoxTopRightX(line) - GetBoundingBoxTopLeftX(line) < maxLineLength;
         }
+
+        private double GetBoundingBoxTopLeftX(Line line)
+        {
+            return line.BoundingBox[0];
+        }
+
+        private double GetBoundingBoxTopRightX(Line line)
+        {
+            return line.BoundingBox[2];
+        }
+
         public List<ChunkInfo> Chunk(string text, int charLimit)
         {
             throw new NotImplementedException();
