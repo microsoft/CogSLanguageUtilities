@@ -227,20 +227,19 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
 
         public static TheoryData PredictionConfigSetTestData()
         {
-            return new TheoryData<string, string, string, string>
+            return new TheoryData<string, string, string>
             {
                 {
                     "testKey",
                     "testEndpoint",
-                    "testAppId",
-                    "testVersionId"
+                    "testAppId"
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(PredictionConfigSetTestData))]
-        public async Task PredictionConfigSetTestAsync(string customTextKey, string customTextEndpoint, string appId, string versionId)
+        public async Task PredictionConfigSetTestAsync(string customTextKey, string customTextEndpoint, string appId)
         {
             await _controller.SetPredictionConfigsAsync(customTextKey, customTextEndpoint, appId);
             await _controller.SetPredictionConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
