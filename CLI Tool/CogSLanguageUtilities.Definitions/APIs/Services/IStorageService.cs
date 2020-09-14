@@ -10,5 +10,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
         public Task StoreDataAsync(string data, string fileName);
         public Task<string> ReadFileAsStringAsync(string fileName);
         public Task<string> ReadAsStringFromAbsolutePathAsync(string filePath);
+        public Task<bool> FileExists(string fileName);
     }
 }
