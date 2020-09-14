@@ -30,7 +30,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
                 }
             };
         }
-        [Theory(Skip ="fails")]
+        [Theory]
         [MemberData(nameof(RunBatchTestTestData))]
         public void RunBatchTestTest(IEnumerable<TestingExample> examples, BatchTestResponse expectedResponse)
         {
@@ -75,16 +75,5 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
                 return obj.GetHashCode();
             }
         }
-
-        //[Fact]
-        //public void test()
-        //{
-        //    var input = File.ReadAllText(@"C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\CLI Tool\CogSLanguageUtilities.ViewLayer.CliCommands\bin\Debug\netcoreapp3.1\destination\InteractiveSemantic-Patriceetal.json");
-        //    var dict = new Dictionary<string, CustomTextPredictionResponse>();
-        //    dict["test"] = JsonConvert.DeserializeObject<CustomTextPredictionResponse>(input);
-        //    Dictionary<string, PredictionObject> dictionaries = new Dictionary<string, PredictionObject>();
-        //    var result = BatchTestingMapper.MapCustomText(dict, dictionaries);
-        //    File.WriteAllText(@"C:\Users\a-noyass\Desktop\LUIS\Cognitive-Custom_text_Utilities\CLI Tool\CogSLanguageUtilities.ViewLayer.CliCommands\bin\Debug\netcoreapp3.1\destination\converted.json", JsonConvert.SerializeObject(result));
-        //}
     }
 }
