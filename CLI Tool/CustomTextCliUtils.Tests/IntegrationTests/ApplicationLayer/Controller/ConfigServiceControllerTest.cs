@@ -306,7 +306,6 @@ namespace Microsoft.CustomTextCliUtils.Tests.IntegrationTests.ApplicationLayer.C
             Assert.Equal(enableKeyphraseByDefault, configModel.TextAnalytics.DefaultOperations.Keyphrase);
         }
 
-
         public static TheoryData ConfigLoadTestData()
         {
             return new TheoryData<string, CliException>
