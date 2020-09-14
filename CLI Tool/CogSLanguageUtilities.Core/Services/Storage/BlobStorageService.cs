@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 {
+    /*
+     * some notes:
+     *      - we use file exists in all reading methods, in order to throw our custom exception in case file wan't found
+     */
     public class BlobStorageService : IStorageService
     {
         private readonly BlobContainerClient _blobContainerClient;
@@ -44,20 +48,32 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 
         public async Task<Stream> ReadFileAsync(string fileName)
         {
-            CheckFileExists(fileName);
-            BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            BlobDownloadInfo download = await blobClient.DownloadAsync();
-            return download.Content;
+            if (await FileExists(fileName))
+            {
+                BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
+                BlobDownloadInfo download = await blobClient.DownloadAsync();
+                return download.Content;
+            }
+            else
+            {
+                throw new Definitions.Exceptions.Storage.FileNotFoundException(fileName);
+            }
         }
 
         public async Task<string> ReadFileAsStringAsync(string fileName)
         {
-            CheckFileExists(fileName);
-            BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            BlobDownloadInfo download = await blobClient.DownloadAsync();
-            using (StreamReader sr = new StreamReader(download.Content))
+            if (await FileExists(fileName))
             {
-                return sr.ReadToEnd();
+                BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
+                BlobDownloadInfo download = await blobClient.DownloadAsync();
+                using (StreamReader sr = new StreamReader(download.Content))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+            else
+            {
+                throw new Definitions.Exceptions.Storage.FileNotFoundException(fileName);
             }
         }
 
@@ -81,12 +97,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             throw new NotImplementedException();
         }
 
-        private void CheckFileExists(string fileName)
+        public async Task<bool> FileExists(string fileName)
         {
-            if (!_blobContainerClient.GetBlobClient(fileName).Exists())
+            return await Task.Run(() =>
             {
-                throw new Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage.FileNotFoundException(fileName);
-            }
+                return _blobContainerClient.GetBlobClient(fileName).Exists();
+            });
         }
     }
 }

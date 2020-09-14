@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 {
+    /*
+    * some notes:
+    *      - we use file exists in all reading methods, in order to throw our custom exception in case file wan't found
+    */
     public class LocalStorageService : IStorageService
     {
         private readonly string _targetDirectory;
@@ -21,32 +25,45 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             _targetDirectory = targetDirectory;
         }
 
-        public Task<string[]> ListFilesAsync()
+        public async Task<string[]> ListFilesAsync()
         {
-            return Task.FromResult(Directory.GetFiles(_targetDirectory).Select(i => Path.GetFileName(i)).ToArray());
+            return await Task.FromResult(Directory.GetFiles(_targetDirectory).Select(i => Path.GetFileName(i)).ToArray());
         }
 
-        public Task<Stream> ReadFileAsync(string fileName)
+        public async Task<Stream> ReadFileAsync(string fileName)
         {
             string filePath = Path.Combine(_targetDirectory, fileName);
             CheckFileExists(filePath);
             var tcs = new TaskCompletionSource<Stream>();
             try
             {
-                FileStream fs = File.OpenRead(filePath);
-                return Task.FromResult(fs as Stream);
+                try
+                {
+                    FileStream fs = File.OpenRead(filePath);
+                    return await Task.FromResult(fs as Stream);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    throw new UnauthorizedFileAccessException(AccessType.Read.ToString(), Path.Combine(_targetDirectory, fileName));
+                }
             }
-            catch (UnauthorizedAccessException)
+            else
             {
-                throw new UnauthorizedFileAccessException(AccessType.Read.ToString(), Path.Combine(_targetDirectory, fileName));
+                throw new Definitions.Exceptions.Storage.FileNotFoundException(filePath);
             }
         }
 
         public async Task<string> ReadFileAsStringAsync(string fileName)
         {
             var filePath = Path.Combine(_targetDirectory, fileName);
-            CheckFileExists(filePath);
-            return await File.ReadAllTextAsync(filePath);
+            if (await FileExists(fileName))
+            {
+                return await File.ReadAllTextAsync(filePath);
+            }
+            else
+            {
+                throw new Definitions.Exceptions.Storage.FileNotFoundException(filePath);
+            }
         }
 
         public async Task StoreDataAsync(string data, string fileName)
@@ -64,16 +81,31 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 
         public async Task<string> ReadAsStringFromAbsolutePathAsync(string filePath)
         {
-            CheckFileExists(filePath);
-            return await File.ReadAllTextAsync(filePath);
+            if (await FileExistsAbsolutePath(filePath))
+            {
+                return await File.ReadAllTextAsync(filePath);
+            }
+            else
+            {
+                throw new Definitions.Exceptions.Storage.FileNotFoundException(filePath);
+            }
         }
 
-        private void CheckFileExists(string filePath)
+        public async Task<bool> FileExists(string fileName)
         {
-            if (!File.Exists(filePath))
+            var filePath = Path.Combine(_targetDirectory, fileName);
+            return await Task.Run(() =>
             {
-                throw new Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage.FileNotFoundException(filePath);
-            }
+                return File.Exists(filePath);
+            });
+        }
+
+        private async Task<bool> FileExistsAbsolutePath(string filePath)
+        {
+            return await Task.Run(() =>
+            {
+                return File.Exists(filePath);
+            });
         }
     }
 }
