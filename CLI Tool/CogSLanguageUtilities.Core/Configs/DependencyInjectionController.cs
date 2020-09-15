@@ -119,14 +119,6 @@ namespace Microsoft.CustomTextCliUtils.Configs
                 return new CustomTextAuthoringService(new HttpHandler(), labeledExamplesConfigs.AzureResourceKey, labeledExamplesConfigs.AzureResourceEndpoint,
                     labeledExamplesConfigs.AppId);
             }).As<ICustomTextAuthoringService>();
-            builder.Register(c =>
-            {
-                var configService = c.Resolve<IConfigsLoader>();
-                return new TextAnalyticsService(
-                    configService.GetTextAnalyticsConfigModel().AzureResourceKey,
-                    configService.GetTextAnalyticsConfigModel().AzureResourceEndpoint,
-                    configService.GetTextAnalyticsConfigModel().DefaultLanguage);
-            }).As<ITextAnalyticsService>();
             builder.RegisterType<BatchTestingController>();
             return builder.Build();
         }

@@ -4,13 +4,16 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.LuisModelEvaluation.Models.Input;
 using Microsoft.LuisModelEvaluation.Models.Result;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -63,7 +66,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             // get labeled examples
             _loggerService.LogOperation(OperationType.GeneratingTestSet);
             var labeledExamples = await _customTextAuthoringService.GetLabeledExamples();
-            var testData = await CreateTestData(labeledExamples);
+            var testData = await CreateTestData(labeledExamples, convertedFiles, failedFiles);
 
             // evaluate model
             _loggerService.LogOperation(OperationType.EvaluatingResults);
@@ -79,37 +82,53 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
 
-        private async Task<IEnumerable<TestingExample>> CreateTestData(Definitions.Models.CustomText.Api.LabeledExamples.Response.CustomTextGetLabeledExamplesResponse labeledExamples)
+        private async Task<IEnumerable<TestingExample>> CreateTestData(CustomTextGetLabeledExamplesResponse labeledExamples, ConcurrentBag<string> convertedFiles, ConcurrentDictionary<string, string> failedFiles)
         {
             var modelsDictionary = await _customTextAuthoringService.GetModelsDictionary();
-            var tasks = labeledExamples.Examples.Select(async e =>
+            var testingExamples = new List<TestingExample>();
+            foreach (var e in labeledExamples.Examples)
             {
-                // document text
-                var documentText = await _sourceStorageService.ReadFileAsStringAsync(e.Document.DocumentId);
-
-                // ground truth
-                var actualClassId = e.ClassificationLabels.FirstOrDefault(c => c.Label == true).ModelId;
-                var actualClassName = modelsDictionary[actualClassId];
-                var groundTruth = new PredictionObject
+                try
                 {
-                    Classification = actualClassName,
-                    Entities = BatchTestingInputMapper.MapCustomTextExamplesToEntitiesRecursively(e.MiniDocs, modelsDictionary)
-                };
+                    // document text
+                    var documentText = await _sourceStorageService.ReadFileAsStringAsync(e.Document.DocumentId);
 
-                // prediction
-                var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
-                var PredictionData = BatchTestingInputMapper.MapCutomTextResponse(predictionResponse);
+                    // ground truth
+                    var actualClassId = e.ClassificationLabels.FirstOrDefault(c => c.Label == true)?.ModelId;
+                    if (actualClassId == null)
+                    {
+                        continue;
+                    }
+                    var actualClassName = modelsDictionary[actualClassId];
+                    var groundTruth = new PredictionObject
+                    {
+                        Classification = actualClassName,
+                        Entities = BatchTestingInputMapper.MapCustomTextExamplesToEntitiesRecursively(e.MiniDocs, modelsDictionary)
+                    };
 
-                // complete example
-                return new TestingExample
+                    // prediction
+                    var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
+                    var predictionResponseString = JsonConvert.SerializeObject(predictionResponse, Formatting.Indented);
+                    var jsonFileName = Path.GetFileNameWithoutExtension(e.Document.DocumentId) + ".json";
+                    await _destinationStorageService.StoreDataAsync(predictionResponseString, jsonFileName);
+
+                    // create example
+                    var PredictionData = BatchTestingInputMapper.MapCutomTextResponse(predictionResponse);
+                    testingExamples.Add(new TestingExample
+                    {
+                        Text = documentText,
+                        LabeledData = groundTruth,
+                        PredictedData = PredictionData
+                    });
+                    convertedFiles.Add(e.Document.DocumentId);
+                }
+                catch (Exception ex)
                 {
-                    Text = documentText,
-                    LabeledData = groundTruth,
-                    PredictedData = PredictionData
-                };
-            });
-            return await Task.WhenAll(tasks);
+                    failedFiles[e.Document.DocumentId] = ex.Message;
+                    _loggerService.LogError(ex);
+                }
+            }
+            return testingExamples;
         }
-
     }
 }
