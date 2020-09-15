@@ -1,5 +1,6 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Newtonsoft.Json;
@@ -44,8 +45,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             }
             else
             {
-                //await HandleExceptionResponseCodesAsync(response, requestUrl);
-                return null;
+                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
             }
         }
 
@@ -86,15 +86,22 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             }
             else
             {
-                //await HandleExceptionResponseCodesAsync(response, requestUrl);
-                return null;
+                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
             }
         }
 
         private async Task TestConnectionAsync()
         {
-            var testQuery = "test";
-            //await SendPredictionRequestAsync(testQuery);
+            var requestUrl = string.Format("{0}/luis/authoring/v4.0-preview/documents/apps/{1}", _endpointUrl, _appId);
+            var headers = new Dictionary<string, string>
+            {
+                ["Ocp-Apim-Subscription-Key"] = _customTextKey
+            };
+            var response = await _httpHandler.SendGetRequestAsync(requestUrl, headers, null);
+            if (response.StatusCode != HttpStatusCode.OK)
+            { 
+                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+            }
         }
     }
 }

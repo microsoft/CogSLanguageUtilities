@@ -17,4 +17,5 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs
         public StorageConfigModel GetStorageConfigModel();
         public TextAnalyticsConfigModel GetTextAnalyticsConfigModel();
         public LabeledExamplesAppConfigModel GetLabeledExamplesAppConfigModel();
+    }
 }
