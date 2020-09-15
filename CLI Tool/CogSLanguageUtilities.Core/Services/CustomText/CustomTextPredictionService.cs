@@ -3,10 +3,10 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Prediction;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Request;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Error;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Status;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Request;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Error;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Result;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Status;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.CustomText;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -14,16 +14,16 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Services.Prediction
+namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 {
-    public class CustomTextService : ICustomTextService
+    public class CustomTextPredictionService : ICustomTextPredictionService
     {
         private readonly string _customTextKey;
         private readonly string _endpointUrl;
         private readonly string _appId;
         private readonly IHttpHandler _httpHandler;
 
-        public CustomTextService(IHttpHandler httpHandler, string customTextKey, string endpointUrl, string appId)
+        public CustomTextPredictionService(IHttpHandler httpHandler, string customTextKey, string endpointUrl, string appId)
         {
             _customTextKey = customTextKey;
             _endpointUrl = endpointUrl;

@@ -4,10 +4,10 @@ using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
 using Microsoft.CogSLanguageUtilities.Core.Services.Concatenation;
+using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
 using Microsoft.CogSLanguageUtilities.Core.Services.Evaluation;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
-using Microsoft.CogSLanguageUtilities.Core.Services.Prediction;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
@@ -83,9 +83,9 @@ namespace Microsoft.CustomTextCliUtils.Configs
             {
                 var configService = c.Resolve<IConfigsLoader>();
                 var predictionConfigs = configService.GetPredictionConfigModel();
-                return new CustomTextService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
+                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
                     predictionConfigs.AppId);
-            }).As<ICustomTextService>();
+            }).As<ICustomTextPredictionService>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
@@ -109,9 +109,9 @@ namespace Microsoft.CustomTextCliUtils.Configs
             {
                 var configService = c.Resolve<IConfigsLoader>();
                 var predictionConfigs = configService.GetPredictionConfigModel();
-                return new CustomTextService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
+                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
                     predictionConfigs.AppId);
-            }).As<ICustomTextService>();
+            }).As<ICustomTextPredictionService>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();

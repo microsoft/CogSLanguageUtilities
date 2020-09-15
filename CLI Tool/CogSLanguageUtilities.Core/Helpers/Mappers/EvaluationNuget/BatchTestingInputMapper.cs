@@ -1,38 +1,40 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Result;
 using Microsoft.LuisModelEvaluation.Models.Input;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities
+namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
 {
-    public class BatchTestingMapper
+    public class BatchTestingInputMapper
     {
         private const string instanceKey = "$instance";
         private const string typeKey = "type";
         private const string startIndexKey = "startIndex";
         private const string lengthKey = "length";
 
-        public static List<TestingExample> MapCustomText(
-            IDictionary<string, CustomTextPredictionResponse> customTextResponse,
-            IDictionary<string, PredictionObject> labeledData)
+        public static PredictionObject MapCutomTextResponse(CustomTextPredictionResponse customTextResponse)
         {
-            List<TestingExample> result = new List<TestingExample>();
-            var zipped = customTextResponse.Zip(labeledData, (predicted, labeled) => new { predicted, labeled });
-            foreach (var entry in customTextResponse)
+            return new PredictionObject
             {
-                var p = new PredictionObject
+                Classification = customTextResponse.Prediction.PositiveClassifiers.FirstOrDefault(),
+                Entities = GetCustomTextEntitiesRecursive(customTextResponse.Prediction.Extractors)
+            };
+        }
+
+        public static List<Entity> MapCustomTextExamplesToEntitiesRecursively(List<MiniDoc> inputEntities, Dictionary<string, string> modelsDictionary)
+        {
+            return inputEntities.Select(e =>
+            {
+                return new Entity
                 {
-                    Classification = entry.Value.Prediction.PositiveClassifiers.FirstOrDefault(),
-                    Entities = GetCustomTextEntitiesRecursive(entry.Value.Prediction.Extractors)
+                    Name = modelsDictionary[e.ModelId],
+                    StartPosition = e.StartCharIndex,
+                    EndPosition = e.EndCharIndex,
+                    Children = e.Children != null ? MapCustomTextExamplesToEntitiesRecursively(e.Children, modelsDictionary) : null
                 };
-                result.Add(new TestingExample
-                {
-                    PredictedData = p,
-                    LabeledData = labeledData[entry.Key]
-                });
-            }
-            return result;
+            }).ToList();
         }
 
         private static List<Entity> GetCustomTextEntitiesRecursive(JObject extractors)

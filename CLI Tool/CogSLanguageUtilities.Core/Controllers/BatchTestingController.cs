@@ -1,20 +1,17 @@
-﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities;
+﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget;
+using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.LuisModelEvaluation.Models.Input;
 using Microsoft.LuisModelEvaluation.Models.Result;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,15 +25,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         private IStorageService _destinationStorageService;
         private readonly ILoggerService _loggerService;
         private readonly ITextAnalyticsService _textAnalyticsPredictionService;
-        private readonly ICustomTextService _customTextPredictionService;
+        private readonly ICustomTextPredictionService _customTextPredictionService;
         private readonly IBatchTestingService _batchTestingService;
+        private readonly CustomTextAuthoringService _customTextAuthoringService = new CustomTextAuthoringService(new HttpHandler(), "asd", "asd", "asd");
 
         public BatchTestingController(
             IConfigsLoader configurationService,
             IStorageFactoryFactory storageFactoryFactory,
             ILoggerService loggerService,
             ITextAnalyticsService textAnalyticsPredictionService,
-            ICustomTextService CustomTextPredictionService,
+            ICustomTextPredictionService CustomTextPredictionService,
             IBatchTestingService batchTestingService)
         {
             _configurationService = configurationService;
@@ -56,69 +54,22 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _destinationStorageService = destinationFactory.CreateStorageService(destinationStorageType, storageConfigModel);
         }
 
-        public async Task EvaluateModelAsync(StorageType sourceStorageType, StorageType destinationStorageType, CognitiveServiceType service)
+        public async Task EvaluateCustomTextAppAsync(StorageType sourceStorageType, StorageType destinationStorageType)
         {
             InitializeStorage(sourceStorageType, destinationStorageType);
-            var charLimit = _configurationService.GetChunkerConfigModel().CharLimit;
-            var defaultOps = _configurationService.GetTextAnalyticsConfigModel().DefaultOperations;
+
+            // init result containers
             var convertedFiles = new ConcurrentBag<string>();
             var failedFiles = new ConcurrentDictionary<string, string>();
-            // Check which service to run
-            var runCustomText = CognitiveServiceType.CustomText.Equals(service) || CognitiveServiceType.Both.Equals(service);
-            var runTextAnalytics = service == CognitiveServiceType.TextAnalytics || service == CognitiveServiceType.Both;
 
-            var predictedData = new Dictionary<string, CustomTextPredictionResponse>();
-            var labeledData = new Dictionary<string, PredictionObject>();
-            // read files from source storage
-            var fileNames = await _sourceStorageService.ListFilesAsync();
-            // parse files
-            var tasks = fileNames.Select(async fileName =>
-            {
-                try
-                {
-                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                    if (Path.GetExtension(fileName) == ".json")
-                    {
-                        string labeledFile = await _sourceStorageService.ReadFileAsStringAsync(fileName);
-                        labeledData[fileNameWithoutExtension] = JsonConvert.DeserializeObject<PredictionObject>(labeledFile);
-                    }
-                    else
-                    {
-                        // read file
-                        _loggerService.LogOperation(OperationType.ReadingFile, fileName);
-                        var fileString = await _sourceStorageService.ReadFileAsStringAsync(fileName);
-                        // prediction service
-                        _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
-                        var queries = new List<string> { fileString };
-                        var customTextresponse = runCustomText ? await _customTextPredictionService.GetPredictionBatchAsync(queries) : null;
-                        var sentimentResponse = runTextAnalytics && defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries) : null;
-                        var nerResponse = runTextAnalytics && defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
-                        var keyphraseResponse = runTextAnalytics && defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
-                        // concatenation service
-                        var concatenatedResponse = new PredictionResultChunkInfo
-                        {
-                            CustomTextResponse = customTextresponse[0]
-                        };
-                        var responseAsJson = JsonConvert.SerializeObject(concatenatedResponse, Formatting.Indented);
-                        // store file
-                        _loggerService.LogOperation(OperationType.StoringResult, fileName);
-                        var newFileName = fileNameWithoutExtension + ".json";
-                        await _destinationStorageService.StoreDataAsync(responseAsJson, newFileName);
-                        convertedFiles.Add(fileName);
-                        predictedData[fileNameWithoutExtension] = customTextresponse[0];
-                    }
-                }
-                catch (CliException e)
-                {
-                    failedFiles[fileName] = e.Message;
-                    _loggerService.LogError(e);
-                }
-            });
-            await Task.WhenAll(tasks);
+            // get labeled examples
+            var labeledExamples = await _customTextAuthoringService.GetLabeledExamples();
+            var testData = await CreateTestData(labeledExamples);
+
             // evaluate model
             _loggerService.LogOperation(OperationType.EvaluatingResults);
-            List<TestingExample> testingExamples = BatchTestingMapper.MapCustomText(predictedData, labeledData);
-            BatchTestResponse batchTestResponse = _batchTestingService.RunBatchTest(testingExamples);
+            BatchTestResponse batchTestResponse = _batchTestingService.RunBatchTest(testData);
+
             // store file
             var outFileName = "batchTesting.json";
             _loggerService.LogOperation(OperationType.StoringResult, outFileName);
@@ -126,5 +77,38 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             await _destinationStorageService.StoreDataAsync(responseAsJson, outFileName);
             _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
+
+        private async Task<IEnumerable<TestingExample>> CreateTestData(Definitions.Models.CustomText.Api.LabeledExamples.Response.CustomTextGetLabeledExamplesResponse labeledExamples)
+        {
+            var modelsDictionary = await _customTextAuthoringService.GetModelsDictionary();
+            var tasks = labeledExamples.Examples.Select(async e =>
+            {
+                // document text
+                var documentText = await _sourceStorageService.ReadFileAsStringAsync(e.Document.DocumentId);
+
+                // ground truth
+                var actualClassId = e.ClassificationLabels.FirstOrDefault(c => c.Label == true).ModelId;
+                var actualClassName = modelsDictionary[actualClassId];
+                var groundTruth = new PredictionObject
+                {
+                    Classification = actualClassName,
+                    Entities = BatchTestingInputMapper.MapCustomTextExamplesToEntitiesRecursively(e.MiniDocs, modelsDictionary)
+                };
+
+                // prediction
+                var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
+                var PredictionData = BatchTestingInputMapper.MapCutomTextResponse(predictionResponse);
+
+                // complete example
+                return new TestingExample
+                {
+                    Text = documentText,
+                    LabeledData = groundTruth,
+                    PredictedData = PredictionData
+                };
+            });
+            return await Task.WhenAll(tasks);
+        }
+
     }
 }
