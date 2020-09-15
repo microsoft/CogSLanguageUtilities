@@ -1,4 +1,5 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Newtonsoft.Json;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 {
-    class CustomTextAuthoringService
+    class CustomTextAuthoringService : ICustomTextAuthoringService
     {
         private readonly string _customTextKey;
         private readonly string _endpointUrl;
@@ -22,12 +23,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             _appId = appId;
             _httpHandler = httpHandler;
             TestConnectionAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-        }
-
-        private async Task TestConnectionAsync()
-        {
-            var testQuery = "test";
-            //await SendPredictionRequestAsync(testQuery);
         }
 
         public async Task<CustomTextGetLabeledExamplesResponse> GetLabeledExamples()
@@ -94,6 +89,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
                 //await HandleExceptionResponseCodesAsync(response, requestUrl);
                 return null;
             }
+        }
+
+        private async Task TestConnectionAsync()
+        {
+            var testQuery = "test";
+            //await SendPredictionRequestAsync(testQuery);
         }
     }
 }

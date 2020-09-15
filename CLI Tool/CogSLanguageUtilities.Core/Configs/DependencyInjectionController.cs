@@ -115,6 +115,13 @@ namespace Microsoft.CustomTextCliUtils.Configs
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
+                var labeledExamplesConfigs = configService.GetLabeledExamplesAppConfigModel();
+                return new CustomTextAuthoringService(new HttpHandler(), labeledExamplesConfigs.AzureResourceKey, labeledExamplesConfigs.AzureResourceEndpoint,
+                    labeledExamplesConfigs.AppId);
+            }).As<ICustomTextAuthoringService>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
                 return new TextAnalyticsService(
                     configService.GetTextAnalyticsConfigModel().AzureResourceKey,
                     configService.GetTextAnalyticsConfigModel().AzureResourceEndpoint,

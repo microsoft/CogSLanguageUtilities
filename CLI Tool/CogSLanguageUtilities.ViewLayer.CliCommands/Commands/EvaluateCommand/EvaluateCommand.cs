@@ -28,7 +28,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Evaluat
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<BatchTestingController>();
-                await controller.EvaluateModelAsync(Source, Destination, CognitiveServiceType.CustomText);
+                await controller.EvaluateCustomTextAppAsync(Source, Destination);
             }
         }
     }
