@@ -8,6 +8,7 @@
         ChunkingFile,
         DisplayingResult,
         RunningPrediction,
-        EvaluatingResults
+        EvaluatingResults,
+        GeneratingTestSet
     }
 }

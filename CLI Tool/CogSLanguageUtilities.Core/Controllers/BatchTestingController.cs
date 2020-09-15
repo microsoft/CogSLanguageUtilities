@@ -1,10 +1,9 @@
-﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
-using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget;
-using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
+﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.LuisModelEvaluation.Models.Input;
@@ -24,24 +23,23 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         private IStorageService _sourceStorageService;
         private IStorageService _destinationStorageService;
         private readonly ILoggerService _loggerService;
-        private readonly ITextAnalyticsService _textAnalyticsPredictionService;
         private readonly ICustomTextPredictionService _customTextPredictionService;
         private readonly IBatchTestingService _batchTestingService;
-        private readonly CustomTextAuthoringService _customTextAuthoringService = new CustomTextAuthoringService(new HttpHandler(), "asd", "asd", "asd");
+        private readonly ICustomTextAuthoringService _customTextAuthoringService;
 
         public BatchTestingController(
             IConfigsLoader configurationService,
             IStorageFactoryFactory storageFactoryFactory,
             ILoggerService loggerService,
-            ITextAnalyticsService textAnalyticsPredictionService,
             ICustomTextPredictionService CustomTextPredictionService,
+            ICustomTextAuthoringService customTextAuthoringService,
             IBatchTestingService batchTestingService)
         {
             _configurationService = configurationService;
             _storageFactoryFactory = storageFactoryFactory;
             _loggerService = loggerService;
-            _textAnalyticsPredictionService = textAnalyticsPredictionService;
             _customTextPredictionService = CustomTextPredictionService;
+            _customTextAuthoringService = customTextAuthoringService;
             _batchTestingService = batchTestingService;
         }
 
@@ -63,6 +61,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var failedFiles = new ConcurrentDictionary<string, string>();
 
             // get labeled examples
+            _loggerService.LogOperation(OperationType.GeneratingTestSet);
             var labeledExamples = await _customTextAuthoringService.GetLabeledExamples();
             var testData = await CreateTestData(labeledExamples);
 
@@ -71,10 +70,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             BatchTestResponse batchTestResponse = _batchTestingService.RunBatchTest(testData);
 
             // store file
-            var outFileName = "batchTesting.json";
+            var outFileName = Constants.CustomTextEvaluationControllerOutputFileName;
             _loggerService.LogOperation(OperationType.StoringResult, outFileName);
             var responseAsJson = JsonConvert.SerializeObject(batchTestResponse, Formatting.Indented);
             await _destinationStorageService.StoreDataAsync(responseAsJson, outFileName);
+
+            // log result
             _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
 
