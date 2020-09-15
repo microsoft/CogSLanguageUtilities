@@ -1,6 +1,6 @@
 ﻿using Azure.AI.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Chunker;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.PredictionApi.Response.Result;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Result;
 using Newtonsoft.Json;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Concatenation
