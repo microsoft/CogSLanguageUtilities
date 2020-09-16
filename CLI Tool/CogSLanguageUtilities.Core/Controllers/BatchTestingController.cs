@@ -94,11 +94,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     var documentText = await _sourceStorageService.ReadFileAsStringAsync(e.Document.DocumentId);
 
                     // ground truth
-                    var actualClassId = e.ClassificationLabels.FirstOrDefault(c => c.Label == true)?.ModelId;
-                    var actualClassName = actualClassId == null ? "None" : modelsDictionary[actualClassId];
+                    var actualClassNames = e.ClassificationLabels?.Where(c => c.Label == true).Select(c => modelsDictionary[c.ModelId]).ToList();
+                    actualClassNames = actualClassNames == null || actualClassNames.Count() == 0 ? new List<string> { "None" } : actualClassNames;
                     var groundTruth = new PredictionObject
                     {
-                        Classification = actualClassName,
+                        Classification = actualClassNames,
                         Entities = BatchTestingInputMapper.MapCustomTextMiniDocsToEntitiesRecursively(e.MiniDocs, modelsDictionary)
                     };
 
