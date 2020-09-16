@@ -95,18 +95,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
                     // ground truth
                     var actualClassId = e.ClassificationLabels.FirstOrDefault(c => c.Label == true)?.ModelId;
-                    if (actualClassId == null)
-                    {
-                        continue;
-                    }
-                    var actualClassName = modelsDictionary[actualClassId];
+                    var actualClassName = actualClassId == null ? "None" : modelsDictionary[actualClassId];
                     var groundTruth = new PredictionObject
                     {
                         Classification = actualClassName,
-                        Entities = BatchTestingInputMapper.MapCustomTextExamplesToEntitiesRecursively(e.MiniDocs, modelsDictionary)
+                        Entities = BatchTestingInputMapper.MapCustomTextMiniDocsToEntitiesRecursively(e.MiniDocs, modelsDictionary)
                     };
 
                     // prediction
+                    _loggerService.LogOperation(OperationType.RunningPrediction, e.Document.DocumentId);
                     var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
                     var predictionResponseString = JsonConvert.SerializeObject(predictionResponse, Formatting.Indented);
                     var jsonFileName = Path.GetFileNameWithoutExtension(e.Document.DocumentId) + ".json";
