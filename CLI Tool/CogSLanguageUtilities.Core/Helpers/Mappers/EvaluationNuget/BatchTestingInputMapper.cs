@@ -18,23 +18,29 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
         {
             return new PredictionObject
             {
-                Classification = customTextResponse.Prediction.PositiveClassifiers.FirstOrDefault(),
+                Classification = customTextResponse.Prediction.PositiveClassifiers.FirstOrDefault() ?? "None",
                 Entities = GetCustomTextEntitiesRecursive(customTextResponse.Prediction.Extractors)
             };
         }
 
-        public static List<Entity> MapCustomTextExamplesToEntitiesRecursively(List<MiniDoc> inputEntities, Dictionary<string, string> modelsDictionary)
+        public static List<Entity> MapCustomTextMiniDocsToEntitiesRecursively(List<MiniDoc> inputMiniDocs, Dictionary<string, string> modelsDictionary)
         {
-            return inputEntities.Select(e =>
+            return inputMiniDocs.SelectMany(d => d.PositiveExtractionLabels).Select(e => MapCustomTextExtractionLabelsToEntitiesRecursively(e, modelsDictionary)).ToList();
+        }
+
+        private static Entity MapCustomTextExtractionLabelsToEntitiesRecursively(PositiveExtractionLabel extractionLabel, Dictionary<string, string> modelsDictionary)
+        {
+            if (extractionLabel == null)
             {
-                return new Entity
-                {
-                    Name = modelsDictionary[e.ModelId],
-                    StartPosition = e.StartCharIndex,
-                    EndPosition = e.EndCharIndex,
-                    Children = e.Children != null ? MapCustomTextExamplesToEntitiesRecursively(e.Children, modelsDictionary) : null
-                };
-            }).ToList();
+                return null;
+            }
+            return new Entity
+            {
+                Name = modelsDictionary[extractionLabel.ModelId],
+                StartPosition = extractionLabel.StartCharIndex,
+                EndPosition = extractionLabel.EndCharIndex,
+                Children = extractionLabel.Children.Select(c => MapCustomTextExtractionLabelsToEntitiesRecursively(c, modelsDictionary)).ToList()
+            };
         }
 
         private static List<Entity> GetCustomTextEntitiesRecursive(JObject extractors)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response
 {
-    public class MiniDoc
+    public class PositiveExtractionLabel
     {
         [JsonProperty("modelId")]
         public string ModelId { get; set; }
@@ -14,7 +14,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Labe
         [JsonProperty("endCharIndex")]
         public int EndCharIndex { get; set; }
 
-        [JsonProperty("positiveExtractionLabels")]
-        public List<PositiveExtractionLabel> PositiveExtractionLabels { get; set; }
+        [JsonProperty("children")]
+        public List<PositiveExtractionLabel> Children { get; set; }
     }
 }
