@@ -95,7 +95,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
                     // ground truth
                     var actualClassNames = e.ClassificationLabels?.Where(c => c.Label == true).Select(c => modelsDictionary[c.ModelId]).ToList();
-                    actualClassNames = actualClassNames == null || actualClassNames.Count() == 0 ? new List<string> { "None" } : actualClassNames;
+                    actualClassNames = actualClassNames ?? new List<string>();
                     var groundTruth = new PredictionObject
                     {
                         Classification = actualClassNames,
