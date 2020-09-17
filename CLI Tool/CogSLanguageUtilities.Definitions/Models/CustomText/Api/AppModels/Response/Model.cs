@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response

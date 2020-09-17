@@ -18,7 +18,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
         {
             return new PredictionObject
             {
-                Classification = customTextResponse.Prediction.PositiveClassifiers.Count == 0 ? new List<string> { "None" } : customTextResponse.Prediction.PositiveClassifiers,
+                Classification = customTextResponse.Prediction.PositiveClassifiers ?? new List<string>(),
                 Entities = GetCustomTextEntitiesRecursive(customTextResponse.Prediction.Extractors)
             };
         }

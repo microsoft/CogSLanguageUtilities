@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Prediction;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.ComponentModel.DataAnnotations;
@@ -12,9 +11,8 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Evaluat
     [Command("evaluate", Description = "")]
     public class EvaluateCommand
     {
-        [Required]
         [Option("--source <local/blob>", Description = "[required] indicates source storage type")]
-        public StorageType Source { get; }
+        public StorageType Source { get; } = StorageType.Blob;
         [Required]
         [Option("--destination <local/blob>", Description = "[required] indicates destination storage type")]
         public StorageType Destination { get; }

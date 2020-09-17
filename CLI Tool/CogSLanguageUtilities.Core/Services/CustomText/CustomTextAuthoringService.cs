@@ -99,7 +99,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             };
             var response = await _httpHandler.SendGetRequestAsync(requestUrl, headers, null);
             if (response.StatusCode != HttpStatusCode.OK)
-            { 
+            {
                 throw new FetchingExamplesFailedException(response.StatusCode.ToString());
             }
         }
