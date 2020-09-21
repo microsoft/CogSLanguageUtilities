@@ -8,7 +8,6 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledE
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.LuisModelEvaluation.Models.Input;
-using Microsoft.LuisModelEvaluation.Models.Result;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
@@ -70,7 +69,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
             // evaluate model
             _loggerService.LogOperation(OperationType.EvaluatingResults);
-            BatchTestResponse batchTestResponse = _batchTestingService.RunBatchTest(testData);
+            var batchTestResponse = _batchTestingService.RunBatchTest(testData);
 
             // store file
             var outFileName = Constants.CustomTextEvaluationControllerOutputFileName;

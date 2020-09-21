@@ -1,6 +1,6 @@
 ﻿using Microsoft.CogSLanguageUtilities.Core.Services.Evaluation;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.Evaluation;
 using Microsoft.LuisModelEvaluation.Models.Input;
-using Microsoft.LuisModelEvaluation.Models.Result;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -20,9 +20,9 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
                 LabeledData = labeled,
                 PredictedData = predicted
             };
-            var batchTestResponse = JsonConvert.DeserializeObject<BatchTestResponse>(File.ReadAllText(@"TestData\Evaluation\batchTesting.json"));
+            var batchTestResponse = JsonConvert.DeserializeObject<BatchTestingOutput>(File.ReadAllText(@"TestData\Evaluation\batchTesting.json"));
             var examples = new List<TestingExample> { example };
-            return new TheoryData<IEnumerable<TestingExample>, BatchTestResponse>
+            return new TheoryData<IEnumerable<TestingExample>, BatchTestingOutput>
             {
                 {
                     examples,
@@ -30,26 +30,27 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
                 }
             };
         }
+
         [Theory]
         [MemberData(nameof(RunBatchTestTestData))]
-        public void RunBatchTestTest(IEnumerable<TestingExample> examples, BatchTestResponse expectedResponse)
+        public void RunBatchTestTest(IEnumerable<TestingExample> examples, BatchTestingOutput expectedResponse)
         {
             var service = new BatchTestingService();
             var batchTestResponse = service.RunBatchTest(examples);
-            Assert.Equal(expectedResponse, batchTestResponse, new BatchTestResponseComparer());
+            Assert.Equal(expectedResponse, batchTestResponse, new BatchTestingOutputComparer());
         }
 
-        public class BatchTestResponseComparer : IEqualityComparer<BatchTestResponse>
+        public class BatchTestingOutputComparer : IEqualityComparer<BatchTestingOutput>
         {
-            public bool Equals(BatchTestResponse x, BatchTestResponse y)
+            public bool Equals(BatchTestingOutput x, BatchTestingOutput y)
             {
-                var xEntities = new List<ModelStats>(x.EntityModelsStats);
+                var xEntities = new List<BatchTestingModelStats>(x.EntityModelsStats);
                 xEntities.Sort((x, y) => x.ModelName.CompareTo(y.ModelName));
-                var xIntents = new List<ModelStats>(x.IntentModelsStats);
+                var xIntents = new List<BatchTestingModelStats>(x.ClassificationModelsStats);
                 xIntents.Sort((x, y) => x.ModelName.CompareTo(y.ModelName));
-                var yEntities = new List<ModelStats>(y.EntityModelsStats);
+                var yEntities = new List<BatchTestingModelStats>(y.EntityModelsStats);
                 yEntities.Sort((x, y) => x.ModelName.CompareTo(y.ModelName));
-                var yIntents = new List<ModelStats>(y.IntentModelsStats);
+                var yIntents = new List<BatchTestingModelStats>(y.ClassificationModelsStats);
                 yEntities.Sort((x, y) => x.ModelName.CompareTo(y.ModelName));
                 var entities = xEntities.Zip(yEntities, (x, y) => new { x, y });
                 var intents = xIntents.Zip(yIntents, (x, y) => new { x, y });
@@ -70,7 +71,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
                 return true;
             }
 
-            public int GetHashCode(BatchTestResponse obj)
+            public int GetHashCode(BatchTestingOutput obj)
             {
                 return obj.GetHashCode();
             }

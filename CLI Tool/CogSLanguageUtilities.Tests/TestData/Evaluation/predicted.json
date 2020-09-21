@@ -1,5 +1,5 @@
 {
-  "Classification": "Introduction",
+  "Classification": [ "Introduction" ],
   "Entities": [
     {
       "StartPosition": 55,
