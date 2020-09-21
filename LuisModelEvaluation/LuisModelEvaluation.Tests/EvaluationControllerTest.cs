@@ -8,48 +8,111 @@ namespace Microsoft.LuisModelEvaluation.Tests
 {
     public class EvaluationControllerTest
     {
-        [Fact]
-        public void EvaluateModelTest()
+        EvaluationController _evaluationController;
+
+        public EvaluationControllerTest()
         {
-            var entity = new Entity
-            {
-                Name = "testEntity",
-                StartPosition = 1,
-                EndPosition = 4,
-                Children = null
-            };
-            var entities = new List<Entity>()
-            {
-                entity
-            };
+            _evaluationController = new EvaluationController();
+        }
+
+        public static TheoryData EvaluateModelTestData()
+        {
             var predictionData = new PredictionObject
             {
                 Classification = new List<string> { "testClass" },
-                Entities = entities
-            };
-            var list = new List<TestingExample>
-            {
-                new TestingExample
+                Entities = new List<Entity>()
                 {
-                    PredictedData = predictionData,
-                    LabeledData = predictionData
+                    new Entity
+                    {
+                        Name = "testEntity",
+                        StartPosition = 1,
+                        EndPosition = 20,
+                        Children = new List<Entity>()
+                        {
+                            new Entity
+                            {
+                                Name = "testChildEntity",
+                                StartPosition = 4,
+                                EndPosition = 10,
+                                Children = null
+                            }
+                        }
+                    }
                 }
             };
-            var evaluationController = new EvaluationController();
-            var result = evaluationController.EvaluateModel(list);
-            Assert.Equal(1, result.EntityModelsStats.Count);
-            Assert.Equal(1, result.IntentModelsStats.Count);
+            var wrongPrediction = new PredictionObject
+            {
+                Classification = new List<string> { "wrongClass" },
+                Entities = new List<Entity>()
+                {
+                    new Entity
+                    {
+                        Name = "wrongEntity",
+                        StartPosition = 5,
+                        EndPosition = 8,
+                        Children = new List<Entity>()
+                        {
+                            new Entity
+                            {
+                                Name = "testWrongChildEntity",
+                                StartPosition = 4,
+                                EndPosition = 10,
+                                Children = null
+                            }
+                        }
+                    }
+                }
+            };
+            var perfectScore = 1.0;
+            var worstScore = 0.0;
+            return new TheoryData<List<TestingExample>, double, int, int>
+            {
+                {
+                    new List<TestingExample> {
+                        new TestingExample
+                        {
+                            PredictedData = predictionData,
+                            LabeledData = predictionData
+                        }
+                    },
+                    perfectScore,
+                    2,
+                    1
+                },
+                {
+                    new List<TestingExample> {
+                        new TestingExample
+                        {
+                            PredictedData = wrongPrediction,
+                            LabeledData = predictionData
+                        }
+                    },
+                    worstScore,
+                    4,
+                    2
+                }
+            };
+        }
+
+        // Test perfect prediction and wrong prediction scenarios
+        [Theory]
+        [MemberData(nameof(EvaluateModelTestData))]
+        public void EvaluateModelTest(List<TestingExample> testData, double score, int entityCount, int classCount)
+        {
+            var result = _evaluationController.EvaluateModel(testData);
+            Assert.Equal(entityCount, result.EntityModelsStats.Count);
+            Assert.Equal(classCount, result.ClassificationModelsStats.Count);
             foreach (var entityStats in result.EntityModelsStats)
             {
-                Assert.Equal(1.0, entityStats.Precision);
-                Assert.Equal(1.0, entityStats.Recall);
-                Assert.Equal(1.0, entityStats.FScore);
+                Assert.Equal(score, entityStats.Precision);
+                Assert.Equal(score, entityStats.Recall);
+                Assert.Equal(score, entityStats.FScore);
             }
-            foreach (var intentStats in result.IntentModelsStats)
+            foreach (var classificationStats in result.ClassificationModelsStats)
             {
-                Assert.Equal(1.0, intentStats.Precision);
-                Assert.Equal(1.0, intentStats.Recall);
-                Assert.Equal(1.0, intentStats.FScore);
+                Assert.Equal(score, classificationStats.Precision);
+                Assert.Equal(score, classificationStats.Recall);
+                Assert.Equal(score, classificationStats.FScore);
             }
             return;
         }
