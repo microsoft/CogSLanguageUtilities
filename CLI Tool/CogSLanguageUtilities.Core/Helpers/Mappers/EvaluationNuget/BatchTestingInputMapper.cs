@@ -1,4 +1,6 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Result;
 using Microsoft.LuisModelEvaluation.Models.Input;
 using Newtonsoft.Json.Linq;
@@ -26,6 +28,44 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
         public static List<Entity> MapCustomTextMiniDocsToEntitiesRecursively(List<MiniDoc> inputMiniDocs, Dictionary<string, string> modelsDictionary)
         {
             return inputMiniDocs.SelectMany(d => d.PositiveExtractionLabels).Select(e => MapCustomTextExtractionLabelsToEntitiesRecursively(e, modelsDictionary)).ToList();
+        }
+
+        public static List<Model> MapCustomTextEntitiesToModelsRecursively(List<CustomTextModel> customTextModels)
+        {
+            return customTextModels.SelectMany(m =>
+            {
+                List<Model> models = new List<Model>();
+                if (m.TypeId != (int)ModelType.Cl)
+                {
+                    models.Add(new Model
+                    {
+                        Name = m.Name,
+                        Type = m.ReadableType
+                    });
+                    if (m.Children?.Any() == true)
+                    {
+                        models.AddRange(MapCustomTextEntitiesToModelsRecursively(m.Children));
+                    }
+                }
+                return models;
+            }).ToList();
+        }
+
+        public static List<Model> MapCustomTextClassesToModels(List<CustomTextModel> customTextModels)
+        {
+            List<Model> models = new List<Model>();
+            customTextModels.ForEach(m =>
+            {
+                if (m.TypeId == (int)ModelType.Cl)
+                {
+                    models.Add(new Model
+                    {
+                        Name = m.Name,
+                        Type = m.ReadableType
+                    });
+                }
+            });
+            return models;
         }
 
         private static Entity MapCustomTextExtractionLabelsToEntitiesRecursively(PositiveExtractionLabel extractionLabel, Dictionary<string, string> modelsDictionary)

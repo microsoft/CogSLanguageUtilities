@@ -6,6 +6,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface IBatchTestingService
     {
-        public BatchTestingOutput RunBatchTest(IEnumerable<TestingExample> testData);
+        public BatchTestingOutput RunBatchTest(IEnumerable<TestingExample> testData, List<Model> entities, List<Model> classes);
     }
 }

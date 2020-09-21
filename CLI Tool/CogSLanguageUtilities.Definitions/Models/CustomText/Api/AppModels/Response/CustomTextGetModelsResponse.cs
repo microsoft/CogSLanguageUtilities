@@ -6,6 +6,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppM
     public class CustomTextGetModelsResponse
     {
         [JsonProperty("models")]
-        public List<Model> Models { get; set; }
+        public List<CustomTextModel> Models { get; set; }
     }
 }

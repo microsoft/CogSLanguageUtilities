@@ -67,9 +67,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var labeledExamples = await _customTextAuthoringService.GetLabeledExamples();
             var testData = await CreateTestData(labeledExamples, convertedFiles, failedFiles);
 
+            // get App models
+            var customTextModels = await _customTextAuthoringService.GetApplicationModels();
+            var entities = BatchTestingInputMapper.MapCustomTextEntitiesToModelsRecursively(customTextModels.Models);
+            var classes = BatchTestingInputMapper.MapCustomTextClassesToModels(customTextModels.Models);
+
             // evaluate model
             _loggerService.LogOperation(OperationType.EvaluatingResults);
-            var batchTestResponse = _batchTestingService.RunBatchTest(testData);
+            var batchTestResponse = _batchTestingService.RunBatchTest(testData, entities, classes);
 
             // store file
             var outFileName = Constants.CustomTextEvaluationControllerOutputFileName;

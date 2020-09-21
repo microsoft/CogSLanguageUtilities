@@ -60,7 +60,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             return result;
         }
 
-        private void AddModelToDictionaryRecursively(Dictionary<string, string> modelsDictionary, List<Model> models)
+        private void AddModelToDictionaryRecursively(Dictionary<string, string> modelsDictionary, List<CustomTextModel> models)
         {
             models.ForEach(m =>
             {
@@ -71,7 +71,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
                 }
             });
         }
-        private async Task<CustomTextGetModelsResponse> GetApplicationModels()
+
+        public async Task<CustomTextGetModelsResponse> GetApplicationModels()
         {
             var requestUrl = string.Format("{0}/luis/authoring/v4.0-preview/documents/apps/{1}/models", _endpointUrl, _appId);
             var headers = new Dictionary<string, string>
