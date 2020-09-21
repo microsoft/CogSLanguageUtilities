@@ -1,5 +1,5 @@
 {
-  "intentModelsStats": [
+  "classificationModelsStats": [
     {
       "modelName": "Introduction",
       "modelType": "Unknown Model Type",
@@ -73,11 +73,11 @@
       "entityTypeFScore": 1.0
     }
   ],
-  "utterancesStats": [
+  "documentsStats": [
     {
       "text": null,
-      "predictedIntentName": "Introduction",
-      "labeledIntentName": "Introduction",
+      "predictedClassNames": [ "Introduction" ],
+      "labeledClassNames": [ "Introduction" ],
       "falsePositiveEntities": [
         {
           "entityName": "Authors::Address::State",
