@@ -36,7 +36,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
         public void RunBatchTestTest(IEnumerable<TestingExample> examples, BatchTestingOutput expectedResponse)
         {
             var service = new BatchTestingService();
-            var batchTestResponse = service.RunBatchTest(examples);
+            var batchTestResponse = service.RunBatchTest(examples, null, null);
             Assert.Equal(expectedResponse, batchTestResponse, new BatchTestingOutputComparer());
         }
 
