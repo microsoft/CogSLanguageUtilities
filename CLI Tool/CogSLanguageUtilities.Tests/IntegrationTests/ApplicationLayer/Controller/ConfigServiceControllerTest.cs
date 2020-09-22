@@ -113,7 +113,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
         public async Task PredictionConfigShowTestAsync()
         {
             // act
-            _controller.ShowPredictionConfigs();
+            _controller.ShowCustomTextConfigs();
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);
@@ -281,8 +281,8 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Controller
         [MemberData(nameof(PredictionConfigSetTestData))]
         public async Task PredictionConfigSetTestAsync(string customTextKey, string customTextEndpoint, string appId)
         {
-            await _controller.SetPredictionConfigsAsync(customTextKey, customTextEndpoint, appId);
-            await _controller.SetPredictionConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
+            await _controller.SetCustomTextConfigsAsync(customTextKey, customTextEndpoint, appId);
+            await _controller.SetCustomTextConfigsAsync(null, null, null); // Value not affected if user doesn't pass it
 
             // assert
             var configsFile = await _storageService.ReadFileAsStringAsync(Constants.ConfigsFileName);

@@ -141,7 +141,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService.Log("Updated Local Storage configs");
         }
 
-        public async Task SetPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId)
+        public async Task SetCustomTextConfigsAsync(string customTextKey, string endpointUrl, string appId)
         {
             if (!string.IsNullOrEmpty(customTextKey))
             {
@@ -200,7 +200,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var configString = JsonConvert.SerializeObject(_configModel.Storage.Blob, Formatting.Indented);
             _loggerService.Log(configString);
         }
-        public void ShowPredictionConfigs()
+        public void ShowCustomTextConfigs()
         {
             var configString = JsonConvert.SerializeObject(_configModel.CustomText, Formatting.Indented);
             _loggerService.Log(configString);

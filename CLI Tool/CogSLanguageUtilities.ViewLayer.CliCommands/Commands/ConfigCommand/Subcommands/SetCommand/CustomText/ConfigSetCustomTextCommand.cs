@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand
 {
-    [Command("prediction", Description = "sets configs for prediction")]
-    public class ConfigSetPredictionCommand
+    [Command("customtext", Description = "sets configs for Custom Text")]
+    public class ConfigSetCustomTextCommand
     {
         [Option(CommandOptionTemplate.CustomTextAzureResourceKey, Description = "custom text app prediction resource key")]
         public string CustomTextKey { get; }
