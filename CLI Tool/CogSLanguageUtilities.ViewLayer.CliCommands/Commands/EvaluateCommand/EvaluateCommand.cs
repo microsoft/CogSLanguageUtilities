@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand
 {
-    [Command("evaluate", Description = "")]
+    [Command("evaluate", Description = "Evaluate trained model against labeled data")]
     public class EvaluateCommand
     {
         [Option("--source <local/blob>", Description = "[required] indicates source storage type")]
