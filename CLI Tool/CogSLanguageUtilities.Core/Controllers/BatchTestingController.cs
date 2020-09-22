@@ -69,7 +69,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
             // get App models
             var customTextModels = await _customTextAuthoringService.GetApplicationModels();
-            var entities = BatchTestingInputMapper.MapCustomTextEntitiesToModelsRecursively(customTextModels.Models);
+            var entities = BatchTestingInputMapper.MapCustomTextEntitiesToModelsRecursively(customTextModels.Models, "");
             var classes = BatchTestingInputMapper.MapCustomTextClassesToModels(customTextModels.Models);
 
             // evaluate model

@@ -25,6 +25,6 @@
         public const int TextAnaylticsApiCallDocumentLimit = 5;
         // evaluation
         public const string CustomTextEvaluationControllerOutputFileName = "CustomTextBatchTesting.json";
-
+        public const string ModelHierarchySeparator = "::";
     }
 }
