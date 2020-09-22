@@ -1,4 +1,5 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Prediction.Response.Result;
@@ -30,21 +31,22 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
             return inputMiniDocs.SelectMany(d => d.PositiveExtractionLabels).Select(e => MapCustomTextExtractionLabelsToEntitiesRecursively(e, modelsDictionary)).ToList();
         }
 
-        public static List<Model> MapCustomTextEntitiesToModelsRecursively(List<CustomTextModel> customTextModels)
+        public static List<Model> MapCustomTextEntitiesToModelsRecursively(List<CustomTextModel> customTextModels, string entityPrefix)
         {
             return customTextModels.SelectMany(m =>
             {
                 List<Model> models = new List<Model>();
                 if (m.TypeId != (int)ModelType.Cl)
                 {
+                    var modelName = string.IsNullOrEmpty(entityPrefix) ? m.Name : $"{entityPrefix}{Constants.ModelHierarchySeparator}{m.Name}";
                     models.Add(new Model
                     {
-                        Name = m.Name,
+                        Name = modelName,
                         Type = m.ReadableType
                     });
                     if (m.Children?.Any() == true)
                     {
-                        models.AddRange(MapCustomTextEntitiesToModelsRecursively(m.Children));
+                        models.AddRange(MapCustomTextEntitiesToModelsRecursively(m.Children, modelName));
                     }
                 }
                 return models;
