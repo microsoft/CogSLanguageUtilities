@@ -1,4 +1,5 @@
-﻿using Microsoft.LuisModelEvaluation.Models.Evaluation;
+﻿using Microsoft.LuisModelEvaluation.Configs;
+using Microsoft.LuisModelEvaluation.Models.Evaluation;
 using Microsoft.LuisModelEvaluation.Models.Input;
 using Microsoft.LuisModelEvaluation.Models.Result;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Microsoft.LuisModelEvaluation.Services
     /// </summary>
     public class EvaluationService
     {
-        public EvaluationService(IEnumerable<Model> entities, IEnumerable<Model> classes)
+        public EvaluationService(IReadOnlyList<Model> entities, IReadOnlyList<Model> classes)
         {
             InitClassificationAndEntityStats(entities, classes);
         }
@@ -36,63 +37,63 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// <summary>
         /// Incrementally aggregates the confusion results for classes
         /// </summary>
+        /// <param name="labeledClassNamesSet">HashSet containing the labeled class names for the test example</param>
+        /// <param name="predictedClassNamesSet">HashSet containing the predicted class names for the test example</param>
         public void AggregateClassificationStats(
-            HashSet<string> actualClassNamesSet,
+            HashSet<string> labeledClassNamesSet,
             HashSet<string> predictedClassNamesSet)
         {
-            // initialize actualClassName in ClassificationStats
-            actualClassNamesSet.Select(actualClassName =>
+            // calculate false negatives
+            foreach (var predictedClassName in labeledClassNamesSet)
             {
-                if (!ClassificationStats.TryGetValue(actualClassName, out ConfusionMatrix labeledConfusionCount))
+                // Initialize if not in dictionary to avoid null errors
+                if (!ClassificationStats.ContainsKey(predictedClassName))
                 {
-                    // Initialize if not in dictionary to avoid null errors
-                    labeledConfusionCount = ClassificationStats[actualClassName] = new ConfusionMatrix
+                    ClassificationStats[predictedClassName] = new ConfusionMatrix
                     {
-                        ModelName = actualClassName,
-                        ModelType = GetModelTypeString(actualClassName)
+                        ModelName = predictedClassName,
+                        ModelType = Constants.ModelNotFoundMessage
                     };
                 }
-                return 0;
-            });
+                // increment false negatives
+                if (!predictedClassNamesSet.Contains(predictedClassName))
+                {
+                    ClassificationStats[predictedClassName].FalseNegatives++;
+                }
+            }
             // calculate false positives
-            predictedClassNamesSet.Select(predictedClassName =>
+            foreach (var predictedClassName in predictedClassNamesSet)
             {
-                if (actualClassNamesSet.Contains(predictedClassName))
+                if (labeledClassNamesSet.Contains(predictedClassName))
                 {
                     ClassificationStats[predictedClassName].TruePositives++;
                 }
                 else
                 {
+                    // Initialize if not in dictionary to avoid null errors
                     if (!ClassificationStats.TryGetValue(predictedClassName, out ConfusionMatrix predictedConfusionCount))
                     {
                         predictedConfusionCount = ClassificationStats[predictedClassName] = new ConfusionMatrix
                         {
                             ModelName = predictedClassName,
-                            ModelType = GetModelTypeString(predictedClassName)
+                            ModelType = Constants.ModelNotFoundMessage
                         };
                     }
                     predictedConfusionCount.FalsePositives++;
                 }
-                return 0;
-            });
-            // calculate false negatives
-            actualClassNamesSet.Select(actualClassName =>
-            {
-                if (!predictedClassNamesSet.Contains(actualClassName))
-                {
-                    ClassificationStats[actualClassName].FalseNegatives++;
-                }
-                return 0;
-            });
+            }
         }
 
         /// <summary>
         /// Incrementally aggregates the confusion results for entities
         /// and populates false positive and negatives entities for each query
         /// </summary>
+        /// <param name="labeledEntities">List of labeled entities for the test example</param>
+        /// <param name="predictedEntities">List of predicted entities for the test example</param>
+        /// <param name="queryStats">Stats calculated for the query</param>
         public void PopulateQueryAndEntityStats(
             IReadOnlyList<Entity> labeledEntities,
-            IEnumerable<Entity> predictedEntities,
+            IReadOnlyList<Entity> predictedEntities,
             QueryStats queryStats)
         {
             /*
@@ -135,6 +136,10 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// <summary>
         /// Returns a bool telling if the provided locations overlap
         /// </summary>
+        /// <param name="start1">Start character index of the first entity</param>
+        /// <param name="end1">End character index of the first entity</param>
+        /// <param name="start2">Start character index of the second entity</param>
+        /// <param name="end2">End character index of the second entity</param>
         private static bool LocationsOverlap(int start1, int end1, int start2, int end2)
         {
             return start1 <= end2 && start2 <= end1;
@@ -143,6 +148,10 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// <summary>
         /// Returns a bool telling if the provided locations match exactly
         /// </summary>
+        /// <param name="start1">Start character index of the first entity</param>
+        /// <param name="end1">End character index of the first entity</param>
+        /// <param name="start2">Start character index of the second entity</param>
+        /// <param name="end2">End character index of the second entity</param>
         private static bool LocationsMatchExactly(int start1, int end1, int start2, int end2)
         {
             return start1 == start2 && end1 == end2;
@@ -151,6 +160,8 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// <summary>
         /// Appends the parent name with entity name to get a full qualified name
         /// </summary>
+        /// <param name="parentName">Name of the parent entity</param>
+        /// <param name="entityName">Name of the child entity</param>
         private static string GetEntityFullName(string parentName, string entityName)
         {
             if (string.IsNullOrEmpty(parentName))
@@ -165,24 +176,30 @@ namespace Microsoft.LuisModelEvaluation.Services
         /// key = ["{entity_name}{entity_start_index}{entity_end_index}"]
         /// to make sure they do not collide if multiple entities of the same type exist in same query but in different places
         /// </summary>
-        private static string GetUniqueEntityKey(string labeledEntityFullName, int startPosition, int endPosition)
+        /// <param name="entityFullName">Entity full hierarchical name</param>
+        /// <param name="startPosition">Entity start character index</param>
+        /// <param name="endPosition">Entity end character index</param>
+        /// <returns>A unique string representation of the entity in the example</returns>
+        private static string GetUniqueEntityKey(string entityFullName, int startPosition, int endPosition)
         {
-            return $"{labeledEntityFullName}{startPosition}{endPosition}";
+            return $"{entityFullName}{startPosition}{endPosition}";
         }
 
         /// <summary>
         /// Add up labeled entities and their children counts
         /// and populate all labeled entities as false negatives initially
         /// </summary>
+        /// <param name="labeledEntity">The entity to be processed</param>
+        /// <param name="falseNegativeEntities">Dictionay containing false negative entities indexed by their unique key</param>
+        /// <param name="labeledEntityPrefix">Parent entity full hierarchical name</param>
         private void ProcessLabeledEntitiesRecursively(
             Entity labeledEntity,
             Dictionary<string, Entity> falseNegativeEntities,
             string labeledEntityPrefix = "")
         {
             // get or create entity stats
-            string labeledEntityFullName;
-            MucEntityConfusionMatrix labeledEntityEvalObj;
-            GetOrAddEntityStatObject(labeledEntity, labeledEntityPrefix, out labeledEntityFullName, out labeledEntityEvalObj);
+            string labeledEntityFullName = GetEntityFullName(labeledEntityPrefix, labeledEntity.Name);
+            var labeledEntityEvalObj = GetOrAddEntityStatObject(labeledEntityFullName);
 
             // init possible count
             labeledEntityEvalObj.ActualCount++;
@@ -218,7 +235,6 @@ namespace Microsoft.LuisModelEvaluation.Services
             QueryStats queryStats,
             Dictionary<string, Entity> falseNegativeEntities)
         {
-
             AddUpPredictedEntitiesCountRecursively(predictedEntity);
 
             AddUpCorrectTypeAndTextEntitiesCountsRecursively(
@@ -236,9 +252,8 @@ namespace Microsoft.LuisModelEvaluation.Services
             string predictedEntityPrefix = "")
         {
             // get or create entity stats
-            string predictedEntityFullName;
-            MucEntityConfusionMatrix predictedEntityEvalObj;
-            GetOrAddEntityStatObject(predictedEntity, predictedEntityPrefix, out predictedEntityFullName, out predictedEntityEvalObj);
+            string predictedEntityFullName = GetEntityFullName(predictedEntityPrefix, predictedEntity.Name);
+            var predictedEntityEvalObj = GetOrAddEntityStatObject(predictedEntityFullName);
 
             // init possible count
             predictedEntityEvalObj.PossibleCount++;
@@ -266,9 +281,8 @@ namespace Microsoft.LuisModelEvaluation.Services
             string predictedEntityPrefix = "")
         {
             // get or create entity stats
-            string predictedEntityFullName;
-            MucEntityConfusionMatrix predictedEntityEvalObj;
-            GetOrAddEntityStatObject(predictedEntity, predictedEntityPrefix, out predictedEntityFullName, out predictedEntityEvalObj);
+            string predictedEntityFullName = GetEntityFullName(predictedEntityPrefix, predictedEntity.Name);
+            var predictedEntityEvalObj = GetOrAddEntityStatObject(predictedEntityFullName);
 
             // A boolean to keep track if the guessed entity matches with any labeled entity
             var isFalsePositive = true;
@@ -374,10 +388,14 @@ namespace Microsoft.LuisModelEvaluation.Services
         }
 
         /// <summary>
+        /// <summary>
         /// Add classes and entities to the stats data structues
         /// This will help models that never appeared in the labeled or the predicted to also be indicated in the results
         /// </summary>
-        private void InitClassificationAndEntityStats(IEnumerable<Model> entities, IEnumerable<Model> classes)
+        /// </summary>
+        /// <param name="entities">List of all entity models in the application</param>
+        /// <param name="classes">List of all classification models in the application</param>
+        private void InitClassificationAndEntityStats(IReadOnlyList<Model> entities, IReadOnlyList<Model> classes)
         {
             if (classes != null)
             {
@@ -404,35 +422,31 @@ namespace Microsoft.LuisModelEvaluation.Services
         }
 
         /// <summary>
-        /// Given a class or entity display name returns the corresponding model type string
+        /// Returns the full hierarchical name of an entity from its name and its parent's name using the hierarchical separator "::"
         /// </summary>
-        private string GetModelTypeString(string entityDisplayName)
-        {
-            // TODO: Check with Amr that this is correct
-            return "Unknown Model Type";
-        }
-
-        static string ModelHierarchySeparator = "::";
-
+        /// <param name="parentName">Parent entity full hierarchical name</param>
+        /// <param name="childName">Child entity name</param>
         public static string GetFormattedHierarchicalChildName(string parentName, string childName)
         {
-            return $"{parentName}{ModelHierarchySeparator}{childName}";
+            return $"{parentName}{Constants.ModelHierarchySeparator}{childName}";
         }
 
-        private void GetOrAddEntityStatObject(Entity entity, string entityPrefix, out string entityFullName, out MucEntityConfusionMatrix entityEvalObj)
+        /// <summary>
+        /// Returns the MucEntityConfusionMatrix for the given entity from the EntityStats dictionary and creates one if it doesn't exist
+        /// </summary>
+        /// <param name="entityFullName">Entity full hierarchical name</param>
+        private MucEntityConfusionMatrix GetOrAddEntityStatObject(string entityFullName)
         {
-            entityFullName = GetEntityFullName(entityPrefix, entity.Name);
-
-            // Add up MUC possible/guessed count
-            if (!EntityStats.TryGetValue(entityFullName, out entityEvalObj))
+            // Create if not exists in dictionary
+            if (!EntityStats.ContainsKey(entityFullName))
             {
-                // Create if not exists in dictionary
-                entityEvalObj = EntityStats[entityFullName] = new MucEntityConfusionMatrix
+                EntityStats[entityFullName] = new MucEntityConfusionMatrix
                 {
                     ModelName = entityFullName,
-                    ModelType = GetModelTypeString(entityFullName)
+                    ModelType = Constants.ModelNotFoundMessage
                 };
             }
+            return EntityStats[entityFullName];
         }
     }
 }

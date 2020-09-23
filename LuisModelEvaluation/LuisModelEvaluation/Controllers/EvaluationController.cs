@@ -9,21 +9,29 @@ namespace Microsoft.LuisModelEvaluation.Controllers
 {
     public class EvaluationController
     {
+        /// <summary>
+        /// Evaluate trained application performance against labeled data using fscore for classes and MUC Evaluation for entities
+        /// </summary>
+        /// <param name="testData">List of TestingExample each containing the labeled and predicted data</param>
+        /// <param name="verbose">Ouputs extra metrics for Entities</param>
+        /// <param name="entities">List of all entity models in the application</param>
+        /// <param name="classes">List of all classification models in the application</param>
+        /// <returns></returns>
         public BatchTestResponse EvaluateModel(
-            IEnumerable<TestingExample> testData,
+            IReadOnlyList<TestingExample> testData,
             bool verbose = false,
-            IEnumerable<Model> entities = null,
-            IEnumerable<Model> classes = null)
+            IReadOnlyList<Model> entities = null,
+            IReadOnlyList<Model> classes = null)
         {
             ValidateInput(testData);
 
-            // Intialize the evaluation service
+            // Intialize the evaluation service with the application models
             var evaluationService = new EvaluationService(entities, classes);
 
             foreach (var testCase in testData)
             {
                 // classification model stats aggregation
-                evaluationService.AggregateClassificationStats(new HashSet<string> ( testCase.LabeledData.Classification ), new HashSet<string> ( testCase.PredictedData.Classification ) );
+                evaluationService.AggregateClassificationStats(new HashSet<string>(testCase.LabeledData.Classification), new HashSet<string>(testCase.PredictedData.Classification));
 
                 // Prepare query stats
                 var queryStats = new QueryStats
@@ -77,7 +85,11 @@ namespace Microsoft.LuisModelEvaluation.Controllers
             };
         }
 
-        private void ValidateInput(IEnumerable<TestingExample> testData)
+        /// <summary>
+        /// Validates input test data by checking for null values
+        /// </summary>
+        /// <param name="testData">List of TestingExample each containing the labeled and predicted data</param>
+        private void ValidateInput(IReadOnlyList<TestingExample> testData)
         {
             if (testData == null || testData.Count() == 0)
             {
