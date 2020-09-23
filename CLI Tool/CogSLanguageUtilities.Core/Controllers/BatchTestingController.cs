@@ -86,7 +86,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService.LogParsingResult(convertedFiles, failedFiles);
         }
 
-        private async Task<IEnumerable<TestingExample>> CreateTestData(CustomTextGetLabeledExamplesResponse labeledExamples, ConcurrentBag<string> convertedFiles, ConcurrentDictionary<string, string> failedFiles)
+        private async Task<List<TestingExample>> CreateTestData(CustomTextGetLabeledExamplesResponse labeledExamples, ConcurrentBag<string> convertedFiles, ConcurrentDictionary<string, string> failedFiles)
         {
             var modelsDictionary = await _customTextAuthoringService.GetModelsDictionary();
             var testingExamples = new List<TestingExample>();
