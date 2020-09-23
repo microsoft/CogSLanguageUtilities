@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Microsoft.LuisModelEvaluation.Models.Input
+namespace Microsoft.LanguageModelEvaluation.Models.Input
 {
     public class Entity
     {

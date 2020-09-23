@@ -1,4 +1,4 @@
-﻿namespace Microsoft.LuisModelEvaluation.Models.Evaluation
+﻿namespace Microsoft.LanguageModelEvaluation.Models.Evaluation
 {
     /*
      * MUC stands for "Message Understanding Conference"

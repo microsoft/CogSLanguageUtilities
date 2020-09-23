@@ -1,10 +1,10 @@
-using Microsoft.LuisModelEvaluation.Exceptions;
-using Microsoft.LuisModelEvaluation.Models.Input;
-using Microsoft.LuisModelEvaluation.Orchestrators;
+using Microsoft.LanguageModelEvaluation.Exceptions;
+using Microsoft.LanguageModelEvaluation.Models.Input;
+using Microsoft.LanguageModelEvaluation.Orchestrators;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Microsoft.LuisModelEvaluation.Tests
+namespace Microsoft.LanguageModelEvaluation.Tests
 {
     public class EvaluationOrchestratorTest
     {

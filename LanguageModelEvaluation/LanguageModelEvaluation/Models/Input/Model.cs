@@ -1,4 +1,4 @@
-﻿namespace Microsoft.LuisModelEvaluation.Models.Input
+﻿namespace Microsoft.LanguageModelEvaluation.Models.Input
 {
     public class Model
     {

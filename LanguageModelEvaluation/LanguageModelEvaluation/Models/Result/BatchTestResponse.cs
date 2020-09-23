@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Microsoft.LuisModelEvaluation.Models.Result
+namespace Microsoft.LanguageModelEvaluation.Models.Result
 {
     public class BatchTestResponse
     {

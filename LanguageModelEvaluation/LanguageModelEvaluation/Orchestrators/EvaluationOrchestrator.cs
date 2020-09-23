@@ -1,11 +1,11 @@
-﻿using Microsoft.LuisModelEvaluation.Exceptions;
-using Microsoft.LuisModelEvaluation.Models.Input;
-using Microsoft.LuisModelEvaluation.Models.Result;
-using Microsoft.LuisModelEvaluation.Services;
+﻿using Microsoft.LanguageModelEvaluation.Exceptions;
+using Microsoft.LanguageModelEvaluation.Models.Input;
+using Microsoft.LanguageModelEvaluation.Models.Result;
+using Microsoft.LanguageModelEvaluation.Services;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.LuisModelEvaluation.Orchestrators
+namespace Microsoft.LanguageModelEvaluation.Orchestrators
 {
     public class EvaluationOrchestrator
     {

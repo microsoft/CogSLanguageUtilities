@@ -1,11 +1,11 @@
-﻿using Microsoft.LuisModelEvaluation.Configs;
-using Microsoft.LuisModelEvaluation.Models.Evaluation;
-using Microsoft.LuisModelEvaluation.Models.Input;
-using Microsoft.LuisModelEvaluation.Models.Result;
+﻿using Microsoft.LanguageModelEvaluation.Configs;
+using Microsoft.LanguageModelEvaluation.Models.Evaluation;
+using Microsoft.LanguageModelEvaluation.Models.Input;
+using Microsoft.LanguageModelEvaluation.Models.Result;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.LuisModelEvaluation.Services
+namespace Microsoft.LanguageModelEvaluation.Services
 {
     /// <summary>
     /// This class is responsible for calculating and aggregating all the confusion values for a batch test.

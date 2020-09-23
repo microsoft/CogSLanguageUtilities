@@ -1,4 +1,4 @@
-﻿namespace Microsoft.LuisModelEvaluation.Configs
+﻿namespace Microsoft.LanguageModelEvaluation.Configs
 {
     public class Constants
     {

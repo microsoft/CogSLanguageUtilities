@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Microsoft.LuisModelEvaluation.Exceptions
+namespace Microsoft.LanguageModelEvaluation.Exceptions
 {
     public class InvalidInputException : Exception
     {
