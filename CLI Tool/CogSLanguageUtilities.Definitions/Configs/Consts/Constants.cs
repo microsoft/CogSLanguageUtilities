@@ -26,5 +26,6 @@
         // evaluation
         public const string CustomTextEvaluationControllerOutputFileName = "CustomTextBatchTesting.json";
         public const string ModelHierarchySeparator = "::";
+        public const int CustomTextExamplesPageSize = 100;
     }
 }

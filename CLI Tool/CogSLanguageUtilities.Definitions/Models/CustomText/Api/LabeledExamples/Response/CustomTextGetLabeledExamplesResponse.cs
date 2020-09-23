@@ -7,5 +7,8 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Labe
     {
         [JsonProperty("examples")]
         public List<Example> Examples { get; set; }
+
+        [JsonProperty("nextPageLink")]
+        public string NextPageLink { get; set; }
     }
 }
