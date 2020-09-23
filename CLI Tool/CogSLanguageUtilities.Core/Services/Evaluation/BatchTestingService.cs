@@ -9,7 +9,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Evaluation
 {
     public class BatchTestingService : IBatchTestingService
     {
-        public BatchTestingOutput RunBatchTest(IEnumerable<TestingExample> testData, List<Model> entities, List<Model> classes)
+        public BatchTestingOutput RunBatchTest(List<TestingExample> testData, List<Model> entities, List<Model> classes)
         {
             var evaluation = new EvaluationController();
             return BatchTestingOutputMapper.MapEvaluationOutput(evaluation.EvaluateModel(testData, true, entities, classes));

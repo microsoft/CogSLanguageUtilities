@@ -33,7 +33,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
 
         [Theory]
         [MemberData(nameof(RunBatchTestTestData))]
-        public void RunBatchTestTest(IEnumerable<TestingExample> examples, BatchTestingOutput expectedResponse)
+        public void RunBatchTestTest(List<TestingExample> examples, BatchTestingOutput expectedResponse)
         {
             var service = new BatchTestingService();
             var batchTestResponse = service.RunBatchTest(examples, null, null);
