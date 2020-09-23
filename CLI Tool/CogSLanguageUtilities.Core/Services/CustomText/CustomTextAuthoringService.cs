@@ -1,5 +1,6 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
@@ -26,12 +27,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             TestConnectionAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
-        public async Task<CustomTextGetLabeledExamplesResponse> GetLabeledExamples()
+        public async Task<CustomTextGetLabeledExamplesResponse> GetLabeledExamples(int skip = 0, int take = Constants.CustomTextExamplesPageSize)
         {
             var requestUrl = string.Format("{0}/luis/authoring/v4.0-preview/documents/apps/{1}/examples", _endpointUrl, _appId);
             var parameters = new Dictionary<string, string>
             {
                 ["enableNestedChildren"] = "true",
+                ["skip"] = skip.ToString(),
+                ["take"] = take.ToString()
             };
             var headers = new Dictionary<string, string>
             {
@@ -41,7 +44,13 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<CustomTextGetLabeledExamplesResponse>(responseString);
+                var examples = JsonConvert.DeserializeObject<CustomTextGetLabeledExamplesResponse>(responseString);
+                if (!string.IsNullOrEmpty(examples.NextPageLink))
+                {
+                    var nextPage = await GetLabeledExamples(skip + take, take);
+                    examples.Examples.AddRange(nextPage.Examples);
+                }
+                return examples;
             }
             else
             {
