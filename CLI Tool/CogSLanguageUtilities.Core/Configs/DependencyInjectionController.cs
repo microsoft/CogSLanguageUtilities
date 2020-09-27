@@ -123,6 +123,22 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return builder.Build();
         }
 
+        public static IContainer BuildExportCommandDependencies()
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                var labeledExamplesConfigs = configService.GetCustomTextAuthoringConfigModel();
+                return new CustomTextAuthoringService(new HttpHandler(), labeledExamplesConfigs.AzureResourceKey, labeledExamplesConfigs.AzureResourceEndpoint,
+                    labeledExamplesConfigs.AppId);
+            }).As<ICustomTextAuthoringService>();
+            builder.RegisterType<ExportCustomTextController>().As<IExportCustomTextController>();
+            return builder.Build();
+        }
+
         private static IParserService CreateParserService(ParserType parserType, IConfigsLoader configService)
         {
             if (parserType.Equals(ParserType.MSRead))

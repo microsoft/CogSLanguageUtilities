@@ -9,6 +9,8 @@
         DisplayingResult,
         RunningPrediction,
         EvaluatingResults,
-        GeneratingTestSet
+        GeneratingTestSet,
+        ReadingModels,
+        GeneratingSchema
     }
 }
