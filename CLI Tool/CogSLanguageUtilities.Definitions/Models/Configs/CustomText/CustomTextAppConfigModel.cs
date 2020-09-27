@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.Evaluation
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.CustomText
 {
-    public class LabeledExamplesAppConfigModel
+    public class CustomTextAppConfigModel
     {
         [JsonProperty("azure-resource-key")]
         public string AzureResourceKey { get; set; }

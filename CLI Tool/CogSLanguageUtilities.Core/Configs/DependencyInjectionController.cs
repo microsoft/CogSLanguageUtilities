@@ -82,8 +82,8 @@ namespace Microsoft.CustomTextCliUtils.Configs
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
-                var predictionConfigs = configService.GetCustomTextConfigModel();
-                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
+                var predictionConfigs = configService.GetCustomTextPredictionConfigModel();
+                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.AzureResourceKey, predictionConfigs.AzureResourceEndpoint,
                     predictionConfigs.AppId);
             }).As<ICustomTextPredictionService>();
             builder.Register(c =>
@@ -108,14 +108,14 @@ namespace Microsoft.CustomTextCliUtils.Configs
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
-                var predictionConfigs = configService.GetCustomTextConfigModel();
-                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.CustomTextKey, predictionConfigs.EndpointUrl,
+                var predictionConfigs = configService.GetCustomTextPredictionConfigModel();
+                return new CustomTextPredictionService(new HttpHandler(), predictionConfigs.AzureResourceKey, predictionConfigs.AzureResourceEndpoint,
                     predictionConfigs.AppId);
             }).As<ICustomTextPredictionService>();
             builder.Register(c =>
             {
                 var configService = c.Resolve<IConfigsLoader>();
-                var labeledExamplesConfigs = configService.GetLabeledExamplesAppConfigModel();
+                var labeledExamplesConfigs = configService.GetCustomTextAuthoringConfigModel();
                 return new CustomTextAuthoringService(new HttpHandler(), labeledExamplesConfigs.AzureResourceKey, labeledExamplesConfigs.AzureResourceEndpoint,
                     labeledExamplesConfigs.AppId);
             }).As<ICustomTextAuthoringService>();
