@@ -1,0 +1,75 @@
+﻿using Azure;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
+using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Helpers;
+using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
+using Microsoft.CognitiveSearchIntegration.Definitions.Consts;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Schema;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+
+namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
+{
+    public class CognitiveSearchService : ICognitiveSearchService
+    {
+        string _endpoint;
+        string _key;
+        private IHttpHandler _httpHandler;
+        private SearchIndexClient _searchIndexClient;
+        private SearchIndexerClient _searchIndexerClient;
+
+        public CognitiveSearchService(string endpoint, string apiKey)
+        {
+            _endpoint = endpoint;
+            _key = apiKey;
+            Uri serviceEndpoint = new Uri(endpoint);
+            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+            _searchIndexClient = new SearchIndexClient(serviceEndpoint, credential);
+            _searchIndexerClient = new SearchIndexerClient(serviceEndpoint, credential);
+        }
+
+        public async Task CreateIndexAsync(SearchIndex index)
+        {
+            await _searchIndexClient.CreateIndexAsync(index);
+            // TODO: handle exceptions
+        }
+
+        public async Task CreateDataSourceConnectionAsync(string indexName, string containerName, string connectionString)
+        {
+            SearchIndexerDataContainer searchIndexerDataContainer = new SearchIndexerDataContainer(containerName);
+            SearchIndexerDataSourceConnection searchIndexerDataSourceConnection = new SearchIndexerDataSourceConnection(
+                indexName + Constants.DataSourceSuffix,
+                SearchIndexerDataSourceType.AzureBlob,
+                connectionString,
+                searchIndexerDataContainer);
+            await _searchIndexerClient.CreateDataSourceConnectionAsync(searchIndexerDataSourceConnection);
+            // TODO: handle exceptions
+        }
+
+        public async Task CreateIndexerAsync(SearchIndexer indexer)
+        {
+            await _searchIndexerClient.CreateIndexerAsync(indexer);
+            // TODO: handle exceptions
+        }
+
+        public async Task CreateSkillAsync(CustomSkillSchema schema)
+        {
+            var requestUrl = $"{_endpoint}/skillsets";
+            var headers = new Dictionary<string, string>
+            {
+                [Constants.ApimSubscriptionKeyHeader] = _key
+            };
+            var parameters = new Dictionary<string, string>
+            {
+                [Constants.CognitiveSearchApiVersionHeader] = Constants.CognitiveSearchApiVersion
+            };
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, schema, headers, parameters);
+            if (response.StatusCode != HttpStatusCode.Created)
+            {
+                // thorw exception
+            }
+        }
+    }
+}
