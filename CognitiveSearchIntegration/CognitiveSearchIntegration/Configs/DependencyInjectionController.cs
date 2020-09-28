@@ -3,6 +3,7 @@ using Microsoft.CognitiveSearchIntegration.Core.Controllers;
 using Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch;
 using Microsoft.CognitiveSearchIntegration.Core.Services.Storage;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
@@ -16,7 +17,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             builder.Register(c =>
             {
                 // TODO: get configuration
-                return new CognitiveSearchService("https://shaban-search.search.windows.net", "2CD90E19736D4DDF8DE53805A2FB61A7");
+                return new CognitiveSearchService(new HttpHandler(), "https://shaban-search.search.windows.net", "2CD90E19736D4DDF8DE53805A2FB61A7");
             }).As<ICognitiveSearchService>();
             builder.Register<IndexingController>(c =>
             {

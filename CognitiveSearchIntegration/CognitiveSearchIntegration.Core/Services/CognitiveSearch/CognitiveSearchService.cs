@@ -20,8 +20,9 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
         private SearchIndexClient _searchIndexClient;
         private SearchIndexerClient _searchIndexerClient;
 
-        public CognitiveSearchService(string endpoint, string apiKey)
+        public CognitiveSearchService(IHttpHandler httpHandler, string endpoint, string apiKey)
         {
+            _httpHandler = httpHandler;
             _endpoint = endpoint;
             _key = apiKey;
             Uri serviceEndpoint = new Uri(endpoint);
@@ -32,6 +33,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
 
         public async Task CreateIndexAsync(SearchIndex index)
         {
+            await _searchIndexClient.DeleteIndexAsync(index.Name);
             await _searchIndexClient.CreateIndexAsync(index);
             // TODO: handle exceptions
         }
@@ -59,7 +61,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             var requestUrl = $"{_endpoint}/skillsets";
             var headers = new Dictionary<string, string>
             {
-                [Constants.ApimSubscriptionKeyHeader] = _key
+                ["api-key"] = _key
             };
             var parameters = new Dictionary<string, string>
             {

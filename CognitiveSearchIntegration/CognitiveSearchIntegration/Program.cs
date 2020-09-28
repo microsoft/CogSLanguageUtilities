@@ -13,17 +13,17 @@ namespace CognitiveSearchIntegration
     {
         public static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+            //AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
             CommandLineApplication.Execute<Program>(args);
         }
 
         private static string GetVersion()
            => typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
-        static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
-        {
-            Environment.Exit(1);
-        }
+        //static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        //{
+        //    Environment.Exit(1);
+        //}
 
     }
 }

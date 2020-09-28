@@ -44,6 +44,12 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
         {
             List<SearchField> indexFields = new List<SearchField>();
 
+            // id
+            indexFields.Add(new SearchField("id", SearchFieldDataType.String)
+            {
+                IsKey = true
+            });
+
             //classifiers
             SearchField classifierIndexField = new SearchField("Classes", SearchFieldDataType.Collection(SearchFieldDataType.String));
 
@@ -98,14 +104,14 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             {
                 foreach (CustomTextSchemaModel child in children)
                 {
-                    SearchField field = new SearchField(
-                        child.Name,
-                        child.Children == null || child.Children.Count == 0 ? SearchFieldDataType.String : SearchFieldDataType.Complex)
-                    {
-                        IsFacetable = true,
-                        IsFilterable = true,
-                        IsSearchable = true
-                    };
+                    var hasChildren = child.Children != null && child.Children.Count > 0;
+                    SearchField field = hasChildren ? new SearchField(child.Name, SearchFieldDataType.Complex) :
+                        new SearchField(child.Name, SearchFieldDataType.String)
+                        {
+                            IsFacetable = true,
+                            IsFilterable = true,
+                            IsSearchable = true
+                        };
 
                     ExploreChildren(child.Children, field.Fields);
 
