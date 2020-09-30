@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Schema
+namespace Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api
 {
 
     public class CustomSkillSchema

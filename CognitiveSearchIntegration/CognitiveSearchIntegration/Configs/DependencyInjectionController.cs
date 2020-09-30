@@ -27,7 +27,8 @@ namespace Microsoft.CustomTextCliUtils.Configs
                     c.Resolve<ICustomTextIndexingService>(),
                     c.Resolve<ICognitiveSearchService>(),
                     "DefaultEndpointsProtocol=https;AccountName=toolingctlutest;AccountKey=BJFJ1KxfHf7UlPN0vruKiDETUMdousYl9AyUiYg8aXsFQnqnKMXvrFa053mO8Qqbwvs36yGzw5Y/RDgChytegQ==;EndpointSuffix=core.windows.net",
-                    "paperschunked");
+                    "paperschunked",
+                    "https://luisextractor20200929162611.azurewebsites.net/api/luis-extractor?code=ayB5u4JAlw9HlqYcIKUp0dOxYHqOwa9mVdUXNyUFD9QZLJBjxyOftg==");
             });
             return builder.Build();
         }

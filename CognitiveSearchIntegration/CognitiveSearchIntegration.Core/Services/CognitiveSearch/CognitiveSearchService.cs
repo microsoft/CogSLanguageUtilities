@@ -4,7 +4,8 @@ using Azure.Search.Documents.Indexes.Models;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Helpers;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Consts;
-using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Schema;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api.Indexer;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -50,13 +51,25 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             // TODO: handle exceptions
         }
 
-        public async Task CreateIndexerAsync(SearchIndexer indexer)
+        public async Task CreateIndexerAsync(Indexer indexer)
         {
-            await _searchIndexerClient.CreateIndexerAsync(indexer);
-            // TODO: handle exceptions
+            var requestUrl = $"{_endpoint}/indexers";
+            var headers = new Dictionary<string, string>
+            {
+                ["api-key"] = _key
+            };
+            var parameters = new Dictionary<string, string>
+            {
+                [Constants.CognitiveSearchApiVersionHeader] = Constants.CognitiveSearchApiVersion
+            };
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, indexer, headers, parameters);
+            if (response.StatusCode != HttpStatusCode.Created)
+            {
+                // thorw exception
+            }
         }
 
-        public async Task CreateSkillAsync(CustomSkillSchema schema)
+        public async Task CreateSkillSetAsync(SkillSet skillset)
         {
             var requestUrl = $"{_endpoint}/skillsets";
             var headers = new Dictionary<string, string>
@@ -67,7 +80,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             {
                 [Constants.CognitiveSearchApiVersionHeader] = Constants.CognitiveSearchApiVersion
             };
-            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, schema, headers, parameters);
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, skillset, headers, parameters);
             if (response.StatusCode != HttpStatusCode.Created)
             {
                 // thorw exception
