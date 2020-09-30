@@ -5,7 +5,7 @@ using Microsoft.CognitiveSearchIntegration.Enums.Prediction;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Threading.Tasks;
 
-namespace Microsoft.CognitiveSearchIntegration.CliCommands.Commands.Integrate
+namespace Microsoft.CognitiveSearchIntegration.CliCommands.Commands
 {
     [Command("index", Description = "")]
     public class IndexCommand
