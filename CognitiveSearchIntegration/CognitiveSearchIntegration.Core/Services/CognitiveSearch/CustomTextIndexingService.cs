@@ -1,7 +1,8 @@
 ﻿using Azure.Search.Documents.Indexes.Models;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Consts;
-using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Schema;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api.Indexer;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CustomText.Schema;
 using System.Collections.Generic;
 
@@ -9,11 +10,12 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
 {
     public class CustomTextIndexingService : ICustomTextIndexingService
     {
-        public CustomSkillSchema CreateCustomSkillSchema(CustomTextSchema schema, string indexName)
+        public SkillSet CreateCustomSkillSchema(CustomTextSchema schema, string indexName, string azureFunctionUrl)
         {
             CustomSkillSchema customSkillSchema = new CustomSkillSchema()
             {
-                name = indexName + Constants.SkillSetSuffix
+                name = indexName.ToLower() + Constants.CustomSkillSuffix,
+                uri = azureFunctionUrl
             };
             List<Output> outputs = new List<Output>();
 
@@ -27,17 +29,20 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
 
             foreach (CustomTextSchemaModel model in schema.Extractors)
             {
-                //skillset
                 Output output = new Output()
                 {
                     name = model.Name,
                     targetName = model.Name
                 };
-
                 outputs.Add(output);
             }
             customSkillSchema.outputs = outputs;
-            return customSkillSchema;
+            return new SkillSet
+            {
+                Name = indexName.ToLower() + Constants.SkillsetSuffix,
+                Description = "Custom Text Skillset",
+                Skills = new List<CustomSkillSchema> { customSkillSchema }
+            };
         }
 
         public SearchIndex CreateIndex(CustomTextSchema schema, string indexName)
@@ -73,28 +78,57 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             };
         }
 
-        public SearchIndexer CreateIndexer(CustomTextSchema schema, string indexName)
+        public Indexer CreateIndexer(CustomTextSchema schema, string indexName)
         {
-            var indexer = new SearchIndexer(indexName + Constants.IndexerSuffix, indexName + Constants.DataSourceSuffix, indexName)
-            {
-                SkillsetName = indexName + Constants.SkillSetSuffix
-            };
-
+            var outputFieldMappings = new List<IndexerFieldMapping>();
             //classifiers
-            indexer.OutputFieldMappings.Add(new FieldMapping("/document/content/Classes")
+            outputFieldMappings.Add(new IndexerFieldMapping
             {
+                SourceFieldName = "/document/content/Classes",
                 TargetFieldName = "Classes"
             });
 
             // extractors
             foreach (CustomTextSchemaModel model in schema.Extractors)
             {
-                indexer.OutputFieldMappings.Add(new FieldMapping($"/document/content/{model.Name}")
+                outputFieldMappings.Add(new IndexerFieldMapping
                 {
+                    SourceFieldName = $"/document/content/{model.Name}",
                     TargetFieldName = model.Name
                 });
-
             }
+
+            List<IndexerFieldMapping> fieldMappings = new List<IndexerFieldMapping>
+            {
+                new IndexerFieldMapping
+                {
+                    SourceFieldName = "metadata_storage_name",
+                    TargetFieldName = "key",
+                    MappingFunction = new MappingFunction
+                    {
+                        Name = "base64Encode"
+                    }
+                }
+            };
+
+            var indexerParameters = new IndexerParameters
+            {
+                Configuration = new IndexerConfiguration
+                {
+                    IndexedFileNameExtensions = ".txt"
+                }
+            };
+
+            var indexer = new Indexer
+            {
+                Name = indexName + Constants.IndexerSuffix,
+                DataSourceName = indexName + Constants.DataSourceSuffix,
+                TargetIndexName = indexName,
+                SkillsetName = indexName.ToLower() + Constants.SkillsetSuffix,
+                FieldMappings = fieldMappings,
+                OutputFieldMappings = outputFieldMappings,
+                Parameters = indexerParameters
+            };
             return indexer;
         }
 

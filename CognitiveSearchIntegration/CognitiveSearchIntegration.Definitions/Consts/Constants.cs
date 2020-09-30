@@ -7,6 +7,7 @@
         public const string ApimSubscriptionKeyHeader = "Ocp-Apim-Subscription-Key";
         public const string IndexerSuffix = "-indexer";
         public const string DataSourceSuffix = "-data";
-        public const string SkillSetSuffix = "-customTextSkill";
+        public const string CustomSkillSuffix = "-customtext-skill";
+        public const string SkillsetSuffix = "-skillset";
     }
 }

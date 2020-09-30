@@ -12,19 +12,22 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Controllers
         private ICognitiveSearchService _cognitiveSearchService;
         private string _connectionString;
         private string _containerName;
+        private string _azureFunctionUrl;
 
         public IndexingController(
             IStorageService storageService,
             ICustomTextIndexingService customTextIndexingService,
             ICognitiveSearchService cognitiveSearchService,
             string connectionString,
-            string containerName)
+            string containerName,
+            string azureFunctionUrl)
         {
             _storageService = storageService;
             _customTextIndexingService = customTextIndexingService;
             _cognitiveSearchService = cognitiveSearchService;
             _containerName = containerName;
             _connectionString = connectionString;
+            _azureFunctionUrl = azureFunctionUrl;
         }
         public async Task IndexCustomText(string schemaPath, string indexName)
         {
@@ -34,15 +37,16 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Controllers
 
             // create index & skillset
             var searchIndex = _customTextIndexingService.CreateIndex(schema, indexName);
-            var customSkill = _customTextIndexingService.CreateCustomSkillSchema(schema, indexName);
-            var searchindexer = _customTextIndexingService.CreateIndexer(schema, indexName);
+            var customSkill = _customTextIndexingService.CreateCustomSkillSchema(schema, indexName, _azureFunctionUrl);
+            var searchIndexer = _customTextIndexingService.CreateIndexer(schema, indexName);
 
             await _cognitiveSearchService.CreateDataSourceConnectionAsync(indexName, _containerName, _connectionString);
             await _cognitiveSearchService.CreateIndexAsync(searchIndex);
-            await _cognitiveSearchService.CreateSkillAsync(customSkill);
-            await _cognitiveSearchService.CreateIndexerAsync(searchindexer);
+            await _cognitiveSearchService.CreateSkillSetAsync(customSkill);
+            await _cognitiveSearchService.CreateIndexerAsync(searchIndexer);
 
             // populate index
+
         }
     }
 }

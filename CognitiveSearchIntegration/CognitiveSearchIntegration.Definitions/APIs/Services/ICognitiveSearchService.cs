@@ -1,5 +1,6 @@
 ﻿using Azure.Search.Documents.Indexes.Models;
-using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Schema;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api.Indexer;
 using System.Threading.Tasks;
 
 namespace Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services
@@ -7,8 +8,8 @@ namespace Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services
     public interface ICognitiveSearchService
     {
         public Task CreateIndexAsync(SearchIndex index);
-        public Task CreateSkillAsync(CustomSkillSchema schema);
-        public Task CreateIndexerAsync(SearchIndexer indexer);
+        public Task CreateSkillSetAsync(SkillSet skillset);
+        public Task CreateIndexerAsync(Indexer indexer);
         public Task CreateDataSourceConnectionAsync(string indexName, string containerName, string connectionString);
     }
 }
