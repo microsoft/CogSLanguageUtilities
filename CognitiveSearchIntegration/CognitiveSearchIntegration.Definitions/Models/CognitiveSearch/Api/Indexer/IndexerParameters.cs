@@ -7,13 +7,13 @@ namespace Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearc
 {
     public class IndexerParameters
     {
-        [JsonProperty("maxFailedItems")]
+        [JsonProperty("maxFailedItems", NullValueHandling = NullValueHandling.Ignore)]
         public long? MaxFailedItems { get; set; }
 
-        [JsonProperty("batchSize")]
+        [JsonProperty("batchSize", NullValueHandling = NullValueHandling.Ignore)]
         public long? BatchSize { get; set; }
 
-        [JsonProperty("configuration")]
+        [JsonProperty("configuration", NullValueHandling = NullValueHandling.Ignore)]
         public IndexerConfiguration Configuration { get; set; }
     }
 }

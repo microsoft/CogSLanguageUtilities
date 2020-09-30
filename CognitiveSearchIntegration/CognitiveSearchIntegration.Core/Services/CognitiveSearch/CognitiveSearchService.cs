@@ -6,6 +6,7 @@ using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Consts;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api.Indexer;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -65,7 +66,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, indexer, headers, parameters);
             if (response.StatusCode != HttpStatusCode.Created)
             {
-                // thorw exception
+                throw new CliException("Indexer failed" + await response.Content.ReadAsStringAsync());
             }
         }
 
@@ -83,7 +84,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, skillset, headers, parameters);
             if (response.StatusCode != HttpStatusCode.Created)
             {
-                // thorw exception
+                throw new CliException("Skill failed" + await response.Content.ReadAsStringAsync());
             }
         }
     }

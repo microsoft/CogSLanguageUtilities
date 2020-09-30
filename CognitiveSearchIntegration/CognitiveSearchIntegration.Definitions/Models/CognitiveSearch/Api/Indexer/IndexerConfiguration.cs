@@ -7,19 +7,19 @@ namespace Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearc
 {
     public class IndexerConfiguration
     {
-        [JsonProperty("parsingMode")]
+        [JsonProperty("parsingMode", NullValueHandling = NullValueHandling.Ignore)]
         public string ParsingMode { get; set; }
 
-        [JsonProperty("indexedFileNameExtensions")]
+        [JsonProperty("indexedFileNameExtensions", NullValueHandling = NullValueHandling.Ignore)]
         public string IndexedFileNameExtensions { get; set; }
 
-        [JsonProperty("imageAction")]
+        [JsonProperty("imageAction", NullValueHandling = NullValueHandling.Ignore)]
         public string ImageAction { get; set; }
 
-        [JsonProperty("dataToExtract")]
+        [JsonProperty("dataToExtract", NullValueHandling = NullValueHandling.Ignore)]
         public string DataToExtract { get; set; }
 
-        [JsonProperty("executionEnvironment")]
+        [JsonProperty("executionEnvironment", NullValueHandling = NullValueHandling.Ignore)]
         public string ExecutionEnvironment { get; set; }
     }
 }
