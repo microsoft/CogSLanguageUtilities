@@ -1,5 +1,5 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CognitiveSearchIntegration.CliCommands.Commands.Integrate;
+using Microsoft.CognitiveSearchIntegration.CliCommands.Commands;
 using System.Reflection;
 
 namespace CognitiveSearchIntegration
