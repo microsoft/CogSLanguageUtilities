@@ -139,8 +139,8 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
                 foreach (CustomTextSchemaModel child in children)
                 {
                     var hasChildren = child.Children != null && child.Children.Count > 0;
-                    SearchField field = hasChildren ? new SearchField(child.Name, SearchFieldDataType.Complex) :
-                        new SearchField(child.Name, SearchFieldDataType.String)
+                    SearchField field = hasChildren ? new SearchField(child.Name, SearchFieldDataType.Collection(SearchFieldDataType.Complex)) :
+                        new SearchField(child.Name, SearchFieldDataType.Collection(SearchFieldDataType.String))
                         {
                             IsFacetable = true,
                             IsFilterable = true,
