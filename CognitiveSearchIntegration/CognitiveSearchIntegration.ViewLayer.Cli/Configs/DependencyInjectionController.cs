@@ -3,34 +3,55 @@ using Microsoft.CognitiveSearchIntegration.Core.Controllers;
 using Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch;
 using Microsoft.CognitiveSearchIntegration.Core.Services.Storage;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Indexer;
+using Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs.ConfigModels;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
+using Newtonsoft.Json;
+using System.IO;
 
-namespace Microsoft.CustomTextCliUtils.Configs
+namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs
 {
     public class DependencyInjectionController
     {
         public static IContainer BuildIndexCommandDependencies()
         {
+            // load configs
+            var appConfigs = LoadApplicationConfigs();
+
+            // register services
             var builder = new ContainerBuilder();
             builder.RegisterType<LocalStorageService>().As<IStorageService>();
             builder.RegisterType<CustomTextIndexingService>().As<ICustomTextIndexingService>();
             builder.Register(c =>
             {
-                // TODO: get configuration
-                return new CognitiveSearchService(new HttpHandler(), "https://shaban-search.search.windows.net", "2CD90E19736D4DDF8DE53805A2FB61A7");
+                return new CognitiveSearchService(new HttpHandler(), appConfigs.CognitiveSearch.EndpointUrl, appConfigs.CognitiveSearch.ApiKey);
             }).As<ICognitiveSearchService>();
-            builder.Register<IndexingController>(c =>
+            builder.Register(c =>
             {
-                // TODO: get configs
                 return new IndexingController(
                     c.Resolve<IStorageService>(),
                     c.Resolve<ICustomTextIndexingService>(),
                     c.Resolve<ICognitiveSearchService>(),
-                    "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
-                    "paperschunked",
-                    "https://luisextractor20200929162611.azurewebsites.net/api/luis-extractor?code=ayB5u4JAlw9HlqYcIKUp0dOxYHqOwa9mVdUXNyUFD9QZLJBjxyOftg==");
+                    new IndexerConfigs
+                    {
+                        DataSourceConnectionString = appConfigs.BlobStorage.ConnectionString,
+                        DataSourceContainerName = appConfigs.BlobStorage.ContainerName,
+                        AzureFunctionUrl = string.Format("{0}?code={1}", appConfigs.AzureFunction.EndpointUrl, appConfigs.AzureFunction.ApiKey)
+                    });
             });
             return builder.Build();
+        }
+
+        private static ConfigModel LoadApplicationConfigs()
+        {
+            var filePath = Path.Combine(Constants.ConfigsFileDirectory, Constants.ConfigsFileName);
+            if (File.Exists(filePath))
+            {
+                var configsFile = File.ReadAllText(filePath);
+                return JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+            }
+            // throw exception
+            return null;
         }
     }
 }

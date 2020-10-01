@@ -1,8 +1,8 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CognitiveSearchIntegration.CliCommands.Commands;
+using Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Commands;
 using System.Reflection;
 
-namespace CognitiveSearchIntegration
+namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli
 {
     [Command("cognitivesearch")]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
