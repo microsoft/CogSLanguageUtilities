@@ -2,10 +2,10 @@
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CognitiveSearchIntegration.Core.Controllers;
 using Microsoft.CognitiveSearchIntegration.Enums.Prediction;
-using Microsoft.CustomTextCliUtils.Configs;
+using Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs;
 using System.Threading.Tasks;
 
-namespace Microsoft.CognitiveSearchIntegration.CliCommands.Commands
+namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Commands
 {
     [Command("index", Description = "")]
     public class IndexCommand
