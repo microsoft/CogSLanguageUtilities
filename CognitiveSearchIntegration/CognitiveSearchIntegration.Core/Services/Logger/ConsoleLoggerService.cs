@@ -1,5 +1,6 @@
 ﻿using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Enums.Logger;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using System;
 
 namespace Microsoft.CognitiveSearchIntegration.Core.Services.Logger
@@ -24,19 +25,20 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.Logger
             lock (_lock)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("Successful: ");
                 Console.WriteLine(message);
                 Console.ResetColor();
             }
         }
 
-        public void LogError(string message)
+        public void LogUnhandledError(Exception exception)
         {
             lock (_lock)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("Error: ");
-                Console.WriteLine(message);
                 Console.ResetColor();
+                Console.WriteLine(exception.Message);                
             }
         }
     }
