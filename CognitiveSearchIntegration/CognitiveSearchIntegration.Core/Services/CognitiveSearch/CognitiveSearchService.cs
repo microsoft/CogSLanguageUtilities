@@ -48,13 +48,13 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
                 SearchIndexerDataSourceType.AzureBlob,
                 connectionString,
                 searchIndexerDataContainer);
-            await _searchIndexerClient.CreateDataSourceConnectionAsync(searchIndexerDataSourceConnection);
+            await _searchIndexerClient.CreateOrUpdateDataSourceConnectionAsync(searchIndexerDataSourceConnection);
             // TODO: handle exceptions
         }
 
         public async Task CreateIndexerAsync(Indexer indexer)
         {
-            var requestUrl = $"{_endpoint}/indexers";
+            var requestUrl = $"{_endpoint}/indexers/{indexer.Name}";
             var headers = new Dictionary<string, string>
             {
                 ["api-key"] = _key
@@ -63,8 +63,8 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             {
                 [Constants.CognitiveSearchApiVersionHeader] = Constants.CognitiveSearchApiVersion
             };
-            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, indexer, headers, parameters);
-            if (response.StatusCode != HttpStatusCode.Created)
+            var response = await _httpHandler.SendJsonPutRequestAsync(requestUrl, indexer, headers, parameters);
+            if (response.StatusCode != HttpStatusCode.Created && response.StatusCode != HttpStatusCode.NoContent)
             {
                 throw new CliException("Indexer failed" + await response.Content.ReadAsStringAsync());
             }
@@ -72,7 +72,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
 
         public async Task CreateSkillSetAsync(SkillSet skillset)
         {
-            var requestUrl = $"{_endpoint}/skillsets";
+            var requestUrl = $"{_endpoint}/skillsets/{skillset.Name}";
             var headers = new Dictionary<string, string>
             {
                 ["api-key"] = _key
@@ -81,8 +81,8 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             {
                 [Constants.CognitiveSearchApiVersionHeader] = Constants.CognitiveSearchApiVersion
             };
-            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, skillset, headers, parameters);
-            if (response.StatusCode != HttpStatusCode.Created)
+            var response = await _httpHandler.SendJsonPutRequestAsync(requestUrl, skillset, headers, parameters);
+            if (response.StatusCode != HttpStatusCode.Created && response.StatusCode != HttpStatusCode.NoContent)
             {
                 throw new CliException("Skill failed" + await response.Content.ReadAsStringAsync());
             }

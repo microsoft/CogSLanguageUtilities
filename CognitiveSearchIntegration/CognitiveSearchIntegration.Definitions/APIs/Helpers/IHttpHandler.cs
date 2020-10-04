@@ -8,6 +8,6 @@ namespace Microsoft.CognitiveSearchIntegration.Definitions.APIs.Helpers
     {
         public Task<HttpResponseMessage> SendGetRequestAsync(string url, Dictionary<string, string> headers, Dictionary<string, string> parameters);
 
-        public Task<HttpResponseMessage> SendJsonPostRequestAsync(string url, object body, Dictionary<string, string> headers, Dictionary<string, string> parameters);
+        public Task<HttpResponseMessage> SendJsonPutRequestAsync(string url, object body, Dictionary<string, string> headers, Dictionary<string, string> parameters);
     }
 }

@@ -25,10 +25,10 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler
             }
         }
 
-        public async Task<HttpResponseMessage> SendJsonPostRequestAsync(string url, object body, Dictionary<string, string> headers, Dictionary<string, string> parameters)
+        public async Task<HttpResponseMessage> SendJsonPutRequestAsync(string url, object body, Dictionary<string, string> headers, Dictionary<string, string> parameters)
         {
             var urlWithParameters = parameters == null ? url : CreateUrlWithParameters(url, parameters);
-            using (var requestMessage = new HttpRequestMessage(HttpMethod.Post, urlWithParameters))
+            using (var requestMessage = new HttpRequestMessage(HttpMethod.Put, urlWithParameters))
             {
                 PopulateRequestMessageHeaders(headers, requestMessage);
                 var requestBodyAsJson = JsonConvert.SerializeObject(body);
