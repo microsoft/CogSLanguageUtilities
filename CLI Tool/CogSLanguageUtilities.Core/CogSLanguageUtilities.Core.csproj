@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
-    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.0.0" />
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.1.0-beta.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4" />
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.ComputerVision" Version="5.0.0" />
