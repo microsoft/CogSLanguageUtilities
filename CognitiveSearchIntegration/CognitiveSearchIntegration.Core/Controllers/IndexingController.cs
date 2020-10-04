@@ -1,9 +1,9 @@
-﻿using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
+﻿using Microsoft.CognitiveSearchIntegration.Core.Helpers;
+using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Consts;
 using Microsoft.CognitiveSearchIntegration.Definitions.Enums.Logger;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Indexer;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CustomText.Schema;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -40,39 +40,31 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Controllers
             var customTextSkillName = indexName.ToLower() + Constants.CustomSkillSuffix;
             var schemaFileName = Path.GetFileName(schemaPath);
 
-            try
-            {
-                // read schema
-                _loggerService.LogOperation(OperationType.ReadingAppSchema, schemaFileName);
-                var schemaString = await _storageService.ReadAsStringFromAbsolutePathAsync(schemaPath);
-                var schema = JsonConvert.DeserializeObject<CustomTextSchema>(schemaString);
+            // read schema
+            _loggerService.LogOperation(OperationType.ReadingAppSchema, schemaFileName);
+            var schemaString = await _storageService.ReadAsStringFromAbsolutePathAsync(schemaPath);
+            var schema = JsonHandler.DeserializeObject<CustomTextSchema>(schemaString, schemaFileName);
 
-                // create models (index & skillset)
-                var searchIndex = _customTextIndexingService.CreateIndex(schema, indexName);
-                var customSkill = _customTextIndexingService.CreateSkillSetSchema(schema, skillSetName, customTextSkillName, _indexerConfigs.AzureFunctionUrl);
-                var searchIndexer = _customTextIndexingService.CreateIndexer(schema, indexerName, dataSourceName, skillSetName, indexName);
+            // create models (index & skillset)
+            var searchIndex = _customTextIndexingService.CreateIndex(schema, indexName);
+            var customSkill = _customTextIndexingService.CreateSkillSetSchema(schema, skillSetName, customTextSkillName, _indexerConfigs.AzureFunctionUrl);
+            var searchIndexer = _customTextIndexingService.CreateIndexer(schema, indexerName, dataSourceName, skillSetName, indexName);
 
-                // indexing pipeline
-                _loggerService.LogOperation(OperationType.CreateDataSource, $"{dataSourceName}");
-                await _cognitiveSearchService.CreateDataSourceConnectionAsync(dataSourceName, _indexerConfigs.DataSourceContainerName, _indexerConfigs.DataSourceConnectionString);
+            // indexing pipeline
+            _loggerService.LogOperation(OperationType.CreateDataSource, $"{dataSourceName}");
+            await _cognitiveSearchService.CreateDataSourceConnectionAsync(dataSourceName, _indexerConfigs.DataSourceContainerName, _indexerConfigs.DataSourceConnectionString);
 
-                _loggerService.LogOperation(OperationType.CreatingSearchIndex, $"{indexName}");
-                await _cognitiveSearchService.CreateIndexAsync(searchIndex);
+            _loggerService.LogOperation(OperationType.CreatingSearchIndex, $"{indexName}");
+            await _cognitiveSearchService.CreateIndexAsync(searchIndex);
 
-                _loggerService.LogOperation(OperationType.CreatingSkillSet, $"{skillSetName}");
-                await _cognitiveSearchService.CreateSkillSetAsync(customSkill);
+            _loggerService.LogOperation(OperationType.CreatingSkillSet, $"{skillSetName}");
+            await _cognitiveSearchService.CreateSkillSetAsync(customSkill);
 
-                _loggerService.LogOperation(OperationType.CreatingIndexer, $"{indexerName}");
-                await _cognitiveSearchService.CreateIndexerAsync(searchIndexer);
+            _loggerService.LogOperation(OperationType.CreatingIndexer, $"{indexerName}");
+            await _cognitiveSearchService.CreateIndexerAsync(searchIndexer);
 
-                // log success message
-                _loggerService.LogSuccessMessage("Indexing Application Was Successfull!");
-            }
-            catch (Exception e)
-            {
-                // TODOs: logger should take in an exception in order to make message clear to why it failed
-                _loggerService.LogError("Indexing Operation Failed!");
-            }
+            // log success message
+            _loggerService.LogSuccessMessage("Indexing Application Was Successfull!");
         }
     }
 }

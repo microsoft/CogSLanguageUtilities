@@ -1,15 +1,18 @@
 ﻿using Azure;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Microsoft.CognitiveSearchIntegration.Core.Helpers;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Helpers;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Consts;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api;
+using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api.Error;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Api.Indexer;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
@@ -35,21 +38,32 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
 
         public async Task CreateIndexAsync(SearchIndex index)
         {
-            await _searchIndexClient.DeleteIndexAsync(index.Name);
-            await _searchIndexClient.CreateIndexAsync(index);
-            // TODO: handle exceptions
+            try
+            {
+                await _searchIndexClient.CreateOrUpdateIndexAsync(index);
+            }
+            catch (RequestFailedException ex)
+            {
+                HandleSDKException(ex);
+            }
         }
 
         public async Task CreateDataSourceConnectionAsync(string dataSourceName, string containerName, string connectionString)
         {
-            SearchIndexerDataContainer searchIndexerDataContainer = new SearchIndexerDataContainer(containerName);
-            SearchIndexerDataSourceConnection searchIndexerDataSourceConnection = new SearchIndexerDataSourceConnection(
-                dataSourceName,
-                SearchIndexerDataSourceType.AzureBlob,
-                connectionString,
-                searchIndexerDataContainer);
-            await _searchIndexerClient.CreateOrUpdateDataSourceConnectionAsync(searchIndexerDataSourceConnection);
-            // TODO: handle exceptions
+            try
+            {
+                SearchIndexerDataContainer searchIndexerDataContainer = new SearchIndexerDataContainer(containerName);
+                SearchIndexerDataSourceConnection searchIndexerDataSourceConnection = new SearchIndexerDataSourceConnection(
+                    dataSourceName,
+                    SearchIndexerDataSourceType.AzureBlob,
+                    connectionString,
+                    searchIndexerDataContainer);
+                await _searchIndexerClient.CreateOrUpdateDataSourceConnectionAsync(searchIndexerDataSourceConnection);
+            }
+            catch (RequestFailedException ex)
+            {
+                HandleSDKException(ex);
+            }
         }
 
         public async Task CreateIndexerAsync(Indexer indexer)
@@ -64,10 +78,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
                 [Constants.CognitiveSearchApiVersionHeader] = Constants.CognitiveSearchApiVersion
             };
             var response = await _httpHandler.SendJsonPutRequestAsync(requestUrl, indexer, headers, parameters);
-            if (response.StatusCode != HttpStatusCode.Created && response.StatusCode != HttpStatusCode.NoContent)
-            {
-                throw new CliException("Indexer failed" + await response.Content.ReadAsStringAsync());
-            }
+            await HandleApiResponse(response);
         }
 
         public async Task CreateSkillSetAsync(SkillSet skillset)
@@ -82,10 +93,24 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
                 [Constants.CognitiveSearchApiVersionHeader] = Constants.CognitiveSearchApiVersion
             };
             var response = await _httpHandler.SendJsonPutRequestAsync(requestUrl, skillset, headers, parameters);
+            await HandleApiResponse(response);
+        }
+
+        private async Task HandleApiResponse(HttpResponseMessage response)
+        {
             if (response.StatusCode != HttpStatusCode.Created && response.StatusCode != HttpStatusCode.NoContent)
             {
-                throw new CliException("Skill failed" + await response.Content.ReadAsStringAsync());
+                var errorObject = JsonHandler.DeserializeObject<CognitiveSearchErrorResponse>(await response.Content.ReadAsStringAsync());
+                throw new CliException(errorObject.Error.Message);
             }
+        }
+
+        private void HandleSDKException(RequestFailedException ex)
+        {
+            // api morons didn't provide useful message. they just stringify the entire response object
+            var msg = ex.Message;
+            var newMsg = msg.Substring(0, msg.IndexOf("\r\n"));
+            throw new CliException(newMsg);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.Storage
             }
             else
             {
-                throw new FileNotFoundException(filePath);
+                throw new Definitions.Exceptions.Storage.FileNotFoundException(filePath);
             }
         }
 
