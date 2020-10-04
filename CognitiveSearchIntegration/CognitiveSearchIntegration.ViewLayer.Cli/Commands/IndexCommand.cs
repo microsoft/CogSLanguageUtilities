@@ -3,6 +3,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CognitiveSearchIntegration.Core.Controllers;
 using Microsoft.CognitiveSearchIntegration.Enums.Prediction;
 using Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Commands
@@ -11,12 +12,14 @@ namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Commands
     public class IndexCommand
     {
         [Option("--schema <absolute_path>", Description = "absolute path to schema file")]
+        [Required]
         public string Schema { get; }
 
         [Option("--cognitive-service <cognitive_service>", Description = "")]
-        public CognitiveServiceType CognitiveSerice { get; }
+        public CognitiveServiceType CognitiveSerice { get; } = CognitiveServiceType.CustomText;
 
         [Option("--index-name <absolute_path>", Description = "name of index to be created")]
+        [Required]
         public string IndexName { get; }
 
         private async Task OnExecute(CommandLineApplication app)

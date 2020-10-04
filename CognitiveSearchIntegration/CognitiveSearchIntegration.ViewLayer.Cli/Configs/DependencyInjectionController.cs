@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.CognitiveSearchIntegration.Core.Controllers;
 using Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch;
+using Microsoft.CognitiveSearchIntegration.Core.Services.Logger;
 using Microsoft.CognitiveSearchIntegration.Core.Services.Storage;
 using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Indexer;
@@ -21,6 +22,7 @@ namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs
             // register services
             var builder = new ContainerBuilder();
             builder.RegisterType<LocalStorageService>().As<IStorageService>();
+            builder.RegisterType<ConsoleLoggerService>().As<ILoggerService>();
             builder.RegisterType<CustomTextIndexingService>().As<ICustomTextIndexingService>();
             builder.Register(c =>
             {
@@ -32,6 +34,7 @@ namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs
                     c.Resolve<IStorageService>(),
                     c.Resolve<ICustomTextIndexingService>(),
                     c.Resolve<ICognitiveSearchService>(),
+                    c.Resolve<ILoggerService>(),
                     new IndexerConfigs
                     {
                         DataSourceConnectionString = appConfigs.BlobStorage.ConnectionString,

@@ -40,11 +40,11 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             // TODO: handle exceptions
         }
 
-        public async Task CreateDataSourceConnectionAsync(string indexName, string containerName, string connectionString)
+        public async Task CreateDataSourceConnectionAsync(string dataSourceName, string containerName, string connectionString)
         {
             SearchIndexerDataContainer searchIndexerDataContainer = new SearchIndexerDataContainer(containerName);
             SearchIndexerDataSourceConnection searchIndexerDataSourceConnection = new SearchIndexerDataSourceConnection(
-                indexName + Constants.DataSourceSuffix,
+                dataSourceName,
                 SearchIndexerDataSourceType.AzureBlob,
                 connectionString,
                 searchIndexerDataContainer);

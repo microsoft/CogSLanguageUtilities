@@ -1,14 +1,14 @@
 {
     "blobStorage": {
-        "connectionString": "",
-        "containerName": ""
+        "connectionString": "DefaultEndpointsProtocol=https;AccountName=nourdocuments;AccountKey=5UvtQ8CiXwDXg63QyEgtReW3E31KTXMvT5UfjnX1XgAW1DU390nKAlkCeBn7DUyDgaaQdm5TZt3iB7DfdUlD5A==;EndpointSuffix=core.windows.net",
+        "containerName": "paperschunked"
     },
     "cognitiveSearch": {
-        "endpointUrl": "",
-        "apiKey": ""
+        "endpointUrl": "https://shaban-search.search.windows.net",
+        "apiKey": "2CD90E19736D4DDF8DE53805A2FB61A7"
     },
     "azureFunction": {
-        "endpointUrl": "",
-        "apiKey": ""
+        "endpointUrl": "https://luisextractor20200929162611.azurewebsites.net/api/luis-extractor",
+        "apiKey": "ayB5u4JAlw9HlqYcIKUp0dOxYHqOwa9mVdUXNyUFD9QZLJBjxyOftg=="
     }
 }

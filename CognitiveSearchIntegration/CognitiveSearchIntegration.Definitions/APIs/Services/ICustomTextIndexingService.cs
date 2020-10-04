@@ -7,8 +7,8 @@ namespace Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services
 {
     public interface ICustomTextIndexingService
     {
-        public SkillSet CreateCustomSkillSchema(CustomTextSchema schema, string indexName, string azureFunctionUrl);
+        public SkillSet CreateSkillSetSchema(CustomTextSchema schema, string skillSetName, string customTextSkillName, string azureFunctionUrl);
         public SearchIndex CreateIndex(CustomTextSchema schema, string indexName);
-        public Indexer CreateIndexer(CustomTextSchema schema, string indexName);
+        public Indexer CreateIndexer(CustomTextSchema schema, string indexerName, string dataSourceName, string skillSetName, string indexName);
     }
 }
