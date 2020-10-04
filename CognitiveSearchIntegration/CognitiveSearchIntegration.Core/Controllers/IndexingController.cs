@@ -43,7 +43,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Controllers
             try
             {
                 // read schema
-                _loggerService.LogOperation(OperationType.ReadingSchema, schemaFileName);
+                _loggerService.LogOperation(OperationType.ReadingAppSchema, schemaFileName);
                 var schemaString = await _storageService.ReadAsStringFromAbsolutePathAsync(schemaPath);
                 var schema = JsonConvert.DeserializeObject<CustomTextSchema>(schemaString);
 
@@ -54,9 +54,9 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Controllers
 
                 // indexing pipeline
                 _loggerService.LogOperation(OperationType.CreateDataSource, $"{dataSourceName}");
-                await _cognitiveSearchService.CreateDataSourceConnectionAsync(indexName, _indexerConfigs.DataSourceContainerName, _indexerConfigs.DataSourceConnectionString);
+                await _cognitiveSearchService.CreateDataSourceConnectionAsync(dataSourceName, _indexerConfigs.DataSourceContainerName, _indexerConfigs.DataSourceConnectionString);
 
-                _loggerService.LogOperation(OperationType.CreatingSearchIndex, $"{indexerName}");
+                _loggerService.LogOperation(OperationType.CreatingSearchIndex, $"{indexName}");
                 await _cognitiveSearchService.CreateIndexAsync(searchIndex);
 
                 _loggerService.LogOperation(OperationType.CreatingSkillSet, $"{skillSetName}");

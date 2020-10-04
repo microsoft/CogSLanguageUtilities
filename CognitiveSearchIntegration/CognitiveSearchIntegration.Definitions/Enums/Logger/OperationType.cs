@@ -2,7 +2,7 @@
 {
     public enum OperationType
     {
-        ReadingSchema,
+        ReadingAppSchema,
         CreatingSearchIndex,
         CreatingIndexer,
         CreatingSkillSet,
