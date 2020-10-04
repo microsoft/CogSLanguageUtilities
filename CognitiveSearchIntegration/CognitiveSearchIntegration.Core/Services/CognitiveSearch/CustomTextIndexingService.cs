@@ -10,11 +10,11 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
 {
     public class CustomTextIndexingService : ICustomTextIndexingService
     {
-        public SkillSet CreateCustomSkillSchema(CustomTextSchema schema, string indexName, string azureFunctionUrl)
+        public SkillSet CreateSkillSetSchema(CustomTextSchema schema, string skillSetName, string customTextSkillName, string azureFunctionUrl)
         {
             CustomSkillSchema customSkillSchema = new CustomSkillSchema()
             {
-                name = indexName.ToLower() + Constants.CustomSkillSuffix,
+                name = customTextSkillName,
                 uri = azureFunctionUrl
             };
             List<Output> outputs = new List<Output>();
@@ -39,7 +39,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             customSkillSchema.outputs = outputs;
             return new SkillSet
             {
-                Name = indexName.ToLower() + Constants.SkillsetSuffix,
+                Name = skillSetName,
                 Description = "Custom Text Skillset",
                 Skills = new List<CustomSkillSchema> { customSkillSchema }
             };
@@ -78,7 +78,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             };
         }
 
-        public Indexer CreateIndexer(CustomTextSchema schema, string indexName)
+        public Indexer CreateIndexer(CustomTextSchema schema, string indexerName, string dataSourceName, string skillSetName, string indexName)
         {
             var outputFieldMappings = new List<IndexerFieldMapping>();
             //classifiers
@@ -121,10 +121,10 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
 
             var indexer = new Indexer
             {
-                Name = indexName + Constants.IndexerSuffix,
-                DataSourceName = indexName + Constants.DataSourceSuffix,
+                Name = indexerName,
+                DataSourceName = dataSourceName,
                 TargetIndexName = indexName,
-                SkillsetName = indexName.ToLower() + Constants.SkillsetSuffix,
+                SkillsetName = skillSetName,
                 FieldMappings = fieldMappings,
                 OutputFieldMappings = outputFieldMappings,
                 Parameters = indexerParameters
