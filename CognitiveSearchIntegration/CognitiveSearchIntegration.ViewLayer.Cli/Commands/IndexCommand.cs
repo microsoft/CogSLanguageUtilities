@@ -25,7 +25,7 @@ namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Commands
         private async Task OnExecute(CommandLineApplication app)
         {
             // build dependencies
-            var container = DependencyInjectionController.BuildIndexCommandDependencies();
+            var container = DIController.BuildIndexCommandDependencies();
 
             // run program
             using (var scope = container.BeginLifetimeScope())

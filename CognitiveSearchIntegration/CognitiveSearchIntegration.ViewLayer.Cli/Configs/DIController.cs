@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Microsoft.CognitiveSearchIntegration.Core.Controllers;
+using Microsoft.CognitiveSearchIntegration.Core.Helpers;
 using Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch;
 using Microsoft.CognitiveSearchIntegration.Core.Services.Logger;
 using Microsoft.CognitiveSearchIntegration.Core.Services.Storage;
@@ -7,12 +8,13 @@ using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Indexer;
 using Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs.ConfigModels;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Newtonsoft.Json;
 using System.IO;
 
 namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs
 {
-    public class DependencyInjectionController
+    public class DIController
     {
         public static IContainer BuildIndexCommandDependencies()
         {
@@ -51,10 +53,10 @@ namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs
             if (File.Exists(filePath))
             {
                 var configsFile = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<ConfigModel>(configsFile);
+                return JsonHandler.DeserializeObject<ConfigModel>(configsFile, Constants.ConfigsFileName);
             }
             // throw exception
-            return null;
+            throw new Definitions.Exceptions.Storage.FileNotFoundException(filePath);
         }
     }
 }
