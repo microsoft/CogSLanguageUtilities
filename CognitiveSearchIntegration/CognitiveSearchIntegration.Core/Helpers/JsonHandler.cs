@@ -10,7 +10,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Helpers
             try
             {
                 return JsonConvert.DeserializeObject<T>(value);
-            } 
+            }
             catch (Exception ex)
             {
                 throw new Definitions.Exceptions.Serialization.JsonSerializationException(fileName);
