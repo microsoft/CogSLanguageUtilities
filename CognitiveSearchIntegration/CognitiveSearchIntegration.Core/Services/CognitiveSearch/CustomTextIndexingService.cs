@@ -102,7 +102,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
                 new IndexerFieldMapping
                 {
                     SourceFieldName = "metadata_storage_name",
-                    TargetFieldName = "key",
+                    TargetFieldName = "id",
                     MappingFunction = new MappingFunction
                     {
                         Name = "base64Encode"
