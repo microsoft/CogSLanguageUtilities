@@ -4,7 +4,6 @@ using Microsoft.CognitiveSearchIntegration.Definitions.Consts;
 using Microsoft.CognitiveSearchIntegration.Definitions.Enums.Logger;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Indexer;
 using Microsoft.CognitiveSearchIntegration.Definitions.Models.CustomText.Schema;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 

@@ -1,7 +1,5 @@
 ﻿using Microsoft.CognitiveSearchIntegration.Definitions.Enums.Logger;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using System;
-using System.Collections.Generic;
 
 namespace Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services
 {

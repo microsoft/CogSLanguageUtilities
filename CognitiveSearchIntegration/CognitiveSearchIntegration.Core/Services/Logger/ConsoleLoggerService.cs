@@ -1,6 +1,5 @@
 ﻿using Microsoft.CognitiveSearchIntegration.Definitions.APIs.Services;
 using Microsoft.CognitiveSearchIntegration.Definitions.Enums.Logger;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using System;
 
 namespace Microsoft.CognitiveSearchIntegration.Core.Services.Logger
@@ -38,7 +37,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.Logger
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("Error: ");
                 Console.ResetColor();
-                Console.WriteLine(exception.Message);                
+                Console.WriteLine(exception.Message);
             }
         }
     }

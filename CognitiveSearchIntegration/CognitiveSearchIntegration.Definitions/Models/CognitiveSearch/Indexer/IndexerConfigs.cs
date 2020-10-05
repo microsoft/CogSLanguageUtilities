@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Indexer
+﻿namespace Microsoft.CognitiveSearchIntegration.Definitions.Models.CognitiveSearch.Indexer
 {
     public class IndexerConfigs
     {
