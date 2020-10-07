@@ -9,6 +9,6 @@
         Heading3,
         Paragraph,
         BulletedList,
-        Table,
+        Table
     }
 }
