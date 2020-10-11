@@ -1,4 +1,5 @@
-﻿using Microsoft.CogSLanguageUtilities.Core.Services.Evaluation;
+﻿using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget;
+using Microsoft.CogSLanguageUtilities.Core.Services.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Evaluation;
 using Microsoft.LuisModelEvaluation.Models.Input;
 using Newtonsoft.Json;
@@ -37,7 +38,8 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.ApplicationLaye
         {
             var service = new BatchTestingService();
             var batchTestResponse = service.RunBatchTest(examples, null, null);
-            Assert.Equal(expectedResponse, batchTestResponse, new BatchTestingOutputComparer());
+            var mappedBatchTestResponse = BatchTestingOutputMapper.MapEvaluationOutput(batchTestResponse);
+            Assert.Equal(expectedResponse, mappedBatchTestResponse, new BatchTestingOutputComparer());
         }
 
         public class BatchTestingOutputComparer : IEqualityComparer<BatchTestingOutput>

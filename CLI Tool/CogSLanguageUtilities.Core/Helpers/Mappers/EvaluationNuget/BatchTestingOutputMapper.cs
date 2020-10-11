@@ -4,8 +4,18 @@ using System.Linq;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
 {
+    /// <summary>
+    /// The reason for creating an output mapper is that
+    /// we want to display the batch testing response to the user in a specifc format
+    /// hence, we need to map the response returned by the evaluation nuget to our desired format
+    /// </summary>
     public class BatchTestingOutputMapper
     {
+        /// <summary>
+        /// Map batch testing result returned from nuget
+        /// </summary>
+        /// <param name="batchTestResponse"></param>
+        /// <returns>Modified evaluation model</returns>
         public static BatchTestingOutput MapEvaluationOutput(BatchTestResponse batchTestResponse)
         {
             return new BatchTestingOutput

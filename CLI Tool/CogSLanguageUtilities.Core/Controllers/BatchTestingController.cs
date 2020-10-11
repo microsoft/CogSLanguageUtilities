@@ -13,7 +13,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
@@ -62,24 +61,27 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var convertedFiles = new ConcurrentBag<string>();
             var failedFiles = new ConcurrentDictionary<string, string>();
 
+            // map app models to nuget classes
+            var customTextModels = await _customTextAuthoringService.GetApplicationModels();
+            var mappedEntities = BatchTestingInputMapper.MapCustomTextAppEntityModels(customTextModels.Models, "");
+            var mappedClasses = BatchTestingInputMapper.MapCustomTextAppClassModels(customTextModels.Models);
+
             // get labeled examples
             _loggerService.LogOperation(OperationType.GeneratingTestSet);
             var labeledExamples = await _customTextAuthoringService.GetLabeledExamples();
-            var testData = await CreateTestData(labeledExamples, convertedFiles, failedFiles);
-
-            // get App models
-            var customTextModels = await _customTextAuthoringService.GetApplicationModels();
-            var entities = BatchTestingInputMapper.MapCustomTextEntitiesToModelsRecursively(customTextModels.Models, "");
-            var classes = BatchTestingInputMapper.MapCustomTextClassesToModels(customTextModels.Models);
+            var mappedTestData = await CreateTestData(labeledExamples, convertedFiles, failedFiles);
 
             // evaluate model
             _loggerService.LogOperation(OperationType.EvaluatingResults);
-            var batchTestResponse = _batchTestingService.RunBatchTest(testData, entities, classes);
+            var batchTestResponse = _batchTestingService.RunBatchTest(mappedTestData, mappedEntities, mappedClasses);
+
+            // map output data
+            var mappedBatchTestResponse = BatchTestingOutputMapper.MapEvaluationOutput(batchTestResponse);
 
             // store file
             var outFileName = Constants.CustomTextEvaluationControllerOutputFileName;
             _loggerService.LogOperation(OperationType.StoringResult, outFileName);
-            var responseAsJson = JsonConvert.SerializeObject(batchTestResponse, Formatting.Indented);
+            var responseAsJson = JsonConvert.SerializeObject(mappedBatchTestResponse, Formatting.Indented);
             await _destinationStorageService.StoreDataAsync(responseAsJson, outFileName);
 
             // log result
@@ -97,15 +99,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     // document text
                     var documentText = await _sourceStorageService.ReadFileAsStringAsync(e.Document.DocumentId);
 
-                    // ground truth
-                    var actualClassNames = e.ClassificationLabels?.Where(c => c.Label == true).Select(c => modelsDictionary[c.ModelId]).ToList();
-                    actualClassNames = actualClassNames ?? new List<string>();
-                    var groundTruth = new PredictionObject
-                    {
-                        Classification = actualClassNames,
-                        Entities = BatchTestingInputMapper.MapCustomTextMiniDocsToEntitiesRecursively(e.MiniDocs, modelsDictionary)
-                    };
-
                     // prediction
                     _loggerService.LogOperation(OperationType.RunningPrediction, e.Document.DocumentId);
                     var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
@@ -113,14 +106,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     var jsonFileName = Path.GetFileNameWithoutExtension(e.Document.DocumentId) + ".json";
                     await _destinationStorageService.StoreDataAsync(predictionResponseString, jsonFileName);
 
-                    // create example
-                    var PredictionData = BatchTestingInputMapper.MapCutomTextResponse(predictionResponse);
-                    testingExamples.Add(new TestingExample
-                    {
-                        Text = documentText,
-                        LabeledData = groundTruth,
-                        PredictedData = PredictionData
-                    });
+                    // create test example
+                    var testExample = BatchTestingInputMapper.CreateTestExample(documentText, e, predictionResponse, modelsDictionary);
+                    testingExamples.Add(testExample);
+
+
                     convertedFiles.Add(e.Document.DocumentId);
                 }
                 catch (Exception ex)
