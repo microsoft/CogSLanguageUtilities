@@ -16,7 +16,6 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Parser;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Parser;
 
 namespace Microsoft.CustomTextCliUtils.Configs
 {
@@ -40,7 +39,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return builder.Build();
         }
 
-        public static IContainer BuildParseCommandDependencies(ParserType parserType)
+        public static IContainer BuildParseCommandDependencies()
         {
             var builder = BuildCommonDependencies();
             builder.Register(c =>
@@ -54,7 +53,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return builder.Build();
         }
 
-        public static IContainer BuildPredictCommandDependencies(ParserType parserType)
+        public static IContainer BuildPredictCommandDependencies()
         {
             var builder = BuildCommonDependencies();
             builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
