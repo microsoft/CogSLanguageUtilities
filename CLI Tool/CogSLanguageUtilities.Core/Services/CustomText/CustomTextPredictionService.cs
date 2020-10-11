@@ -22,6 +22,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
         private readonly string _endpointUrl;
         private readonly string _appId;
         private readonly IHttpHandler _httpHandler;
+        private readonly string _customTextPredictionbaseUrl = "luis/prediction/v4.0-preview/documents";
 
         public CustomTextPredictionService(IHttpHandler httpHandler, string customTextKey, string endpointUrl, string appId)
         {
@@ -86,7 +87,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         private async Task<string> SendPredictionRequestAsync(string queryText)
         {
-            var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/predictText?log=true&%24expand=classifier%2Cextractor", _endpointUrl, _appId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/slots/production/predictText?log=true&%24expand=classifier%2Cextractor", _endpointUrl, _customTextPredictionbaseUrl, _appId);
             var requestBody = new CustomTextPredictionRequest(queryText);
             var headers = new Dictionary<string, string>
             {
@@ -108,7 +109,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         private async Task<CustomTextQueryResponse> PingStatusAsync(string operationId)
         {
-            var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/operations/{2}/predictText/status", _endpointUrl, _appId, operationId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/slots/production/operations/{3}/predictText/status", _endpointUrl, _customTextPredictionbaseUrl, _appId, operationId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
@@ -129,7 +130,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         private async Task<CustomTextPredictionResponse> GetResultAsync(string operationId)
         {
-            var requestUrl = string.Format("{0}/luis/prediction/v4.0-preview/documents/apps/{1}/slots/production/operations/{2}/predictText", _endpointUrl, _appId, operationId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/slots/production/operations/{3}/predictText", _endpointUrl, _customTextPredictionbaseUrl, _appId, operationId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey

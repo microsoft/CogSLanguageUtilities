@@ -17,6 +17,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
         private readonly string _endpointUrl;
         private readonly string _appId;
         private readonly IHttpHandler _httpHandler;
+        private readonly string _customTextAuthoringBaseUrl = "luis/authoring/v4.0-preview/documents";
 
         public CustomTextAuthoringService(IHttpHandler httpHandler, string customTextKey, string endpointUrl, string appId)
         {
@@ -29,7 +30,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         public async Task<CustomTextGetLabeledExamplesResponse> GetLabeledExamples(int skip = 0, int take = Constants.CustomTextExamplesPageSize)
         {
-            var requestUrl = string.Format("{0}/luis/authoring/v4.0-preview/documents/apps/{1}/examples", _endpointUrl, _appId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/examples", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var parameters = new Dictionary<string, string>
             {
                 ["enableNestedChildren"] = "true",
@@ -83,7 +84,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         public async Task<CustomTextGetModelsResponse> GetApplicationModels()
         {
-            var requestUrl = string.Format("{0}/luis/authoring/v4.0-preview/documents/apps/{1}/models", _endpointUrl, _appId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/models", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
@@ -102,7 +103,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         private async Task TestConnectionAsync()
         {
-            var requestUrl = string.Format("{0}/luis/authoring/v4.0-preview/documents/apps/{1}", _endpointUrl, _appId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
