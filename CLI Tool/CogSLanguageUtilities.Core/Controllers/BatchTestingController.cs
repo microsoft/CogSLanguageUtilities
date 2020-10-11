@@ -92,6 +92,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         {
             var modelsDictionary = await _customTextAuthoringService.GetModelsDictionary();
             var testingExamples = new List<TestingExample>();
+            await _destinationStorageService.CreateDirectoryAsync(Constants.EvaluationCommandPredictionOutputDirectoryName);
             foreach (var e in labeledExamples.Examples)
             {
                 try
@@ -104,7 +105,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
                     var predictionResponseString = JsonConvert.SerializeObject(predictionResponse, Formatting.Indented);
                     var jsonFileName = Path.GetFileNameWithoutExtension(e.Document.DocumentId) + ".json";
-                    await _destinationStorageService.StoreDataAsync(predictionResponseString, jsonFileName);
+                    await _destinationStorageService.StoreDataToDirectoryAsync(predictionResponseString, Constants.EvaluationCommandPredictionOutputDirectoryName, jsonFileName);
 
                     // create test example
                     var testExample = BatchTestingInputMapper.CreateTestExample(documentText, e, predictionResponse, modelsDictionary);

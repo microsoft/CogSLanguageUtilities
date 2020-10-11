@@ -68,7 +68,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
         {
             try
             {
-                string filePath = Path.Combine(_targetDirectory, Path.GetFileName(fileName));
+                string filePath = Path.Combine(_targetDirectory, fileName);
                 await File.WriteAllTextAsync(filePath, data);
             }
             catch (UnauthorizedAccessException)
@@ -104,6 +104,21 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             {
                 return File.Exists(filePath);
             });
+        }
+
+        public async Task CreateDirectoryAsync(string directoryName)
+        {
+            await Task.Run(() =>
+            {
+                var completePath = Path.Combine(_targetDirectory, directoryName);
+                return Directory.CreateDirectory(completePath);
+            });
+        }
+
+        public async Task StoreDataToDirectoryAsync(string data, string directoryName, string fileName)
+        {
+            var relativePath = Path.Combine(directoryName, fileName);
+            await StoreDataAsync(data, relativePath);
         }
     }
 }
