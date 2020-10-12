@@ -93,30 +93,32 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var modelsDictionary = await _customTextAuthoringService.GetModelsDictionary();
             var testingExamples = new List<TestingExample>();
             await _destinationStorageService.CreateDirectoryAsync(Constants.EvaluationCommandPredictionOutputDirectoryName);
-            foreach (var e in labeledExamples.Examples)
+            foreach (var labeledExample in labeledExamples.Examples)
             {
                 try
                 {
                     // document text
-                    var documentText = await _sourceStorageService.ReadFileAsStringAsync(e.Document.DocumentId);
+                    var documentText = await _sourceStorageService.ReadFileAsStringAsync(labeledExample.Document.DocumentId);
 
                     // prediction
-                    _loggerService.LogOperation(OperationType.RunningPrediction, e.Document.DocumentId);
+                    _loggerService.LogOperation(OperationType.RunningPrediction, labeledExample.Document.DocumentId);
                     var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
+                    
+                    // store prediction output
                     var predictionResponseString = JsonConvert.SerializeObject(predictionResponse, Formatting.Indented);
-                    var jsonFileName = Path.GetFileNameWithoutExtension(e.Document.DocumentId) + ".json";
+                    var jsonFileName = Path.GetFileNameWithoutExtension(labeledExample.Document.DocumentId) + ".json";
                     await _destinationStorageService.StoreDataToDirectoryAsync(predictionResponseString, Constants.EvaluationCommandPredictionOutputDirectoryName, jsonFileName);
 
                     // create test example
-                    var testExample = BatchTestingInputMapper.CreateTestExample(documentText, e, predictionResponse, modelsDictionary);
+                    var testExample = BatchTestingInputMapper.CreateTestExample(documentText, labeledExample, predictionResponse, modelsDictionary);
                     testingExamples.Add(testExample);
 
 
-                    convertedFiles.Add(e.Document.DocumentId);
+                    convertedFiles.Add(labeledExample.Document.DocumentId);
                 }
                 catch (Exception ex)
                 {
-                    failedFiles[e.Document.DocumentId] = ex.Message;
+                    failedFiles[labeledExample.Document.DocumentId] = ex.Message;
                     _loggerService.LogError(ex);
                 }
             }
