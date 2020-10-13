@@ -89,21 +89,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             }
         }
 
-        public async Task<bool> FileExists(string fileName)
+        public Task<bool> FileExists(string fileName)
         {
             var filePath = Path.Combine(_targetDirectory, fileName);
-            return await Task.Run(() =>
-            {
-                return File.Exists(filePath);
-            });
+            return Task.FromResult(File.Exists(filePath));
         }
 
-        private async Task<bool> FileExistsAbsolutePath(string filePath)
+        private Task<bool> FileExistsAbsolutePath(string filePath)
         {
-            return await Task.Run(() =>
-            {
-                return File.Exists(filePath);
-            });
+            return Task.FromResult(File.Exists(filePath));
         }
 
         public Task CreateDirectoryAsync(string directoryName)
