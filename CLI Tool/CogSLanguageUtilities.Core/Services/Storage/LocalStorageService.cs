@@ -106,13 +106,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             });
         }
 
-        public async Task CreateDirectoryAsync(string directoryName)
+        public Task CreateDirectoryAsync(string directoryName)
         {
-            await Task.Run(() =>
-            {
-                var completePath = Path.Combine(_targetDirectory, directoryName);
-                return Directory.CreateDirectory(completePath);
-            });
+            var completePath = Path.Combine(_targetDirectory, directoryName);
+            Directory.CreateDirectory(completePath);
+            return Task.CompletedTask;
         }
 
         public async Task StoreDataToDirectoryAsync(string data, string directoryName, string fileName)

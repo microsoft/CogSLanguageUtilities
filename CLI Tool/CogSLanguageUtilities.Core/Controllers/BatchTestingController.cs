@@ -63,7 +63,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
             // map app models to nuget classes
             var customTextModels = await _customTextAuthoringService.GetApplicationModels();
-            var mappedEntities = BatchTestingInputMapper.MapCustomTextAppEntityModels(customTextModels.Models, "");
+            var mappedEntities = BatchTestingInputMapper.MapCustomTextAppEntityModels(customTextModels.Models, entityPrefix: string.Empty);
             var mappedClasses = BatchTestingInputMapper.MapCustomTextAppClassModels(customTextModels.Models);
 
             // get labeled examples
@@ -103,7 +103,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     // prediction
                     _loggerService.LogOperation(OperationType.RunningPrediction, labeledExample.Document.DocumentId);
                     var predictionResponse = await _customTextPredictionService.GetPredictionAsync(documentText);
-                    
+
                     // store prediction output
                     var predictionResponseString = JsonConvert.SerializeObject(predictionResponse, Formatting.Indented);
                     var jsonFileName = Path.GetFileNameWithoutExtension(labeledExample.Document.DocumentId) + ".json";

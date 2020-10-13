@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<AssemblyName>clutils</AssemblyName>
+    <AssemblyName>clutils</AssemblyName>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	<RootNamespace>Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands</RootNamespace>
+    <RootNamespace>Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,12 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CogSLanguageUtilities.Core\CogSLanguageUtilities.Core.csproj" />
     <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="LuisModelEvaluation">
-      <HintPath>..\..\LuisModelEvaluation\LuisModelEvaluation\bin\Debug\netstandard2.0\LuisModelEvaluation.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

@@ -5,9 +5,5 @@
         Cl = 0,
 
         Ee,
-
-        Domain,
-
-        NonMlEe,
     }
 }

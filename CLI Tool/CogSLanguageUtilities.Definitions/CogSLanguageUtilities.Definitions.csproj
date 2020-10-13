@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-	<RootNamespace>Microsoft.CogSLanguageUtilities.Definitions</RootNamespace>
+    <RootNamespace>Microsoft.CogSLanguageUtilities.Definitions</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
