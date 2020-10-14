@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.CogSLanguageUtilities.Definitions.Enums.Chunker;
+using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers
 {
@@ -6,7 +7,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers
     {
         Task LoadConfigsFromFile(string configsFilePath);
         Task SetBlobStorageConfigsAsync(string connectionString, string sourceContainer, string destinationContainer);
-        Task SetChunkerConfigsAsync(int? charLimit);
+        Task SetChunkerConfigsAsync(int? charLimit, ChunkSectionLevel chunkSectionLevel);
         Task SetCustomTextAuthoringConfigsAsync(string customTextKey, string endpointUrl, string appId);
         Task SetCustomTextPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId);
         Task SetLocalStorageConfigsAsync(string sourceDirectory, string destinationDirectory);

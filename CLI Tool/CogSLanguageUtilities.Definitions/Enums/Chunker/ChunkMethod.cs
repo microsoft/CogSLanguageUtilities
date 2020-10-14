@@ -4,6 +4,7 @@
     {
         Page,
         Char,
+        Section,
         NoChunking
     }
 }
