@@ -32,6 +32,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Parser
                     {
                         RootElement = new DocumentElement
                         {
+                            Text = string.Empty,
                             Type = ElementType.Root
                         },
                         Children = new List<DocumentSegment>
