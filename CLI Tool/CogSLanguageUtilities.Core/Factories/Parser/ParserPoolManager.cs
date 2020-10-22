@@ -20,6 +20,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Factories.Parser
         private string[] _validDocTypes;
         private MSReadParserService _msreadParser;
         private DocxParserService _docxParser;
+        private PlainTextParserService _textParser;
 
         public ParserPoolManager(ParserConfigModel allParsersConfigs)
         {
@@ -34,7 +35,17 @@ namespace Microsoft.CogSLanguageUtilities.Core.Factories.Parser
 
         public IParserService GetParser(string fileType, string fileName = "")
         {
-            if (Constants.MsReadValidFileTypes.Contains(fileType))
+            // plain text files
+            if (Constants.PlainTextValidFileTypes.Contains(fileType, StringComparer.OrdinalIgnoreCase))
+            {
+                if (_textParser == null)
+                {
+                    _textParser = new PlainTextParserService();
+                }
+                return _textParser;
+            }
+            // msread supported files
+            else if (Constants.MsReadValidFileTypes.Contains(fileType, StringComparer.OrdinalIgnoreCase))
             {
                 if (_msreadParser == null)
                 {
@@ -42,7 +53,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Factories.Parser
                 }
                 return _msreadParser;
             }
-            else if (Constants.DocxValidFileTypes.Contains(fileType))
+            // docx supported files
+            else if (Constants.DocxValidFileTypes.Contains(fileType, StringComparer.OrdinalIgnoreCase))
             {
                 if (_docxParser == null)
                 {

@@ -9,9 +9,10 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
         // configs file
         public static readonly string ConfigsFileLocalDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
         public static readonly string ConfigsFileName = "configs.json";
-        // msread
+        // parsers
         public static readonly string[] MsReadValidFileTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
         public static readonly string[] DocxValidFileTypes = { ".docx" };
+        public static readonly string[] PlainTextValidFileTypes = { ".txt" };
         // chunker
         public const double MaxLineLengthPrecentile = 0.95;
         public const double MaxNumberOfIndentsAfterLine = 7;
@@ -29,8 +30,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
         // text analytics
         public const int TextAnalyticsPredictionMaxCharLimit = 5000;
         public const int TextAnaylticsApiCallDocumentLimit = 5;
-        // plain text parser
-        public static readonly string[] PlainTextValidFileTypes = { ".txt" };
         // evaluation
         public const string CustomTextEvaluationControllerOutputFileName = "CustomTextBatchTesting.json";
         public const string ModelHierarchySeparator = "::";
