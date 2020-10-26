@@ -7,6 +7,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -112,6 +113,107 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             };
             var response = await _httpHandler.SendGetRequestAsync(requestUrl, headers, null);
             if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+            }
+        }
+
+        public async Task<object> AddApplicationClassifier(CustomTextModel classifier)
+        {
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/classifiers", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
+            var headers = new Dictionary<string, string>
+            {
+                ["Ocp-Apim-Subscription-Key"] = _customTextKey
+            };
+
+            var body = new Dictionary<string, string>
+            {
+                ["name"] = classifier.Name,
+                ["description"] = classifier.Description
+            };
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body, headers, parameters: null);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var examples = JsonConvert.DeserializeObject<object>(responseString);
+                return examples;
+            }
+            else
+            {
+                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+            }
+        }
+
+        public async Task<object> AddApplicationExtractor(CustomTextModel extractor)
+        {
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/classifiers", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
+            var headers = new Dictionary<string, string>
+            {
+                ["Ocp-Apim-Subscription-Key"] = _customTextKey
+            };
+
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body: extractor, headers, parameters: null);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var examples = JsonConvert.DeserializeObject<object>(responseString);
+                return examples;
+            }
+            else
+            {
+                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+            }
+        }
+
+        public async Task<object> AddDocumentClassifierLabel(string documentId, string classifierId, bool classifierLabel)
+        {
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/classifiers/{4}/labels", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, classifierId);
+            var headers = new Dictionary<string, string>
+            {
+                ["Ocp-Apim-Subscription-Key"] = _customTextKey
+            };
+
+            var body = new Dictionary<string, string>
+            {
+                ["label"] = classifierLabel.ToString(),
+            };
+
+
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body, headers, parameters: null);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var examples = JsonConvert.DeserializeObject<object>(responseString);
+                return examples;
+            }
+            else
+            {
+                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+            }
+        }
+
+
+        public async Task<object> AddDocumentExtractorMiniDocs(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs)
+        {
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/classifiers/{4}/labels", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, extractorId);
+            var headers = new Dictionary<string, string>
+            {
+                ["Ocp-Apim-Subscription-Key"] = _customTextKey
+            };
+
+            var body = new Dictionary<string, IEnumerable<MiniDoc>>
+            {
+                ["miniDocs"] = miniDocs,
+            };
+
+            var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body, headers, parameters: null);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var examples = JsonConvert.DeserializeObject<object>(responseString);
+                return examples;
+            }
+            else
             {
                 throw new FetchingExamplesFailedException(response.StatusCode.ToString());
             }
