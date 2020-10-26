@@ -14,6 +14,9 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppM
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         [JsonProperty("children", NullValueHandling = NullValueHandling.Ignore)]
         public List<CustomTextModel> Children { get; set; }
 

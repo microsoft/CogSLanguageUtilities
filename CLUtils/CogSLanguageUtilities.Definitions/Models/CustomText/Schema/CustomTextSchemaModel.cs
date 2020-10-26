@@ -14,6 +14,9 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Schema
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         [JsonProperty("typeId")]
         public ModelType TypeId { get; set; }
 

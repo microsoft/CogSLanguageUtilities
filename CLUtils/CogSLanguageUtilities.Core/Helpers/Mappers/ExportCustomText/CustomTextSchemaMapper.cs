@@ -32,6 +32,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText
                     {
                         Id = m.Id,
                         Name = m.Name,
+                        Description = m.Description,
                         TypeId = m.TypeId,
                         ReadableType = m.ReadableType
                     });
@@ -55,6 +56,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText
                     {
                         Id = m.Id,
                         Name = m.Name,
+                        Description = m.Description,
                         TypeId = m.TypeId,
                         ReadableType = m.ReadableType,
                         Children = GetExtractorsFromCustomTextModelsRecursively(m.Children)
