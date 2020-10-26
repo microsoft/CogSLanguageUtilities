@@ -118,7 +118,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             }
         }
 
-        public async Task<object> AddApplicationClassifier(CustomTextModel classifier)
+        public async Task<object> AddApplicationClassifierAsync(CustomTextModel classifier)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/classifiers", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var headers = new Dictionary<string, string>
@@ -144,7 +144,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             }
         }
 
-        public async Task<object> AddApplicationExtractor(CustomTextModel extractor)
+        public async Task<object> AddApplicationExtractorAsync(CustomTextModel extractor)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/classifiers", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var headers = new Dictionary<string, string>
@@ -165,7 +165,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             }
         }
 
-        public async Task<object> AddDocumentClassifierLabel(string documentId, string classifierId, bool classifierLabel)
+        public async Task<object> AddDocumentClassifierLabelAsync(string documentId, string classifierId, bool classifierLabel)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/classifiers/{4}/labels", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, classifierId);
             var headers = new Dictionary<string, string>
@@ -193,7 +193,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
         }
 
 
-        public async Task<object> AddDocumentExtractorMiniDocs(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs)
+        public async Task<object> AddDocumentExtractorMiniDocsAsync(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/classifiers/{4}/labels", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, extractorId);
             var headers = new Dictionary<string, string>
