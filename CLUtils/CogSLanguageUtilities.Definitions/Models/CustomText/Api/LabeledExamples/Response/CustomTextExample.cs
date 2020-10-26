@@ -11,7 +11,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Labe
         public Document Document { get; set; }
 
         [JsonProperty("classificationLabels")]
-        public ClassificationLabel[] ClassificationLabels { get; set; }
+        public List<ClassificationLabel> ClassificationLabels { get; set; }
 
         [JsonProperty("miniDocs")]
         public List<MiniDoc> MiniDocs { get; set; }

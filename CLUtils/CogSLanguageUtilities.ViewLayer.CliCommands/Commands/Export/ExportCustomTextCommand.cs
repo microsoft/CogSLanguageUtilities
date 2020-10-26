@@ -13,7 +13,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Export
     class ExportCustomTextCommand
     {
         [Option("--destination <local/blob>", Description = "[required] indicates destination storage type")]
-        public StorageType Destination { get; }
+        public StorageType Destination { get; } = StorageType.Local;
 
         private async Task OnExecute(CommandLineApplication app)
         {
