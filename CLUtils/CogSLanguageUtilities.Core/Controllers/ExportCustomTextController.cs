@@ -46,9 +46,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             // read models from app
             _loggerService.LogOperation(OperationType.ReadingModels);
             var customTextModels = await _customTextAuthoringService.GetApplicationModels();
+            // read labeled examples
+            var labeledExamples = await _customTextAuthoringService.GetLabeledExamples();
             // map to schema format
             _loggerService.LogOperation(OperationType.GeneratingSchema);
-            var schema = CustomTextSchemaMapper.MapCustomTextModelsToSchema(customTextModels.Models);
+            var schema = CustomTextSchemaMapper.MapCustomTextModelsToSchema(customTextModels.Models, labeledExamples.Examples);
             // write schema to file
             _loggerService.LogOperation(OperationType.StoringResult, Constants.CustomTextSchemaFileName);
             await _destinationStorageService.StoreDataAsync(JsonConvert.SerializeObject(schema, Formatting.Indented), Constants.CustomTextSchemaFileName);

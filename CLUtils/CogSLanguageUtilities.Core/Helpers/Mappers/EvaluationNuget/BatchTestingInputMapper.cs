@@ -82,7 +82,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
         /// <param name="predictionResponse"></param>
         /// <param name="modelsDictionary"></param>
         /// <returns>Testing Example model used by nuget</returns>
-        public static TestingExample CreateTestExample(string documentText, Example labeledExample, CustomTextPredictionResponse predictionResponse, Dictionary<string, string> modelsDictionary)
+        public static TestingExample CreateTestExample(string documentText, CustomTextExample labeledExample, CustomTextPredictionResponse predictionResponse, Dictionary<string, string> modelsDictionary)
         {
             var PredictionData = MapCutomTextPredictionResponse(predictionResponse);
             PredictionObject groundTruth = MapCustomTextLabeledExample(modelsDictionary, labeledExample);
@@ -114,7 +114,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
         /// <param name="modelsDictionary"></param>
         /// <param name="e"></param>
         /// <returns>PredictionObject used by evaluation nuget</returns>
-        private static PredictionObject MapCustomTextLabeledExample(Dictionary<string, string> modelsDictionary, Example e)
+        private static PredictionObject MapCustomTextLabeledExample(Dictionary<string, string> modelsDictionary, CustomTextExample e)
         {
             var actualClassNames = e.ClassificationLabels?.Where(c => c.Label == true).Select(c => modelsDictionary[c.ModelId]).ToList();
             actualClassNames = actualClassNames ?? new List<string>();

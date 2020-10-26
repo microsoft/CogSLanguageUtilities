@@ -1,7 +1,10 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
+using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Schema;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText
 {
@@ -12,12 +15,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText
             List<CustomTextSchemaModel> classifiers = new List<CustomTextSchemaModel>();
             customTextModels.ForEach(m =>
             {
-                if (m.TypeId == (int)ModelType.Cl)
+                if (m.TypeId == ModelType.Cl)
                 {
                     classifiers.Add(new CustomTextSchemaModel
                     {
+                        Id = m.Id,
                         Name = m.Name,
-                        Type = m.ReadableType
+                        TypeId = m.TypeId,
+                        ReadableType = m.ReadableType
                     });
                 }
             });
@@ -33,12 +38,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText
             List<CustomTextSchemaModel> extractors = new List<CustomTextSchemaModel>();
             customTextModels.ForEach(m =>
             {
-                if (m.TypeId != (int)ModelType.Cl)
+                if (m.TypeId != ModelType.Cl)
                 {
                     extractors.Add(new CustomTextSchemaModel
                     {
+                        Id = m.Id,
                         Name = m.Name,
-                        Type = m.ReadableType,
+                        TypeId = m.TypeId,
+                        ReadableType = m.ReadableType,
                         Children = GetExtractorsFromCustomTextModelsRecursively(m.Children)
                     });
                 }
@@ -46,13 +53,20 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText
             return extractors;
         }
 
-        public static CustomTextSchema MapCustomTextModelsToSchema(List<CustomTextModel> models)
+        public static CustomTextSchema MapCustomTextModelsToSchema(List<CustomTextModel> models, List<CustomTextExample> examples)
         {
             return new CustomTextSchema
             {
                 Classifiers = GetClassifiersFromCustomTextModels(models),
-                Extractors = GetExtractorsFromCustomTextModelsRecursively(models)
+                Extractors = GetExtractorsFromCustomTextModelsRecursively(models),
+                Examples = GetExamplesFromCustomTextLabeledExamples(examples)
             };
+        }
+
+        private static List<CustomTextSchemaExample> GetExamplesFromCustomTextLabeledExamples(List<CustomTextExample> examples)
+        {
+
+            return null;
         }
     }
 }

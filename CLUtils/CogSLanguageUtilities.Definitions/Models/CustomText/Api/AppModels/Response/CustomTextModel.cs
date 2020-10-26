@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Newtonsoft.Json;
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response
@@ -17,7 +18,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppM
         public List<CustomTextModel> Children { get; set; }
 
         [JsonProperty("typeId")]
-        public int TypeId { get; set; }
+        public ModelType TypeId { get; set; }
 
         [JsonProperty("readableType")]
         public string ReadableType { get; set; }

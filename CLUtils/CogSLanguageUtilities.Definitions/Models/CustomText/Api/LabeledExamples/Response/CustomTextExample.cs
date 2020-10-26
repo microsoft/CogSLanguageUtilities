@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response
 {
-    public class Example
+    public class CustomTextExample
     {
         [JsonProperty("document")]
         public Document Document { get; set; }

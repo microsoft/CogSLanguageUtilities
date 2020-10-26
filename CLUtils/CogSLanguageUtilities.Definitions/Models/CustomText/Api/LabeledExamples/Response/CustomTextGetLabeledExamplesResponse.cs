@@ -8,7 +8,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.Labe
     public class CustomTextGetLabeledExamplesResponse
     {
         [JsonProperty("examples")]
-        public List<Example> Examples { get; set; }
+        public List<CustomTextExample> Examples { get; set; }
 
         [JsonProperty("nextPageLink")]
         public string NextPageLink { get; set; }
