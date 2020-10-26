@@ -1,4 +1,6 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Schema;
