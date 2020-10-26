@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
+namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
 {
     public class Constants
     {
@@ -34,5 +34,7 @@
         public const int CustomTextExamplesPageSize = 100;
         public const string EvaluationCommandPredictionOutputDirectoryName = "prediction_output";
 
+        // export schema
+        public const string CustomTextSchemaFileName = "CustomTextSchema.json";
     }
 }
