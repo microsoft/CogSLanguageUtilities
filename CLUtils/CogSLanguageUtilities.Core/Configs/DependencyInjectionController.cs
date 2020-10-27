@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Autofac;
+using Autofac;
 using Microsoft.CogSLanguageUtilities.Core.Controllers;
 using Microsoft.CogSLanguageUtilities.Core.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.HttpHandler;
@@ -13,6 +13,7 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
@@ -139,6 +140,22 @@ namespace Microsoft.CustomTextCliUtils.Configs
                     labeledExamplesConfigs.AppId);
             }).As<ICustomTextAuthoringService>();
             builder.RegisterType<ExportCustomTextController>().As<IExportCustomTextController>();
+            return builder.Build();
+        }
+
+        public static IContainer BuildImportCommandDependencies()
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<StorageFactoryFactory>().As<IStorageFactoryFactory>();
+            builder.Register(c =>
+            {
+                var configService = c.Resolve<IConfigsLoader>();
+                var labeledExamplesConfigs = configService.GetCustomTextAuthoringConfigModel();
+                return new CustomTextAuthoringService(new HttpHandler(), labeledExamplesConfigs.AzureResourceKey, labeledExamplesConfigs.AzureResourceEndpoint,
+                    labeledExamplesConfigs.AppId);
+            }).As<ICustomTextAuthoringService>();
+            builder.RegisterType<ImportController>().As<IImportController>();
             return builder.Build();
         }
 

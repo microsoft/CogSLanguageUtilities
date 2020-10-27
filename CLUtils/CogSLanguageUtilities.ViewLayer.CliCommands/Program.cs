@@ -8,6 +8,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Export;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.Import;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand;
 using System;
@@ -23,7 +24,8 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
         typeof(ChunkCommand),
         typeof(PredictCommand),
         typeof(EvaluateCommand),
-        typeof(ExportCommand))]
+        typeof(ExportCommand),
+        typeof(ImportCommand))]
     public class Program
     {
         public static void Main(string[] args)

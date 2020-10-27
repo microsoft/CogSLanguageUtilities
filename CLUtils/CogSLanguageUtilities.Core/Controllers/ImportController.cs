@@ -57,7 +57,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService.LogOperation(OperationType.CreatingModels);
 
             // add models: classifiers
-            AddClassifierModelsToApp(customTextSchema, modelsDictionary);
+            await AddClassifierModelsToAppAsync(customTextSchema, modelsDictionary);
 
             // add models: extractors
             AddExtractorModelsToApp(customTextSchema, modelsDictionary);
@@ -118,9 +118,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             });
         }
 
-        private void AddClassifierModelsToApp(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
+        private async Task AddClassifierModelsToAppAsync(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
         {
-            customTextSchema.Classifiers.ForEach(async classifier =>
+            foreach(var classifier in customTextSchema.Classifiers)
             {
                 // map model
                 var mappedClassifier = ImportCustomTextSchemaMapper.MapClassifier(classifier);
@@ -129,7 +129,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
                 // add created classifier id to dictionary
                 modelsDictionary.Add(classifier.Id, response.Id);
-            });
+            }
         }
 
         private void AddExtractorsToDictionaryRecursively(CustomTextModel schemaExtractor, CustomTextModel createdExtractor, Dictionary<string, string> modelsDictionary)
