@@ -7,9 +7,9 @@ using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Schema;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText
+namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.CustomText
 {
-    public class CustomTextSchemaMapper
+    public class ExportCustomTextSchemaMapper
     {
         public static CustomTextSchema MapCustomTextModelsToSchema(List<CustomTextModel> models, List<CustomTextExample> examples)
         {

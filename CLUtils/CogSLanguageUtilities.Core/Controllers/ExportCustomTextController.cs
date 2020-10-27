@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.ExportCustomText;
+using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Factories.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
@@ -50,7 +51,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var labeledExamples = await _customTextAuthoringService.GetLabeledExamples();
             // map to schema format
             _loggerService.LogOperation(OperationType.GeneratingSchema);
-            var schema = CustomTextSchemaMapper.MapCustomTextModelsToSchema(customTextModels.Models, labeledExamples.Examples);
+            var schema = ExportCustomTextSchemaMapper.MapCustomTextModelsToSchema(customTextModels.Models, labeledExamples.Examples);
             // write schema to file
             _loggerService.LogOperation(OperationType.StoringResult, Constants.CustomTextSchemaFileName);
             await _destinationStorageService.StoreDataAsync(JsonConvert.SerializeObject(schema, Formatting.Indented), Constants.CustomTextSchemaFileName);

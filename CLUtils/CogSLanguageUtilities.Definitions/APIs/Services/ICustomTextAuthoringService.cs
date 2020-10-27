@@ -13,9 +13,9 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
         public Task<CustomTextGetLabeledExamplesResponse> GetLabeledExamples(int skip = 0, int take = Constants.CustomTextExamplesPageSize);
         Task<Dictionary<string, string>> GetModelsDictionary();
         public Task<CustomTextGetModelsResponse> GetApplicationModels();
-        public Task<object> AddApplicationClassifierAsync(CustomTextModel classifier);
-        public Task<object> AddApplicationExtractorAsync(CustomTextModel extractor);
-        public Task<object> AddDocumentClassifierLabelAsync(string documentId, string classifierId, bool classifierLabel);
-        public Task<object> AddDocumentExtractorMiniDocsAsync(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs);
+        public Task<CustomTextModel> AddApplicationClassifierAsync(CustomTextModel classifier);
+        public Task<CustomTextModel> AddApplicationExtractorAsync(CustomTextModel extractor);
+        public Task<CustomTextGetLabeledExamplesResponse> AddDocumentClassifierLabelAsync(string documentId, string classifierId, bool classifierLabel);
+        public Task<CustomTextGetLabeledExamplesResponse> AddDocumentExtractorMiniDocsAsync(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs);
     }
 }

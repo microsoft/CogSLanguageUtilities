@@ -3,6 +3,7 @@
 ﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.HttpHandler;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Evaluation;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
@@ -118,7 +119,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             }
         }
 
-        public async Task<object> AddApplicationClassifierAsync(CustomTextModel classifier)
+        public async Task<CustomTextModel> AddApplicationClassifierAsync(CustomTextModel classifier)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/classifiers", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var headers = new Dictionary<string, string>
@@ -132,19 +133,19 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
                 ["description"] = classifier.Description
             };
             var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body, headers, parameters: null);
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.Created)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var examples = JsonConvert.DeserializeObject<object>(responseString);
-                return examples;
+                var model = JsonConvert.DeserializeObject<CustomTextModel>(responseString);
+                return model;
             }
             else
             {
-                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+                throw new AddingModelFailedException(response.StatusCode.ToString());
             }
         }
 
-        public async Task<object> AddApplicationExtractorAsync(CustomTextModel extractor)
+        public async Task<CustomTextModel> AddApplicationExtractorAsync(CustomTextModel extractor)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/classifiers", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var headers = new Dictionary<string, string>
@@ -156,16 +157,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var examples = JsonConvert.DeserializeObject<object>(responseString);
-                return examples;
+                var model = JsonConvert.DeserializeObject<CustomTextModel>(responseString);
+                return model;
             }
             else
             {
-                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+                throw new AddingModelFailedException(response.StatusCode.ToString());
             }
         }
 
-        public async Task<object> AddDocumentClassifierLabelAsync(string documentId, string classifierId, bool classifierLabel)
+        public async Task<CustomTextGetLabeledExamplesResponse> AddDocumentClassifierLabelAsync(string documentId, string classifierId, bool classifierLabel)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/classifiers/{4}/labels", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, classifierId);
             var headers = new Dictionary<string, string>
@@ -183,17 +184,17 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var examples = JsonConvert.DeserializeObject<object>(responseString);
+                var examples = JsonConvert.DeserializeObject<CustomTextGetLabeledExamplesResponse>(responseString);
                 return examples;
             }
             else
             {
-                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+                throw new AddingExampleFailedException(response.StatusCode.ToString());
             }
         }
 
 
-        public async Task<object> AddDocumentExtractorMiniDocsAsync(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs)
+        public async Task<CustomTextGetLabeledExamplesResponse> AddDocumentExtractorMiniDocsAsync(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs)
         {
             var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/classifiers/{4}/labels", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, extractorId);
             var headers = new Dictionary<string, string>
@@ -210,12 +211,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var examples = JsonConvert.DeserializeObject<object>(responseString);
+                var examples = JsonConvert.DeserializeObject<CustomTextGetLabeledExamplesResponse>(responseString);
                 return examples;
             }
             else
             {
-                throw new FetchingExamplesFailedException(response.StatusCode.ToString());
+                throw new AddingExampleFailedException(response.StatusCode.ToString());
             }
         }
     }

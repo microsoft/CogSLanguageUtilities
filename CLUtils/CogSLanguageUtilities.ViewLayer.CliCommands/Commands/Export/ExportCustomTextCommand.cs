@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using Autofac;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CogSLanguageUtilities.Core.Controllers;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using Microsoft.CustomTextCliUtils.Configs;
 using System.Threading.Tasks;

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers
 {
-    public interface IExportCustomTextController
+    public interface IImportController
     {
-        Task ExportSchema(StorageType destinationStorageType);
+        Task ImportSchemaAsync(StorageType sourceStorageType, string schemaPath);
     }
 }

@@ -13,6 +13,8 @@
         EvaluatingResults,
         GeneratingTestSet,
         ReadingModels,
-        GeneratingSchema
+        GeneratingSchema,
+        CreatingModels,
+        AddingLabels
     }
 }
