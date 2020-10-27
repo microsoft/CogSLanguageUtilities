@@ -147,14 +147,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         public async Task<CustomTextModel> AddApplicationExtractorAsync(CustomTextModel extractor)
         {
-            var requestUrl = string.Format("{0}/{1}/apps/{2}/classifiers", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/extractors", _endpointUrl, _customTextAuthoringBaseUrl, _appId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
             };
 
             var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body: extractor, headers, parameters: null);
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.Created)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var model = JsonConvert.DeserializeObject<CustomTextModel>(responseString);
@@ -181,7 +181,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
 
             var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body, headers, parameters: null);
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.Created)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var examples = JsonConvert.DeserializeObject<CustomTextGetLabeledExamplesResponse>(responseString);
@@ -196,7 +196,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
 
         public async Task<CustomTextGetLabeledExamplesResponse> AddDocumentExtractorMiniDocsAsync(string documentId, string extractorId, IEnumerable<MiniDoc> miniDocs)
         {
-            var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/classifiers/{4}/labels", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, extractorId);
+            var requestUrl = string.Format("{0}/{1}/apps/{2}/documents/{3}/extractors/{4}/minidocs", _endpointUrl, _customTextAuthoringBaseUrl, _appId, documentId, extractorId);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _customTextKey
@@ -208,7 +208,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.CustomText
             };
 
             var response = await _httpHandler.SendJsonPostRequestAsync(requestUrl, body, headers, parameters: null);
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.Created)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var examples = JsonConvert.DeserializeObject<CustomTextGetLabeledExamplesResponse>(responseString);

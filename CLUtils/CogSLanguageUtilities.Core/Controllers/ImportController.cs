@@ -60,22 +60,22 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             await AddClassifierModelsToAppAsync(customTextSchema, modelsDictionary);
 
             // add models: extractors
-            AddExtractorModelsToApp(customTextSchema, modelsDictionary);
+            //await AddExtractorModelsToAppAsync(customTextSchema, modelsDictionary);
 
             _loggerService.LogOperation(OperationType.AddingLabels);
 
             // add labels: classifiers
-            AddClassifierLabelsToApp(customTextSchema, modelsDictionary);
+            await AddClassifierLabelsToAppAsync(customTextSchema, modelsDictionary);
 
             // add labels: extractors
-            AddExtractorLabelsToApp(customTextSchema, modelsDictionary);
+            //await AddExtractorLabelsToAppAsync(customTextSchema, modelsDictionary);
         }
 
-        private void AddExtractorLabelsToApp(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
+        private async Task AddExtractorLabelsToAppAsync(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
         {
-            customTextSchema.Examples.ForEach(example =>
+            foreach (var example in customTextSchema.Examples)
             {
-                example.MiniDocs.ForEach(async miniDoc =>
+                foreach (var miniDoc in example.MiniDocs)
                 {
                     var mappedMiniDoc = ImportCustomTextSchemaMapper.MapMiniDoc(miniDoc);
                     mappedMiniDoc.ModelId = modelsDictionary[mappedMiniDoc.ModelId];
@@ -85,28 +85,28 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                         extractorId: mappedMiniDoc.ModelId,
                         miniDocs: new List<MiniDoc> { mappedMiniDoc }
                     );
-                });
-            });
+                }
+            }
         }
 
-        private void AddClassifierLabelsToApp(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
+        private async Task AddClassifierLabelsToAppAsync(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
         {
-            customTextSchema.Examples.ForEach(example =>
+            foreach (var example in customTextSchema.Examples)
             {
-                example.ClassificationLabels.ForEach(async classificationLabel =>
+                foreach (var classificationLabel in example.ClassificationLabels)
                 {
                     await _customTextAuthoringService.AddDocumentClassifierLabelAsync(
                         documentId: example.Document.DocumentId,
                         classifierId: modelsDictionary[classificationLabel.ModelId],
                         classifierLabel: classificationLabel.Label
                     );
-                });
-            });
+                }
+            }
         }
 
-        private void AddExtractorModelsToApp(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
+        private async Task AddExtractorModelsToAppAsync(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
         {
-            customTextSchema.Extractors.ForEach(async extractor =>
+            foreach (var extractor in customTextSchema.Extractors)
             {
                 // map model
                 var mappedExtractor = ImportCustomTextSchemaMapper.MapExtractor(extractor);
@@ -115,12 +115,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
                 // add created extractor id to dictionary
                 AddExtractorsToDictionaryRecursively(mappedExtractor, response, modelsDictionary);
-            });
+            }
         }
 
         private async Task AddClassifierModelsToAppAsync(CustomTextSchema customTextSchema, Dictionary<string, string> modelsDictionary)
         {
-            foreach(var classifier in customTextSchema.Classifiers)
+            foreach (var classifier in customTextSchema.Classifiers)
             {
                 // map model
                 var mappedClassifier = ImportCustomTextSchemaMapper.MapClassifier(classifier);
