@@ -23,8 +23,11 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.CustomText
         {
             return new CustomTextModel
             {
+                Id = extractor.Id,
                 Name = extractor.Name,
                 Description = extractor.Description,
+                TypeId = extractor.TypeId,
+                ReadableType = extractor.ReadableType,
                 Children = MapExtractorChildren(extractor.Children)
             };
         }
