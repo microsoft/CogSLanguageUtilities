@@ -37,7 +37,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics
                 throw new TextAnalyticsConnectionException(e.Message);
             }
         }
-        public async Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries)
+        public async Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries, bool opinionMining)
         {
             // verify text analytics char limit
             VerifyCharLimit(queries);
@@ -46,8 +46,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics
             var result = new List<AnalyzeSentimentResult>();
             while (listPaginator.HasNext())
             {
+                var options = new AnalyzeSentimentOptions() { IncludeOpinionMining = opinionMining };
                 var subList = (listPaginator.GetNextPage()).ToList();
-                var response = await _textAnalyticsClient.AnalyzeSentimentBatchAsync(subList, language: _predictionLanguage);
+                var response = await _textAnalyticsClient.AnalyzeSentimentBatchAsync(subList, language: _predictionLanguage, options: options);
                 HandleError(response.Value);
                 result.AddRange(response.Value);
             }

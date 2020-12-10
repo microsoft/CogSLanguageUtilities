@@ -14,7 +14,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers
         Task SetCustomTextPredictionConfigsAsync(string customTextKey, string endpointUrl, string appId);
         Task SetLocalStorageConfigsAsync(string sourceDirectory, string destinationDirectory);
         Task SetMsReadConfigsAsync(string cognitiveServicesKey, string endpointUrl);
-        Task SetTextAnalyticsConfigsAsync(string azureResourceKey, string azureResourceEndpoint, string defaultLanguage, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault);
+        Task SetTextAnalyticsConfigsAsync(string azureResourceKey, string azureResourceEndpoint, string defaultLanguage, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault, bool? enableOpinionMiningByDefault);
         void ShowAllConfigs();
         void ShowChunkerConfigs();
         void ShowCustomTextAuthoringConfigs();

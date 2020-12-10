@@ -8,7 +8,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface ITextAnalyticsService
     {
-        public Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries);
+        public Task<List<AnalyzeSentimentResult>> PredictSentimentBatchAsync(List<string> queries, bool opinionMining);
         public Task<List<RecognizeEntitiesResult>> PredictNerBatchAsync(List<string> queries);
         public Task<List<ExtractKeyPhrasesResult>> PredictKeyphraseBatchAsync(List<string> queries);
     }

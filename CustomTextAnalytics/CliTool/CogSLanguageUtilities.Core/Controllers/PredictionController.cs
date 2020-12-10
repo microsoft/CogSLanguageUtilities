@@ -95,7 +95,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                     _loggerService.LogOperation(OperationType.RunningPrediction, fileName);
                     var queries = chunkedText.Select(r => r.Text).ToList();
                     var customTextresponse = runCustomText ? await _customTextPredictionService.GetPredictionBatchAsync(queries) : null;
-                    var sentimentResponse = runTextAnalytics && defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries) : null;
+                    var sentimentResponse = runTextAnalytics && defaultOps.Sentiment ? await _textAnalyticsPredictionService.PredictSentimentBatchAsync(queries, defaultOps.OpinionMining) : null;
                     var nerResponse = runTextAnalytics && defaultOps.Ner ? await _textAnalyticsPredictionService.PredictNerBatchAsync(queries) : null;
                     var keyphraseResponse = runTextAnalytics && defaultOps.Keyphrase ? await _textAnalyticsPredictionService.PredictKeyphraseBatchAsync(queries) : null;
                     // concatenation service

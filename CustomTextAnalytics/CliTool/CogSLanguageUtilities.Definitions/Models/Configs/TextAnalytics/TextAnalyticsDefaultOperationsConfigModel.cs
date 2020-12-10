@@ -15,5 +15,8 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs.TextAnalyti
 
         [JsonProperty(ConfigKeys.TextAnalyticsKeyphrase)]
         public bool Keyphrase { get; set; }
+
+        [JsonProperty(ConfigKeys.TextAnalyticsOpinionMining)]
+        public bool OpinionMining { get; set; }
     }
 }

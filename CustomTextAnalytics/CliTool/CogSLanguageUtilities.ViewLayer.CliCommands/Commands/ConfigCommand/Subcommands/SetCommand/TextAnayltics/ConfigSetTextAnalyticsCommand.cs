@@ -24,6 +24,8 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
         public bool? EnableNerByDefault { get; }
         [Option(CommandOptionTemplate.TextAnalyticsEnableKeyphrase, optionType: CommandOptionType.SingleValue, Description = "text analytics enable keyphrase by default")]
         public bool? EnableKeyphraseByDefault { get; }
+        [Option(CommandOptionTemplate.TextAnalyticsEnableOpinionMining, optionType: CommandOptionType.SingleValue, Description = "text analytics enable opinion mining by default")]
+        public bool? EnableOpinionMiningByDefault { get; }
 
         private async Task OnExecuteAsync(CommandLineApplication app)
         {
@@ -34,7 +36,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigC
             using (var scope = container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ConfigsController>();
-                await controller.SetTextAnalyticsConfigsAsync(AzureResourceKey, AzureResourceEndpoint, DefaultLanguage, EnableSentimentByDefault, EnableNerByDefault, EnableKeyphraseByDefault);
+                await controller.SetTextAnalyticsConfigsAsync(AzureResourceKey, AzureResourceEndpoint, DefaultLanguage, EnableSentimentByDefault, EnableNerByDefault, EnableKeyphraseByDefault, EnableOpinionMiningByDefault);
             }
         }
     }
