@@ -39,7 +39,8 @@
     "default_operations": {
       "sentiment": true,
       "ner": false,
-      "keyphrase": true
+      "keyphrase": true,
+      "opinion-mining": true
     }
   }
 }

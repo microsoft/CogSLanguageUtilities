@@ -33,6 +33,7 @@
         public const string TextAnalyticsSentiment = "sentiment";
         public const string TextAnalyticsNer = "ner";
         public const string TextAnalyticsKeyphrase = "keyphrase";
+        public const string TextAnalyticsOpinionMining = "opinion-mining";
 
         // evaluation
         public const string EvaluationLabeledExamplesAppAzureResourceKey = "azure-resource-key";

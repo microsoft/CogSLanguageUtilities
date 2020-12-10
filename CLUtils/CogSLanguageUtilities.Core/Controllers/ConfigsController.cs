@@ -52,7 +52,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _loggerService.Log("Configs loaded from file");
         }
 
-        public async Task SetTextAnalyticsConfigsAsync(string azureResourceKey, string azureResourceEndpoint, string defaultLanguage, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault)
+        public async Task SetTextAnalyticsConfigsAsync(string azureResourceKey, string azureResourceEndpoint, string defaultLanguage, bool? enableSentimentByDefault, bool? enableNerByDefault, bool? enableKeyphraseByDefault, bool? enableOpinionMiningByDefault)
         {
             _configModel.TextAnalytics.AzureResourceKey = azureResourceKey ?? _configModel.TextAnalytics.AzureResourceKey;
             _configModel.TextAnalytics.AzureResourceEndpoint = azureResourceEndpoint ?? _configModel.TextAnalytics.AzureResourceEndpoint;
@@ -61,6 +61,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             _configModel.TextAnalytics.DefaultOperations.Sentiment = enableSentimentByDefault ?? _configModel.TextAnalytics.DefaultOperations.Sentiment;
             _configModel.TextAnalytics.DefaultOperations.Ner = enableNerByDefault ?? _configModel.TextAnalytics.DefaultOperations.Ner;
             _configModel.TextAnalytics.DefaultOperations.Keyphrase = enableKeyphraseByDefault ?? _configModel.TextAnalytics.DefaultOperations.Keyphrase;
+            _configModel.TextAnalytics.DefaultOperations.OpinionMining = enableOpinionMiningByDefault ?? _configModel.TextAnalytics.DefaultOperations.OpinionMining;
 
             await StoreConfigsModelAsync();
             _loggerService.Log("Updated Text Analytics configs");
