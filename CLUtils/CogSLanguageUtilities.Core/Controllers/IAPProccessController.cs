@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
-    class IAPProccessController
+    public class IAPProccessController
     {
         IStorageService _storageService;
         ITranscriptParser _transcriptParser;
@@ -34,7 +34,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             foreach (var file in files)
             {
                 //  1- parse file (extract utterances)
-                var transcript = await _transcriptParser.ParseTranscriptAsync(file);
+                var fileStream = await _storageService.ReadFileAsync(file);
+                var transcript = await _transcriptParser.ParseTranscriptAsync(fileStream);
 
                 var predictionsDictionary = new Dictionary<long, CustomLuisResponse>();
                 foreach (var utterance in transcript.Utterances)
@@ -48,7 +49,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 
                 //  5- write result file
                 var outString = JsonConvert.SerializeObject(processedTranscript, Formatting.Indented);
-                await _storageService.StoreDataToDirectoryAsync(outString, @"C:\Users\v-noyasser\Desktop\transcripts", "test.json");
+                await _storageService.StoreDataAsync(outString, "test.json");
             }
         }
     }

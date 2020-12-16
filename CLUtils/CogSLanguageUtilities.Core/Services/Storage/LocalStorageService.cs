@@ -16,7 +16,22 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
     */
     public class LocalStorageService : IStorageService
     {
-        private readonly string _targetDirectory;
+        private readonly string _sourceDirectory;
+        private readonly string _destinationDirectory;
+
+        public LocalStorageService(string sourceDirectory, string destinationDirectory)
+        {
+            if (!Directory.Exists(sourceDirectory))
+            {
+                throw new FolderNotFoundException(sourceDirectory);
+            }
+            if (!Directory.Exists(destinationDirectory))
+            {
+                throw new FolderNotFoundException(destinationDirectory);
+            }
+            _sourceDirectory = sourceDirectory;
+            _destinationDirectory = destinationDirectory;
+        }
 
         public LocalStorageService(string targetDirectory)
         {
@@ -24,17 +39,16 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             {
                 throw new FolderNotFoundException(targetDirectory);
             }
-            _targetDirectory = targetDirectory;
         }
 
         public async Task<string[]> ListFilesAsync()
         {
-            return await Task.FromResult(Directory.GetFiles(_targetDirectory).Select(i => Path.GetFileName(i)).ToArray());
+            return await Task.FromResult(Directory.GetFiles(_sourceDirectory).Select(i => Path.GetFileName(i)).ToArray());
         }
 
         public async Task<Stream> ReadFileAsync(string fileName)
         {
-            string filePath = Path.Combine(_targetDirectory, fileName);
+            string filePath = Path.Combine(_sourceDirectory, fileName);
             if (await FileExists(fileName))
             {
                 try
@@ -44,7 +58,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new UnauthorizedFileAccessException(AccessType.Read.ToString(), Path.Combine(_targetDirectory, fileName));
+                    throw new UnauthorizedFileAccessException(AccessType.Read.ToString(), Path.Combine(_sourceDirectory, fileName));
                 }
             }
             else
@@ -55,7 +69,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 
         public async Task<string> ReadFileAsStringAsync(string fileName)
         {
-            var filePath = Path.Combine(_targetDirectory, fileName);
+            var filePath = Path.Combine(_sourceDirectory, fileName);
             if (await FileExists(fileName))
             {
                 return await File.ReadAllTextAsync(filePath);
@@ -70,7 +84,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
         {
             try
             {
-                string filePath = Path.Combine(_targetDirectory, fileName);
+                string filePath = Path.Combine(_destinationDirectory, fileName);
                 await File.WriteAllTextAsync(filePath, data);
             }
             catch (UnauthorizedAccessException)
@@ -93,7 +107,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 
         public Task<bool> FileExists(string fileName)
         {
-            var filePath = Path.Combine(_targetDirectory, fileName);
+            var filePath = Path.Combine(_sourceDirectory, fileName);
             return Task.FromResult(File.Exists(filePath));
         }
 
@@ -104,7 +118,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
 
         public Task CreateDirectoryAsync(string directoryName)
         {
-            var completePath = Path.Combine(_targetDirectory, directoryName);
+            var completePath = Path.Combine(_destinationDirectory, directoryName);
             Directory.CreateDirectory(completePath);
             return Task.CompletedTask;
         }

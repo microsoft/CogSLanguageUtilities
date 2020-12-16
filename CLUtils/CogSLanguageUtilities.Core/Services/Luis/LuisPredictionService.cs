@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.Luis
 {
-    class LuisPredictionService : ILuisPredictionService
+    public class LuisPredictionService : ILuisPredictionService
     {
         LUISRuntimeClient _client;
         Guid _appId;

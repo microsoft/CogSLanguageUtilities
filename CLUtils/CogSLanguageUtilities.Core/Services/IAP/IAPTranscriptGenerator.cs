@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
 {
-    class IAPTranscriptGenerator : IIAPTranscriptGenerator
+    public class IAPTranscriptGenerator : IIAPTranscriptGenerator
     {
         public ProcessedTranscript GenerateTranscript(Dictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId)
         {

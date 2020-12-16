@@ -9,7 +9,9 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Chunker;
 using Microsoft.CogSLanguageUtilities.Core.Services.Concatenation;
 using Microsoft.CogSLanguageUtilities.Core.Services.CustomText;
 using Microsoft.CogSLanguageUtilities.Core.Services.Evaluation;
+using Microsoft.CogSLanguageUtilities.Core.Services.IAP;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
+using Microsoft.CogSLanguageUtilities.Core.Services.Luis;
 using Microsoft.CogSLanguageUtilities.Core.Services.Parser;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
@@ -107,6 +109,21 @@ namespace Microsoft.CustomTextCliUtils.Configs
                     labeledExamplesConfigs.AppId);
             }).As<ICustomTextAuthoringService>();
             builder.RegisterType<BatchTestingController>();
+            return builder.Build();
+        }
+
+        public static IContainer BuildIAPControllerDependencies()
+        {
+            var builder = BuildCommonDependencies();
+            builder.RegisterType<TranscriptParser>().As<ITranscriptParser>();
+            builder.RegisterType<IAPTranscriptGenerator>().As<IIAPTranscriptGenerator>();
+            builder.RegisterInstance(new LuisPredictionService(
+                "",
+                "",
+                "")).As<ILuisPredictionService>();
+            builder.RegisterInstance(new LocalStorageService(@"C:\Users\v-noyasser\Desktop\transcripts\source", 
+                @"C:\Users\v-noyasser\Desktop\transcripts\destination")).As<IStorageService>();
+            builder.RegisterType<IAPProccessController>();
             return builder.Build();
         }
 

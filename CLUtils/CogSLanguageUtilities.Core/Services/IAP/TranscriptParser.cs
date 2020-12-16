@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
 {
-    class TranscriptParser : ITranscriptParser
+    public class TranscriptParser : ITranscriptParser
     {
-        public async Task<IAPTranscript> ParseTranscriptAsync(string filePath)
+        public async Task<IAPTranscript> ParseTranscriptAsync(Stream file)
         {
             string line;
-            var sr = new StreamReader(filePath);
+            var sr = new StreamReader(file);
             List<ConversationUtterance> utterances = new List<ConversationUtterance>();
             var firstLine = await sr.ReadLineAsync();
             ExtractMetaData(firstLine, out string id, out string channel);
