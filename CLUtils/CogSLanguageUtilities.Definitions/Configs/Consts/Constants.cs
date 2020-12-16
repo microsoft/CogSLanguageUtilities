@@ -38,6 +38,10 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
         public const string ModelHierarchySeparator = "::";
         public const int CustomTextExamplesPageSize = 100;
         public const string EvaluationCommandPredictionOutputDirectoryName = "prediction_output";
-
+        // Mapping
+        public const string InstanceKey = "$instance";
+        public const string TypeKey = "type";
+        public const string StartIndexKey = "startIndex";
+        public const string LengthKey = "length";
     }
 }

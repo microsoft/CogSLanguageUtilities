@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Enums.CustomText;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.AppModels.Response;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.CustomText.Api.LabeledExamples.Response;
@@ -19,11 +19,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
     /// </summary>
     public class BatchTestingInputMapper
     {
-        private const string instanceKey = "$instance";
-        private const string typeKey = "type";
-        private const string startIndexKey = "startIndex";
-        private const string lengthKey = "length";
-
         /// <summary>
         /// Maps all entity models in the Custom Text app 
         /// </summary>
@@ -129,10 +124,10 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
         private static List<Entity> MapCustomTextPredictionEntities(JObject extractors)
         {
             List<Entity> entities = new List<Entity>();
-            var instance = extractors[instanceKey];
+            var instance = extractors[Constants.InstanceKey];
             foreach (var entry in extractors)
             {
-                if (entry.Key != instanceKey)
+                if (entry.Key != Constants.InstanceKey)
                 {
                     JArray entityArray = (JArray)entry.Value;
                     JArray instanceArray = (JArray)instance[entry.Key];
@@ -140,9 +135,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.EvaluationNuget
                     {
                         entities.Add(new Entity
                         {
-                            Name = instanceArray[i][typeKey].ToString(),
-                            StartPosition = instanceArray[i][startIndexKey].ToObject<int>(),
-                            EndPosition = instanceArray[i][startIndexKey].ToObject<int>() + instanceArray[i][lengthKey].ToObject<int>(),
+                            Name = instanceArray[i][Constants.TypeKey].ToString(),
+                            StartPosition = instanceArray[i][Constants.StartIndexKey].ToObject<int>(),
+                            EndPosition = instanceArray[i][Constants.StartIndexKey].ToObject<int>() + instanceArray[i][Constants.LengthKey].ToObject<int>(),
                             Children = entityArray[i] is JObject ? MapCustomTextPredictionEntities((JObject)entityArray[i]) : null
                         });
                     }
