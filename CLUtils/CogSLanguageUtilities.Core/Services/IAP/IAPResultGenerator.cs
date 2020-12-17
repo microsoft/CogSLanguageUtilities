@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
 {
-    public class IAPTranscriptGenerator : IIAPTranscriptGenerator
+    public class IAPResultGenerator : IIAPResultGenerator
     {
-        public ProcessedTranscript GenerateTranscript(IDictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId)
+        public ProcessedTranscript GenerateResult(IDictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId)
         {
 
             var meta = new Meta
@@ -18,7 +18,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
                 TranscriptId = transcriptId
             };
 
-            var conversations = luisPredictions.Select(prediction =>
+            var conversations = luisPredictions.Where(prediction => prediction.Value.Entities != null)
+                .Select(prediction =>
             {
                 return new Conversation
                 {
@@ -26,11 +27,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
                     Timestamp = prediction.Key,
                     Extractions = prediction.Value.Entities
                 };
-            }).ToList();
+            });
 
+            var sortedConversations = conversations.OrderBy(c => c.Timestamp).ToList();
             return new ProcessedTranscript
             {
-                Conversation = conversations,
+                Conversation = sortedConversations,
                 Meta = meta
             };
         }

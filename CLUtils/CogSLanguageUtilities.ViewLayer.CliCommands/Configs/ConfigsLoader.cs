@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Configs;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Configs;
+using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Models.Configs;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace Microsoft.CustomTextCliUtils.Configs
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs
 {
-    public class ConfigsLoader : IConfigsLoader
+    public class ConfigsLoader
     {
         readonly ConfigModel _configModel;
 
@@ -32,7 +31,7 @@ namespace Microsoft.CustomTextCliUtils.Configs
             return _configModel.Storage;
         }
 
-        public LuisConfigModel  GetLuisConfigModel()
+        public LuisConfigModel GetLuisConfigModel()
         {
             return _configModel.Luis;
         }

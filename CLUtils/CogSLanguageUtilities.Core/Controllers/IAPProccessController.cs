@@ -15,13 +15,13 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         IStorageService _storageService;
         ITranscriptParser _transcriptParser;
         ILuisPredictionService _luisPredictionService;
-        IIAPTranscriptGenerator _transcriptGenerator;
+        IIAPResultGenerator _transcriptGenerator;
 
         public IAPProccessController(
             IStorageService storageService,
             ITranscriptParser transcriptParser,
             ILuisPredictionService luisPredictionService,
-            IIAPTranscriptGenerator transcriptGenerator)
+            IIAPResultGenerator transcriptGenerator)
         {
             _storageService = storageService;
             _transcriptParser = transcriptParser;
@@ -35,27 +35,29 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
             var files = await _storageService.ListFilesAsync();
 
             // loop on files
-            foreach (var file in files)
+            var fileTasks = files.Select(async file =>
             {
-                //  1- parse file (extract utterances)
+                //  parse file (extract utterances)
                 var fileStream = await _storageService.ReadFileAsync(file);
                 var transcript = await _transcriptParser.ParseTranscriptAsync(fileStream);
 
                 var predictionsDictionary = new ConcurrentDictionary<long, CustomLuisResponse>();
                 var tasks = transcript.Utterances.Select(async utterance =>
                 {
-                    //  2- run luis prediction endpoint
+                    // run luis prediction endpoint
                     predictionsDictionary[utterance.Timestamp] = await _luisPredictionService.Predict(utterance.Text);
-                    //  3- run TA prediction endpoint
+                    // TODO: run TA prediction endpoint
                 });
                 await Task.WhenAll(tasks);
-                //  4- concatenate result
-                var processedTranscript = _transcriptGenerator.GenerateTranscript(predictionsDictionary, transcript.Channel, transcript.Id);
 
-                //  5- write result file
+                // concatenate result
+                var processedTranscript = _transcriptGenerator.GenerateResult(predictionsDictionary, transcript.Channel, transcript.Id);
+
+                // write result file
                 var outString = JsonConvert.SerializeObject(processedTranscript, Formatting.Indented);
                 await _storageService.StoreDataAsync(outString, "test.json");
-            }
+            });
+            await Task.WhenAll(fileTasks);
         }
     }
 }

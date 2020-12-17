@@ -6,10 +6,10 @@ using Microsoft.CogSLanguageUtilities.Core.Services.IAP;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Core.Services.Luis;
 using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Configs;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CustomTextCliUtils.Configs
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs
 {
     public class DependencyInjectionController
     {
@@ -17,12 +17,12 @@ namespace Microsoft.CustomTextCliUtils.Configs
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(new ConsoleLoggerService()).As<ILoggerService>();
-            builder.RegisterType<ConfigsLoader>().As<IConfigsLoader>();
+            builder.RegisterType<ConfigsLoader>();
             builder.RegisterType<TranscriptParser>().As<ITranscriptParser>();
-            builder.RegisterType<IAPTranscriptGenerator>().As<IIAPTranscriptGenerator>();
+            builder.RegisterType<IAPResultGenerator>().As<IIAPResultGenerator>();
             builder.Register(c =>
             {
-                var configs = c.Resolve<IConfigsLoader>();
+                var configs = c.Resolve<ConfigsLoader>();
                 return new LuisPredictionService(
                     configs.GetLuisConfigModel().Endpoint,
                     configs.GetLuisConfigModel().Key,
@@ -31,13 +31,13 @@ namespace Microsoft.CustomTextCliUtils.Configs
 
             builder.Register(c =>
             {
-                var configs = c.Resolve<IConfigsLoader>();
-                return new LocalStorageService(
+                var configs = c.Resolve<ConfigsLoader>();
+                return new DiskStorageService(
                     configs.GetStorageConfigModel().SourcePath,
                     configs.GetStorageConfigModel().DestinationPath);
             }).As<IStorageService>();
 
-            builder.RegisterType<IAPProccessController>();
+            builder.RegisterType<IAPProccessController>().As<IIAPProccessController>();
             return builder.Build();
         }
     }

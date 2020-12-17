@@ -55,6 +55,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.Luis
                 }
                 catch (Exception)
                 {
+                    // TODO: Handle all types of entities instead of skipping
                     continue;
                 }
             }

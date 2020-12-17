@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Storage;
 using System;
@@ -14,12 +14,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
     * some notes:
     *      - we use file exists in all reading methods, in order to throw our custom exception in case file wan't found
     */
-    public class LocalStorageService : IStorageService
+    public class DiskStorageService : IStorageService
     {
         private readonly string _sourceDirectory;
         private readonly string _destinationDirectory;
 
-        public LocalStorageService(string sourceDirectory, string destinationDirectory)
+        public DiskStorageService(string sourceDirectory, string destinationDirectory)
         {
             if (!Directory.Exists(sourceDirectory))
             {
@@ -31,14 +31,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             }
             _sourceDirectory = sourceDirectory;
             _destinationDirectory = destinationDirectory;
-        }
-
-        public LocalStorageService(string targetDirectory)
-        {
-            if (!Directory.Exists(targetDirectory))
-            {
-                throw new FolderNotFoundException(targetDirectory);
-            }
         }
 
         public async Task<string[]> ListFilesAsync()
@@ -67,19 +59,6 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             }
         }
 
-        public async Task<string> ReadFileAsStringAsync(string fileName)
-        {
-            var filePath = Path.Combine(_sourceDirectory, fileName);
-            if (await FileExists(fileName))
-            {
-                return await File.ReadAllTextAsync(filePath);
-            }
-            else
-            {
-                throw new Definitions.Exceptions.Storage.FileNotFoundException(filePath);
-            }
-        }
-
         public async Task StoreDataAsync(string data, string fileName)
         {
             try
@@ -93,40 +72,10 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Storage
             }
         }
 
-        public async Task<string> ReadAsStringFromAbsolutePathAsync(string filePath)
-        {
-            if (await FileExistsAbsolutePath(filePath))
-            {
-                return await File.ReadAllTextAsync(filePath);
-            }
-            else
-            {
-                throw new Definitions.Exceptions.Storage.FileNotFoundException(filePath);
-            }
-        }
-
         public Task<bool> FileExists(string fileName)
         {
             var filePath = Path.Combine(_sourceDirectory, fileName);
             return Task.FromResult(File.Exists(filePath));
-        }
-
-        private Task<bool> FileExistsAbsolutePath(string filePath)
-        {
-            return Task.FromResult(File.Exists(filePath));
-        }
-
-        public Task CreateDirectoryAsync(string directoryName)
-        {
-            var completePath = Path.Combine(_destinationDirectory, directoryName);
-            Directory.CreateDirectory(completePath);
-            return Task.CompletedTask;
-        }
-
-        public async Task StoreDataToDirectoryAsync(string data, string directoryName, string fileName)
-        {
-            var relativePath = Path.Combine(directoryName, fileName);
-            await StoreDataAsync(data, relativePath);
         }
     }
 }

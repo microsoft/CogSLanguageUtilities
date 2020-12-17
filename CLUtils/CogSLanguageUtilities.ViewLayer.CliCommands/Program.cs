@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using McMaster.Extensions.CommandLineUtils;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
@@ -14,7 +14,7 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
     [Subcommand(
-        typeof(RunPipelineCommand))]
+        typeof(RunCommand))]
     public class Program
     {
         public static void Main(string[] args)

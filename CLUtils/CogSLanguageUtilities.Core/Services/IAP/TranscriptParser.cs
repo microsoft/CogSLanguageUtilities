@@ -1,5 +1,8 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Enums.IAP;
+using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
 using System.Collections.Generic;
 using System.IO;
@@ -12,11 +15,15 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
     {
         public async Task<IAPTranscript> ParseTranscriptAsync(Stream file)
         {
-            string line;
             var sr = new StreamReader(file);
-            List<ConversationUtterance> utterances = new List<ConversationUtterance>();
+
+            // Extract meta data from first line in transcript
             var firstLine = await sr.ReadLineAsync();
             ExtractMetaData(firstLine, out string id, out string channel);
+
+            // Read every line into an utterance
+            string line;
+            var utterances = new List<ConversationUtterance>();
             while ((line = await sr.ReadLineAsync()) != null)
             {
                 utterances.Add(ParseLine(line));
@@ -32,7 +39,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
 
         private static void ExtractMetaData(string firstLine, out string id, out string channel)
         {
-            Regex pattern = new Regex(@"Id:(?<Id>\d+) Channel:(?<Channel>\d+)", RegexOptions.IgnoreCase);
+            var pattern = new Regex(@"Id:(?<Id>\d+) Channel:(?<Channel>\d+)", RegexOptions.IgnoreCase);
             var match = pattern.Match(firstLine);
             if (match.Success)
             {
@@ -41,7 +48,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
             }
             else
             {
-                throw new System.Exception("Invalid Id or Channel");
+                throw new CliException("Invalid Id or Channel Format");
             }
         }
 
@@ -52,7 +59,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
             return new ConversationUtterance
             {
                 Timestamp = timestamp,
-                Text = line.Substring(timestampIndex + 1)
+                Text = line.Substring(timestampIndex + 1).Trim()
             };
         }
     }

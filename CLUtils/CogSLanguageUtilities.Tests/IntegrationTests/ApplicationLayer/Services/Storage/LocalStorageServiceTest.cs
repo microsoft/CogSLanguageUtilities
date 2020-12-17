@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
+using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
 using System;
@@ -46,11 +46,11 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Storag
         {
             if (excpectedException == null)
             {
-                new LocalStorageService(directory);
+                new DiskStorageService(directory, directory);
             }
             else
             {
-                Assert.Throws(excpectedException.GetType(), () => new LocalStorageService(directory));
+                Assert.Throws(excpectedException.GetType(), () => new DiskStorageService(directory, directory));
             }
         }
 
@@ -59,7 +59,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Storag
         {
             string fileName = "storageTest.txt";
             string expected = "StoreDataTest text for testing";
-            IStorageService storageService = new LocalStorageService(TestDirectory);
+            IStorageService storageService = new DiskStorageService(TestDirectory, TestDirectory);
             await storageService.StoreDataAsync(expected, fileName);
             string actual = File.ReadAllText(Path.Combine(TestDirectory, fileName));
             Assert.Equal(expected, actual);
@@ -72,23 +72,12 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Storag
             string expected = "ReadFileTest text for testing";
             File.WriteAllText(Path.Combine(TestDirectory, fileName), expected);
             string actual = "";
-            IStorageService storageService = new LocalStorageService(TestDirectory);
+            IStorageService storageService = new DiskStorageService(TestDirectory, TestDirectory);
             Stream file = await storageService.ReadFileAsync(fileName);
             using (StreamReader sr = new StreamReader(file))
             {
                 actual = sr.ReadToEnd();
             }
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public async Task ReadFileAsStringTestAsync()
-        {
-            string fileName = "storageTest.txt";
-            string expected = "ReadFileAsStringTestAsync text for testing";
-            File.WriteAllText(Path.Combine(TestDirectory, fileName), expected);
-            IStorageService storageService = new LocalStorageService(TestDirectory);
-            string actual = await storageService.ReadFileAsStringAsync(fileName);
             Assert.Equal(expected, actual);
         }
 
@@ -101,7 +90,7 @@ namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Storag
             {
                 File.Create(Path.Combine(TestDirectory, fileName)).Dispose();
             });
-            IStorageService storageService = new LocalStorageService(TestDirectory);
+            IStorageService storageService = new DiskStorageService(TestDirectory, TestDirectory);
             string[] actualFiles = await storageService.ListFilesAsync();
             Assert.Equal(expectedFiles, actualFiles);
         }

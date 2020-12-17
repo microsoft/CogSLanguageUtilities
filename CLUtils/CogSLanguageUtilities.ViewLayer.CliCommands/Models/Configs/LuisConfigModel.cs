@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using Newtonsoft.Json;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Configs
+namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Models.Configs
 {
     public class LuisConfigModel
     {

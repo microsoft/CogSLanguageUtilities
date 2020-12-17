@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
-    public interface IIAPTranscriptGenerator
+    public interface IIAPResultGenerator
     {
-        ProcessedTranscript GenerateTranscript(IDictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId);
+        ProcessedTranscript GenerateResult(IDictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId);
     }
 }

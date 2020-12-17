@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage
+namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage
 {
     public class UnauthorizedFileAccessException : CliException
     {

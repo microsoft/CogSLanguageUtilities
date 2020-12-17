@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.Collections;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.Collections;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -6,6 +6,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers
 {
     public interface IIAPProccessController
     {
-        Task Run();
+        public Task Run();
     }
 }

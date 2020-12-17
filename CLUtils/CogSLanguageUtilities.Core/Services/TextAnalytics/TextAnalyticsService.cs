@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Azure;
+using Azure;
 using Azure.AI.TextAnalytics;
 using Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
