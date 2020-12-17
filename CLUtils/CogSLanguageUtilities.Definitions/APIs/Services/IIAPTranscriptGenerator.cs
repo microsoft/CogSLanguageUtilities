@@ -9,6 +9,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
 {
     public interface IIAPTranscriptGenerator
     {
-        ProcessedTranscript GenerateTranscript(Dictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId);
+        ProcessedTranscript GenerateTranscript(IDictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId);
     }
 }

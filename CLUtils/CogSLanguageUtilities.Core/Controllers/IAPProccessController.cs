@@ -4,7 +4,8 @@ using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
 using Newtonsoft.Json;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
@@ -40,13 +41,14 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
                 var fileStream = await _storageService.ReadFileAsync(file);
                 var transcript = await _transcriptParser.ParseTranscriptAsync(fileStream);
 
-                var predictionsDictionary = new Dictionary<long, CustomLuisResponse>();
-                foreach (var utterance in transcript.Utterances)
+                var predictionsDictionary = new ConcurrentDictionary<long, CustomLuisResponse>();
+                var tasks = transcript.Utterances.Select(async utterance =>
                 {
                     //  2- run luis prediction endpoint
                     predictionsDictionary[utterance.Timestamp] = await _luisPredictionService.Predict(utterance.Text);
                     //  3- run TA prediction endpoint
-                }
+                });
+                await Task.WhenAll(tasks);
                 //  4- concatenate result
                 var processedTranscript = _transcriptGenerator.GenerateTranscript(predictionsDictionary, transcript.Channel, transcript.Id);
 

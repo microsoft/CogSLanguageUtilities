@@ -9,7 +9,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
 {
     public class IAPTranscriptGenerator : IIAPTranscriptGenerator
     {
-        public ProcessedTranscript GenerateTranscript(Dictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId)
+        public ProcessedTranscript GenerateTranscript(IDictionary<long, CustomLuisResponse> luisPredictions, ChannelType channel, string transcriptId)
         {
 
             var meta = new Meta
