@@ -43,5 +43,6 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
         public const string TypeKey = "type";
         public const string StartIndexKey = "startIndex";
         public const string LengthKey = "length";
+        public const string TextKey = "text";
     }
 }

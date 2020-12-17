@@ -36,7 +36,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Models.IAP
         [JsonProperty("position")]
         public long Position { get; set; }
 
-        [JsonProperty("children")]
+        [JsonProperty("children", NullValueHandling = NullValueHandling.Ignore)]
         public List<Extraction> Children { get; set; }
     }
 

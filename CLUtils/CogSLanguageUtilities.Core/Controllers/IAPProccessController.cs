@@ -12,6 +12,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Controllers
         ITranscriptParser _transcriptParser;
         ILuisPredictionService _luisPredictionService;
         IIAPTranscriptGenerator _transcriptGenerator;
+        ITextAnalyticsService _textAnalyticsService;
 
         public IAPProccessController(
             IStorageService storageService,

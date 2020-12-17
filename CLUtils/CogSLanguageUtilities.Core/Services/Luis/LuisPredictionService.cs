@@ -23,7 +23,7 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Luis
         public async Task<CustomLuisResponse> Predict(string query)
         {
             var request = new PredictionRequest { Query = query };
-            var response = await _client.Prediction.GetSlotPredictionAsync(_appId, "Production", request);
+            var response = await _client.Prediction.GetSlotPredictionAsync(_appId, "Production", request, verbose: true);
             return LuisOutputMapper.MapToCustomLuisRespone(response);
         }
 

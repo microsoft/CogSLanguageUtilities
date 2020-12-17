@@ -3,6 +3,7 @@ using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,8 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.Luis
             {
                 Query = luisResponse.Query,
                 TopIntent = luisResponse.Prediction.TopIntent,
-                Intents = MapLuisPredictionIntents(luisResponse.Prediction.Intents)
+                Intents = MapLuisPredictionIntents(luisResponse.Prediction.Intents),
+                Entities = MapLuisPredictionEntities(JObject.FromObject(luisResponse.Prediction.Entities))
             };
         }
 
@@ -31,22 +33,30 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.Luis
             var instance = extractors[Constants.InstanceKey];
             foreach (var entry in extractors)
             {
-                if (entry.Key != Constants.InstanceKey)
+                try
                 {
-                    JArray entityArray = (JArray)entry.Value;
-                    JArray instanceArray = (JArray)instance[entry.Key];
-                    for (int i = 0; i < entityArray.Count; i++)
+                    if (entry.Key != Constants.InstanceKey)
                     {
-                        entities.Add(new Extraction
+                        JArray entityArray = (JArray)entry.Value;
+                        JArray instanceArray = (JArray)instance[entry.Key];
+                        for (int i = 0; i < entityArray.Count; i++)
                         {
-                            EntityName = instanceArray[i][Constants.TypeKey].ToString(),
-                            Position = instanceArray[i][Constants.StartIndexKey].ToObject<int>(),
-                            Children = entityArray[i] is JObject ? MapLuisPredictionEntities((JObject)entityArray[i]) : null
-                        });
+                            entities.Add(new Extraction
+                            {
+                                Text = instanceArray[i][Constants.TextKey].ToString(),
+                                EntityName = instanceArray[i][Constants.TypeKey].ToString(),
+                                Position = instanceArray[i][Constants.StartIndexKey].ToObject<int>(),
+                                Children = entityArray[i] is JObject ? MapLuisPredictionEntities((JObject)entityArray[i]) : null
+                            });
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    continue;
+                }
             }
-            return entities;
+            return entities.Count > 0 ? entities : null;
         }
     }
 }
