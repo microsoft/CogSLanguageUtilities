@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;

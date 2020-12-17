@@ -1,45 +1,11 @@
 {
   "storage": {
-    "blob": {
-      "connection-string": "",
-      "source-container": "",
-      "destination-container": ""
-    },
-    "local": {
-      "source-dir": "",
-      "destination-dir": ""
-    }
+    "sourcePath": "",
+    "destinationPath": ""
   },
-  "parser": {
-    "msread": {
-      "azure-resource-endpoint": "",
-      "azure-resource-key": ""
-    }
-  },
-  "chunker": {
-    "char-limit": 5000,
-    "chunk-section-level": ""
-  },
-  "customtext": {
-    "authoring": {
-      "azure-resource-key": "",
-      "azure-resource-endpoint": "",
-      "app-id": ""
-    },
-    "prediction": {
-      "azure-resource-endpoint": "",
-      "azure-resource-key": "",
-      "app-id": ""
-    }
-  },
-  "textanalytics": {
-    "azure-resource-endpoint": "",
-    "azure-resource-key": "",
-    "default-language": "",
-    "default_operations": {
-      "sentiment": true,
-      "ner": false,
-      "keyphrase": true
-    }
+  "luis": {
+    "endpoint": "",
+    "key": "",
+    "appId": ""
   }
 }

@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
-    <ProjectReference Include="..\LuisModelEvaluation\LuisModelEvaluation\LuisModelEvaluation.csproj" />
   </ItemGroup>
 
 </Project>

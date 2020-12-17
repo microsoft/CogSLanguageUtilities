@@ -5,11 +5,7 @@ using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
 using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.ConfigCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.EvaluateCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.PredictCommand;
 using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.RunPipelineCommand;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.UtilitiesCommand;
 using System;
 using System.Reflection;
 
@@ -18,11 +14,6 @@ namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
     [Subcommand(
-        typeof(ConfigCommand),
-        typeof(ParseCommand),
-        typeof(ChunkCommand),
-        typeof(PredictCommand),
-        typeof(EvaluateCommand),
         typeof(RunPipelineCommand))]
     public class Program
     {

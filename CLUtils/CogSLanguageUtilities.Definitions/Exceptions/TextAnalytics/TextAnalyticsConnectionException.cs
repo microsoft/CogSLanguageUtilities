@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics
 {
@@ -12,8 +11,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics
 
         public static string ConstructMessage(string message)
         {
-            return $"Connection to Azure Cognitive Services failed with message: \n{message} \nCheck Text Analytics configs " +
-                $"{ConfigKeys.TextAnalyticsAzureResourceKey} and {ConfigKeys.TextAnalyticsAzureResourceEndpoint}";
+            return $"Connection to Azure Cognitive Services failed with message: \n{message} \nCheck Text Analytics configs ";
         }
     }
 }

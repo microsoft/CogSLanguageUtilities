@@ -1,4 +1,6 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
 using System.IO;
 using System.Threading.Tasks;
 

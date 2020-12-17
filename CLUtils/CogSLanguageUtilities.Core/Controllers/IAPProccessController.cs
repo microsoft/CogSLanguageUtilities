@@ -1,4 +1,7 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
+using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
 using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -6,13 +9,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.CogSLanguageUtilities.Core.Controllers
 {
-    public class IAPProccessController
+    public class IAPProccessController : IIAPProccessController
     {
         IStorageService _storageService;
         ITranscriptParser _transcriptParser;
         ILuisPredictionService _luisPredictionService;
         IIAPTranscriptGenerator _transcriptGenerator;
-        ITextAnalyticsService _textAnalyticsService;
 
         public IAPProccessController(
             IStorageService storageService,

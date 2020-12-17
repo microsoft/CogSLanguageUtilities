@@ -1,4 +1,7 @@
-﻿namespace Microsoft.CogSLanguageUtilities.Definitions.Models.IAP
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Microsoft.CogSLanguageUtilities.Definitions.Models.IAP
 {
     public class ConversationUtterance
     {

@@ -1,4 +1,6 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
 using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Luis

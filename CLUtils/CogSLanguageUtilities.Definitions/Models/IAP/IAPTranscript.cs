@@ -1,4 +1,6 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.Enums.IAP;
+﻿// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+using Microsoft.CogSLanguageUtilities.Definitions.Enums.IAP;
 using System.Collections.Generic;
 
 namespace Microsoft.CogSLanguageUtilities.Definitions.Models.IAP
