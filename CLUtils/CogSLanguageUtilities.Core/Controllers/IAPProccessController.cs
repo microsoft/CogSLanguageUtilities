@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
+using Microsoft.IAPUtilities.Definitions.APIs.Controllers;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Models.Luis;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Controllers
+namespace Microsoft.IAPUtilities.Core.Controllers
 {
     public class IAPProccessController : IIAPProccessController
     {

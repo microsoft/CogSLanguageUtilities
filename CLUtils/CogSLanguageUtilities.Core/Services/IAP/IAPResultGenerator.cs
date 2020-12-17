@@ -1,11 +1,11 @@
-﻿using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Enums.IAP;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
+﻿using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Enums.IAP;
+using Microsoft.IAPUtilities.Definitions.Models.IAP;
+using Microsoft.IAPUtilities.Definitions.Models.Luis;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
+namespace Microsoft.IAPUtilities.Core.Services.IAP
 {
     public class IAPResultGenerator : IIAPResultGenerator
     {

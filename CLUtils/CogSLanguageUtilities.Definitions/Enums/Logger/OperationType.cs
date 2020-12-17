@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger
+namespace Microsoft.IAPUtilities.Definitions.Models.Enums.Logger
 {
     public enum OperationType
     {

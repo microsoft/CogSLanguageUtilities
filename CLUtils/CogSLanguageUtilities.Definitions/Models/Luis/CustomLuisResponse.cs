@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
+using Microsoft.IAPUtilities.Definitions.Models.IAP;
 using System.Collections.Generic;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.Luis
+namespace Microsoft.IAPUtilities.Definitions.Models.Luis
 {
     public class CustomLuisResponse
     {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>clutils</AssemblyName>
+    <AssemblyName>iap</AssemblyName>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands</RootNamespace>
@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CogSLanguageUtilities.Core\CogSLanguageUtilities.Core.csproj" />
-    <ProjectReference Include="..\CogSLanguageUtilities.Definitions\CogSLanguageUtilities.Definitions.csproj" />
+    <ProjectReference Include="..\CogSLanguageUtilities.Core\IAPUtilities.Core.csproj" />
+    <ProjectReference Include="..\CogSLanguageUtilities.Definitions\IAPUtilities.Definitions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics
+namespace Microsoft.IAPUtilities.Definitions.Exceptions.TextAnalytics
 {
     public class TextAnalyticsException : CliException
     {

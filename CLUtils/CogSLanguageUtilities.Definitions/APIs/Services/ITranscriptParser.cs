@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
+using Microsoft.IAPUtilities.Definitions.Models.IAP;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
+namespace Microsoft.IAPUtilities.Definitions.APIs.Services
 {
     public interface ITranscriptParser
     {

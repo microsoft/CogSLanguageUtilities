@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 using Autofac;
-using Microsoft.CogSLanguageUtilities.Core.Controllers;
-using Microsoft.CogSLanguageUtilities.Core.Services.IAP;
-using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
-using Microsoft.CogSLanguageUtilities.Core.Services.Luis;
-using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Core.Controllers;
+using Microsoft.IAPUtilities.Core.Services.IAP;
+using Microsoft.IAPUtilities.Core.Services.Logger;
+using Microsoft.IAPUtilities.Core.Services.Luis;
+using Microsoft.IAPUtilities.Core.Services.Storage;
+using Microsoft.IAPUtilities.Definitions.APIs.Controllers;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
 
-namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs
+namespace Microsoft.IAPUtilities.ViewLayer.CliCommands.Configs
 {
     public class DependencyInjectionController
     {

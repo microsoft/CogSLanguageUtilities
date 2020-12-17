@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System;
 
-namespace Microsoft.CogSLanguageUtilities.Tests.Configs
+namespace Microsoft.IAPUtilities.Tests.Configs
 {
     public class Secrets
     {

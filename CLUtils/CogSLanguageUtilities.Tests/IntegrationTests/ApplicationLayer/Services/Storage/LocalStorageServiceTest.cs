@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Core.Services.Storage;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Storage;
+using Microsoft.IAPUtilities.Core.Services.Storage;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Exceptions.Storage;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Microsoft.CogSLanguageUtilities.Tests.IntegrationTests.Services.Storage
+namespace Microsoft.IAPUtilities.Tests.IntegrationTests.Services.Storage
 {
     public class LocalStorageServiceTest : IDisposable
     {

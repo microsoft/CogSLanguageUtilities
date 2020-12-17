@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CogSLanguageUtilities.Core.Services.Logger;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.RunPipelineCommand;
+using Microsoft.IAPUtilities.Core.Services.Logger;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Configs.Consts;
+using Microsoft.IAPUtilities.Definitions.Exceptions;
+using Microsoft.IAPUtilities.ViewLayer.CliCommands.Commands.RunPipelineCommand;
 using System;
 using System.Reflection;
 
-namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands
+namespace Microsoft.IAPUtilities.ViewLayer.CliCommands
 {
     [Command(Constants.ToolName)]
     [VersionOptionFromMember("--version", MemberName = nameof(GetVersion))]
     [Subcommand(
-        typeof(RunCommand))]
+        typeof(PipelineCommand))]
     public class Program
     {
         public static void Main(string[] args)

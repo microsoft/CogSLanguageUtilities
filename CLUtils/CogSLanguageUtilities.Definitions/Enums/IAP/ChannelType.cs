@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Enums.IAP
+namespace Microsoft.IAPUtilities.Definitions.Enums.IAP
 {
     public enum ChannelType
     {

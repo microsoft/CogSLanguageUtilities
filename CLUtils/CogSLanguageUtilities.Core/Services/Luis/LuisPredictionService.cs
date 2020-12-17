@@ -1,12 +1,12 @@
 ﻿using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
-using Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.Luis;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
+using Microsoft.IAPUtilities.Core.Helpers.Mappers.Luis;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Models.Luis;
 using System;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Services.Luis
+namespace Microsoft.IAPUtilities.Core.Services.Luis
 {
     public class LuisPredictionService : ILuisPredictionService
     {

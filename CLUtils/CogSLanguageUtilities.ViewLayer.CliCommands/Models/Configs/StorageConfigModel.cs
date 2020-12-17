@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using Newtonsoft.Json;
 
-namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Models.Configs
+namespace Microsoft.IAPUtilities.ViewLayer.CliCommands.Models.Configs
 {
     public class StorageConfigModel
     {

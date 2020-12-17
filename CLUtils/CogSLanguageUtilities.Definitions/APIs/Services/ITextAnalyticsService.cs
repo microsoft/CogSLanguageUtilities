@@ -4,7 +4,7 @@ using Azure.AI.TextAnalytics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
+namespace Microsoft.IAPUtilities.Definitions.APIs.Services
 {
     public interface ITextAnalyticsService
     {

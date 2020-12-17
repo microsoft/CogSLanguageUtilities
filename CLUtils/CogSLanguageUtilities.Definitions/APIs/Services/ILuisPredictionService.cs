@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
+using Microsoft.IAPUtilities.Definitions.Models.Luis;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
+namespace Microsoft.IAPUtilities.Definitions.APIs.Services
 {
     public interface ILuisPredictionService
     {

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.Collections;
+using Microsoft.IAPUtilities.Definitions.APIs.Helpers.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities
+namespace Microsoft.IAPUtilities.Core.Helpers.Utilities
 {
     class Paginator<T> : IPaginator<T>
     {

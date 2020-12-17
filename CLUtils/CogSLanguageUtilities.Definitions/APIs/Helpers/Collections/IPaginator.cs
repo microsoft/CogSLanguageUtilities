@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Helpers.Collections
+namespace Microsoft.IAPUtilities.Definitions.APIs.Helpers.Collections
 {
     public interface IPaginator<T>
     {

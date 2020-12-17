@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 using Azure.AI.TextAnalytics;
-using Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
-using Microsoft.CogSLanguageUtilities.Tests.Configs;
+using Microsoft.IAPUtilities.Core.Services.TextAnalytics;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Exceptions;
+using Microsoft.IAPUtilities.Definitions.Exceptions.TextAnalytics;
+using Microsoft.IAPUtilities.Tests.Configs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;

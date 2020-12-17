@@ -3,7 +3,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
+namespace Microsoft.IAPUtilities.Definitions.APIs.Services
 {
     public interface IStorageService
     {

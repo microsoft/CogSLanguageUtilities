@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
+using Microsoft.IAPUtilities.Definitions.Configs.Consts;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions.Configs
+namespace Microsoft.IAPUtilities.Definitions.Exceptions.Configs
 {
     public class MissingConfigsException : CliException
     {

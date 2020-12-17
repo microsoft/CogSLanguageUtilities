@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 using Autofac;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Controllers;
-using Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Configs;
+using Microsoft.IAPUtilities.Definitions.APIs.Controllers;
+using Microsoft.IAPUtilities.ViewLayer.CliCommands.Configs;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.RunPipelineCommand
+namespace Microsoft.IAPUtilities.ViewLayer.CliCommands.Commands.RunPipelineCommand
 {
     [Command("run", Description = "Run IAP pipeline")]
     public class RunCommand

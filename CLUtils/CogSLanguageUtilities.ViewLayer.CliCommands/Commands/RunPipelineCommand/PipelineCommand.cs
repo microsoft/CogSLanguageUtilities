@@ -1,6 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 
-namespace Microsoft.CogSLanguageUtilities.ViewLayer.CliCommands.Commands.RunPipelineCommand
+namespace Microsoft.IAPUtilities.ViewLayer.CliCommands.Commands.RunPipelineCommand
 {
     [Command("pipeline")]
     [Subcommand(

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Enums.Logger;
+using Microsoft.IAPUtilities.Definitions.Models.Enums.Logger;
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.APIs.Services
+namespace Microsoft.IAPUtilities.Definitions.APIs.Services
 {
     public interface ILoggerService
     {

@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Enums.IAP;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Enums.IAP;
+using Microsoft.IAPUtilities.Definitions.Exceptions;
+using Microsoft.IAPUtilities.Definitions.Models.IAP;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Services.IAP
+namespace Microsoft.IAPUtilities.Core.Services.IAP
 {
     public class TranscriptParser : ITranscriptParser
     {

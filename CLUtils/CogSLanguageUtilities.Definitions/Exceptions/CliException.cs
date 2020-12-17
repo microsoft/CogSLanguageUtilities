@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Exceptions
+namespace Microsoft.IAPUtilities.Definitions.Exceptions
 {
     public class CliException : Exception
     {

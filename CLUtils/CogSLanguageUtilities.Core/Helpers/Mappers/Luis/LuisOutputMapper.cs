@@ -1,18 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
-using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.IAP;
-using Microsoft.CogSLanguageUtilities.Definitions.Models.Luis;
+using Microsoft.IAPUtilities.Definitions.Models.IAP;
+using Microsoft.IAPUtilities.Definitions.Models.Luis;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.Luis
+namespace Microsoft.IAPUtilities.Core.Helpers.Mappers.Luis
 {
     public class LuisOutputMapper
     {
+        private const string InstanceKey = "$instance";
+        private const string TypeKey = "type";
+        private const string StartIndexKey = "startIndex";
+        private const string LengthKey = "length";
+        private const string TextKey = "text";
+
         public static CustomLuisResponse MapToCustomLuisRespone(PredictionResponse luisResponse)
         {
             return new CustomLuisResponse
@@ -32,12 +37,12 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.Luis
         private static List<Extraction> MapLuisPredictionEntities(JObject extractors)
         {
             List<Extraction> entities = new List<Extraction>();
-            var instance = extractors[Constants.InstanceKey];
+            var instance = extractors[InstanceKey];
             foreach (var entry in extractors)
             {
                 try
                 {
-                    if (entry.Key != Constants.InstanceKey)
+                    if (entry.Key != InstanceKey)
                     {
                         JArray entityArray = (JArray)entry.Value;
                         JArray instanceArray = (JArray)instance[entry.Key];
@@ -45,9 +50,9 @@ namespace Microsoft.CogSLanguageUtilities.Core.Helpers.Mappers.Luis
                         {
                             entities.Add(new Extraction
                             {
-                                Text = instanceArray[i][Constants.TextKey].ToString(),
-                                EntityName = instanceArray[i][Constants.TypeKey].ToString(),
-                                Position = instanceArray[i][Constants.StartIndexKey].ToObject<int>(),
+                                Text = instanceArray[i][TextKey].ToString(),
+                                EntityName = instanceArray[i][TypeKey].ToString(),
+                                Position = instanceArray[i][StartIndexKey].ToObject<int>(),
                                 Children = entityArray[i] is JObject ? MapLuisPredictionEntities((JObject)entityArray[i]) : null
                             });
                         }

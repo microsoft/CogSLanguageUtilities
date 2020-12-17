@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-using Microsoft.CogSLanguageUtilities.Definitions.Enums.IAP;
+using Microsoft.IAPUtilities.Definitions.Enums.IAP;
 using System.Collections.Generic;
 
-namespace Microsoft.CogSLanguageUtilities.Definitions.Models.IAP
+namespace Microsoft.IAPUtilities.Definitions.Models.IAP
 {
     public class IAPTranscript
     {

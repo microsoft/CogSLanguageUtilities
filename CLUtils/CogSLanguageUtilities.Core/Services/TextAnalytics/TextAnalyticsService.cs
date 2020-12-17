@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 using Azure;
 using Azure.AI.TextAnalytics;
-using Microsoft.CogSLanguageUtilities.Core.Helpers.Utilities;
-using Microsoft.CogSLanguageUtilities.Definitions.APIs.Services;
-using Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts;
-using Microsoft.CogSLanguageUtilities.Definitions.Exceptions.TextAnalytics;
+using Microsoft.IAPUtilities.Core.Helpers.Utilities;
+using Microsoft.IAPUtilities.Definitions.APIs.Services;
+using Microsoft.IAPUtilities.Definitions.Configs.Consts;
+using Microsoft.IAPUtilities.Definitions.Exceptions.TextAnalytics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.CogSLanguageUtilities.Core.Services.TextAnalytics
+namespace Microsoft.IAPUtilities.Core.Services.TextAnalytics
 {
     public class TextAnalyticsService : ITextAnalyticsService
     {
