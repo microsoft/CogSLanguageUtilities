@@ -9,7 +9,7 @@ namespace Microsoft.CogSLanguageUtilities.Definitions.Configs.Consts
         // tool name
         public const string ToolName = "clutils";
         // configs file
-        public static readonly string ConfigsFileLocalDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+        public static readonly string ConfigsFileLocalDirectory = ".";
         public static readonly string ConfigsFileName = "configs.json";
         // msread
         public static readonly string[] MsReadValidFileTypes = { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };

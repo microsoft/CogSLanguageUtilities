@@ -26,6 +26,5 @@ namespace Microsoft.CogSLanguageUtilities.Core.Services.Luis
             var response = await _client.Prediction.GetSlotPredictionAsync(_appId, "Production", request, verbose: true);
             return LuisOutputMapper.MapToCustomLuisRespone(response);
         }
-
     }
 }
