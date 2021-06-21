@@ -55,7 +55,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             });
 
             //classifiers
-            SearchField classifierIndexField = new SearchField("Classes", SearchFieldDataType.Collection(SearchFieldDataType.String));
+            SearchField classifierIndexField = new SearchField("Classes", SearchFieldDataType.String);
 
             indexFields.Add(classifierIndexField);
 
@@ -64,9 +64,9 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             {
                 SearchField indexField = new SearchField(
                     model.Name,
-                    model.Children == null || model.Children.Count == 0 ? SearchFieldDataType.Collection(SearchFieldDataType.String) : SearchFieldDataType.Collection(SearchFieldDataType.Complex));
+                    SearchFieldDataType.String);
 
-                ExploreChildren(model.Children, indexField.Fields);
+                //ExploreChildren(model.Children, indexField.Fields);
 
                 indexFields.Add(indexField);
             }
