@@ -23,7 +23,7 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log,
-            Microsoft.Azure.WebJobs.ExecutionContext executionContext)
+            ExecutionContext executionContext)
         {
             log.LogInformation("LUIS-D Extractor and Classifier function");
 
@@ -36,8 +36,6 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
                 return new BadRequestObjectResult($"{skillName} - Invalid request record array.");
             }
             #endregion Input Mapping
-
-
 
             WebApiSkillResponse response = WebApiSkillHelpers.ProcessRequestRecords(skillName, requestRecords,
                 (inRecord, outRecord) =>
