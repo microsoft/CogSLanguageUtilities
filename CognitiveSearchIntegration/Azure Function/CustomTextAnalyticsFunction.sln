@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31409.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomText.Function", "CustomTextAnalytics.Function\CustomText.Function.csproj", "{CACB3939-9F63-4FC7-A173-20799B116869}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomTextAnalyticsMiniSDK", "CustomTextAnalyticsMiniSDK", "{DF678A27-A40C-483D-965F-B9AC48C55745}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomTextAnalytics.MiniSDK.Client", "CustomTextAnalytics.MiniSDK\CustomTextAnalytics.MiniSDK.Client\CustomTextAnalytics.MiniSDK.Client.csproj", "{C70964AB-CFED-4F8E-9868-453BD9A06B60}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomTextAnalytics.MiniSDK.RestClient", "CustomTextAnalytics.MiniSDK\CustomTextAnalytics.MiniSDK.RestClient\CustomTextAnalytics.MiniSDK.RestClient.csproj", "{17B66F9E-B402-4FBE-AE25-492422605BE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CACB3939-9F63-4FC7-A173-20799B116869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CACB3939-9F63-4FC7-A173-20799B116869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CACB3939-9F63-4FC7-A173-20799B116869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CACB3939-9F63-4FC7-A173-20799B116869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C70964AB-CFED-4F8E-9868-453BD9A06B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70964AB-CFED-4F8E-9868-453BD9A06B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70964AB-CFED-4F8E-9868-453BD9A06B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70964AB-CFED-4F8E-9868-453BD9A06B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B66F9E-B402-4FBE-AE25-492422605BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B66F9E-B402-4FBE-AE25-492422605BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B66F9E-B402-4FBE-AE25-492422605BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B66F9E-B402-4FBE-AE25-492422605BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C70964AB-CFED-4F8E-9868-453BD9A06B60} = {DF678A27-A40C-483D-965F-B9AC48C55745}
+		{17B66F9E-B402-4FBE-AE25-492422605BE5} = {DF678A27-A40C-483D-965F-B9AC48C55745}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3206B0FB-727F-468A-8011-24DC9C967B88}
+	EndGlobalSection
+EndGlobal

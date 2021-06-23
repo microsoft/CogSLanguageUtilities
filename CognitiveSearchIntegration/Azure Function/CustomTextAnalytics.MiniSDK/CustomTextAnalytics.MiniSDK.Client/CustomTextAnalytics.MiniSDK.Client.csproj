@@ -8,4 +8,6 @@
     <ProjectReference Include="..\CustomTextAnalytics.MiniSDK.RestClient\CustomTextAnalytics.MiniSDK.RestClient.csproj" />
   </ItemGroup>
 
+
+
 </Project>

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
@@ -22,6 +21,7 @@
     <ProjectReference Include="..\CustomTextAnalytics.MiniSDK.Client\CustomTextAnalytics.MiniSDK.Client.csproj" />
     <ProjectReference Include="..\CustomTextAnalytics.MiniSDK.RestClient\CustomTextAnalytics.MiniSDK.RestClient.csproj" />
   </ItemGroup>
+
 
 
 </Project>

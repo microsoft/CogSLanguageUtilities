@@ -1,6 +1,6 @@
 using AzureCognitiveSearch.PowerSkills.Helpers;
 using AzureCognitiveSearch.PowerSkills.ViewModels;
-using CustomTextUtilities.MiniSDK;
+using CustomTextUtilities.MiniSDK.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -45,13 +45,10 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
 
                     // processing
                     var client = new CustomTextAnalyticsClient(_endpointUrl, _serviceKey);
-                    client.AnalyzeCustomEntitiesAsync(text, _modelId).ConfigureAwait(false).GetAwaiter().GetResult();
+                    var entities = client.AnalyzeCustomEntitiesAsync(text, _modelId).ConfigureAwait(false).GetAwaiter().GetResult();
 
                     // result mocking
                     outRecord.Data["result"] = "success";
-
-                    // mock classes
-                    outRecord.Data.Add("Classes", "application");
 
                     // mock entities
                     outRecord.Data.Add("account", "account");
