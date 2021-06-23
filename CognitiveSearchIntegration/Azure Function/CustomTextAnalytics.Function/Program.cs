@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
 {
     public static class Program
     {
-        private static string _endpointUrl = "";
-        private static string _serviceKey = "";
-        private static string _modelId = "";
+        private static readonly string _endpointUrl = Environment.GetEnvironmentVariable("CustomTextEndpointUrl");
+        private static readonly string _serviceKey = Environment.GetEnvironmentVariable("CustomTextApiKey");
+        private static readonly string _modelId = Environment.GetEnvironmentVariable("CustomTextModelId");
 
         [FunctionName("customtext-extractor")]
         public static async Task<IActionResult> Run(
@@ -43,17 +45,24 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
                     // extract input
                     var text = inRecord.Data["text"] as string;
 
-                    // processing
-                    var client = new CustomTextAnalyticsClient(_endpointUrl, _serviceKey);
-                    var entities = client.AnalyzeCustomEntitiesAsync(text, _modelId).ConfigureAwait(false).GetAwaiter().GetResult();
+                    try
+                    {
+                        // processing
+                        var client = new CustomTextAnalyticsClient(_endpointUrl, _serviceKey);
+                        var entities = client.AnalyzeCustomEntitiesAsync(text, _modelId).ConfigureAwait(false).GetAwaiter().GetResult();
 
-                    // result mocking
-                    outRecord.Data["result"] = "success";
+                        // get result
+                        entities.Entities.ToList().ForEach(entity =>
+                        {
+                            outRecord.Data.Add(entity.Text, entity.Text);
+                        });
 
-                    // mock entities
-                    outRecord.Data.Add("account", "account");
-                    outRecord.Data.Add("card", "card");
-                    outRecord.Data.Add("loan", "loan");
+                        outRecord.Data["result"] = "success";
+                    }
+                    catch (Exception _)
+                    {
+                        outRecord.Data["result"] = "failed";
+                    }
 
                     return outRecord;
                 });

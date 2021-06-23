@@ -1,6 +1,4 @@
-﻿
-using CustomTextUtilities.MiniSDK.Models.GetJobResult;
-using System.Linq;
+﻿using System.Linq;
 
 namespace CustomTextAnalytics.MiniSDK.Client.Models
 {
