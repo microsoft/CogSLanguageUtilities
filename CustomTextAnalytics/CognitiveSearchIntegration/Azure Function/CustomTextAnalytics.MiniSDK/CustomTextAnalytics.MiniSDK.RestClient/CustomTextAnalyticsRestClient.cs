@@ -1,13 +1,12 @@
 ﻿using CustomTextAnalytics.MiniSDK.RestClient.Enums;
+using CustomTextAnalytics.MiniSDK.RestClient.Models.AnalyzeApi;
+using CustomTextAnalytics.MiniSDK.RestClient.Models.GetJobResultApi;
+using CustomTextAnalytics.MiniSDK.RestClient.Pipeline;
 using CustomTextAnalytics.MiniSDK.RestClient.Utilities;
-using CustomTextUtilities.MiniSDK.Models.AnalyzeCustomEntities;
-using CustomTextUtilities.MiniSDK.Models.GetJobResult;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using static CustomTextUtilities.MiniSDK.HttpPipeline;
+using static CustomTextAnalytics.MiniSDK.RestClient.Pipeline.HttpPipeline;
 
 namespace CustomTextUtilities.MiniSDK
 {
@@ -26,26 +25,28 @@ namespace CustomTextUtilities.MiniSDK
 
         public async Task<string> StartAnalyzeCustomEntitiesAsync(string documentText, string modelId)
         {
-            // api data
+            // prepare api data
             var url = string.Format("{0}/{1}/analyze", _endpointUrl, _customTextAnalyticsBaseUrl);
             var headers = new Dictionary<string, string>
             {
                 ["Ocp-Apim-Subscription-Key"] = _serviceKey
             };
 
-            var body = new AnalyzeCustomEntitiesRequestBody(documentText, modelId);
+            var body = new AnalyzeApiRequestBody(documentText, modelId);
 
             // make network call
             var response = await _httpClient.SendHttpRequestAsync(method: HttpRequestMethod.POST, url: url, urlParameters: null, headers: headers, body);
 
-            var jobId = ValueExtractor.GetJobId(response);
+            // extract job id from header
+            var operationLocationHeader = GetHeaderValue(response, "operation-location");
+            var jobId = Helpers.ExtractJobIdFromLocationHeader(operationLocationHeader);
 
             return jobId;
         }
 
-        public async Task<GetJobResultResponse> GetAnalyzeJobInfo(string jobId)
+        public async Task<GetJobResultApiResponse> GetAnalyzeJobInfo(string jobId)
         {
-            // api data
+            // prepare api data
             var url = string.Format("{0}/{1}/analyze/jobs/{2}", _endpointUrl, _customTextAnalyticsBaseUrl, jobId);
             var headers = new Dictionary<string, string>
             {
@@ -55,42 +56,10 @@ namespace CustomTextUtilities.MiniSDK
             // make network call
             var response = await _httpClient.SendHttpRequestAsync<object>(method: HttpRequestMethod.GET, url: url, urlParameters: null, headers: headers);
 
-            var result = JsonConvert.DeserializeObject<GetJobResultResponse>(await response.Content.ReadAsStringAsync());
+            // parse result
+            var result = JsonConvert.DeserializeObject<GetJobResultApiResponse>(await response.Content.ReadAsStringAsync());
 
             return result;
-        }
-
-        public async Task<bool> WaitForJobUntilDone(string jobId, int maxWaitingTime = 0)
-        {
-            // prepare algorithm
-            var doneValuesList = Enum.GetNames(typeof(JobDoneStatus)).Select(value => value.ToLower());
-
-            var jobDoneStatusSet = new HashSet<string>(doneValuesList);
-
-
-            var startTimeStamp = DateTime.Now;
-            while (true)
-            {
-                // check job status is done
-                var jobInfo = await GetAnalyzeJobInfo(jobId);
-                var jobStatus = jobInfo.Status.ToLower();
-                if (jobDoneStatusSet.Contains(jobStatus))
-                {
-                    return true;
-                }
-
-                // check for timeouts
-                if (maxWaitingTime > 0)
-                {
-                    var nowTimeStamp = DateTime.Now;
-                    var diff = nowTimeStamp.Subtract(startTimeStamp).TotalSeconds;
-                    if (diff > maxWaitingTime)
-                    {
-                        break;
-                    }
-                }
-            }
-            return false;
         }
     }
 }

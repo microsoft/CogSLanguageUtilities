@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CustomTextAnalytics.MiniSDK.RestClient.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace CustomTextUtilities.MiniSDK
+namespace CustomTextAnalytics.MiniSDK.RestClient.Pipeline
 {
-    public class HttpPipeline
+    internal class HttpPipeline
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 
-        public async Task<HttpResponseMessage> SendHttpRequestAsync<T>(HttpRequestMethod method, string url, Dictionary<string, string> urlParameters, Dictionary<string, string> headers, T body = default)
+        internal async Task<HttpResponseMessage> SendHttpRequestAsync<T>(HttpRequestMethod method, string url, Dictionary<string, string> urlParameters, Dictionary<string, string> headers, T body = default)
         {
             var requestMethod = GetHttpRequestMethod(method);
             var fullUrl = CreateUrlWithParameters(url, urlParameters);
@@ -32,10 +33,9 @@ namespace CustomTextUtilities.MiniSDK
             }
         }
 
-        public enum HttpRequestMethod
+        internal static string GetHeaderValue(HttpResponseMessage response, string headerKey)
         {
-            GET,
-            POST
+            return response.Headers.GetValues(headerKey).ToList().First().ToString();
         }
 
         #region Helpers

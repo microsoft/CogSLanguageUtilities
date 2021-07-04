@@ -1,24 +1,24 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace CustomTextUtilities.MiniSDK.Models.GetJobResult
+namespace CustomTextAnalytics.MiniSDK.RestClient.Models.GetJobResultApi
 {
-    public partial class GetJobResultResponse
+    public class GetJobResultApiResponse
     {
-        [JsonProperty("createdDateTime")]
-        public DateTimeOffset CreatedDateTime { get; set; }
-
         [JsonProperty("displayName")]
         public string DisplayName { get; set; }
-
-        [JsonProperty("expirationDateTime")]
-        public DateTimeOffset ExpirationDateTime { get; set; }
 
         [JsonProperty("jobId")]
         public Guid JobId { get; set; }
 
         [JsonProperty("lastUpdateDateTime")]
         public DateTimeOffset LastUpdateDateTime { get; set; }
+
+        [JsonProperty("createdDateTime")]
+        public DateTimeOffset CreatedDateTime { get; set; }
+
+        [JsonProperty("expirationDateTime")]
+        public DateTimeOffset ExpirationDateTime { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
@@ -27,13 +27,13 @@ namespace CustomTextUtilities.MiniSDK.Models.GetJobResult
         public object[] Errors { get; set; }
 
         [JsonProperty("tasks")]
-        public WelcomeTasks Tasks { get; set; }
+        public GetJobResultTasks Tasks { get; set; }
     }
 
-    public partial class WelcomeTasks
+    public class GetJobResultTasks
     {
         [JsonProperty("details")]
-        public Details Details { get; set; }
+        public GetJobResultDetails Details { get; set; }
 
         [JsonProperty("completed")]
         public long Completed { get; set; }
@@ -47,50 +47,58 @@ namespace CustomTextUtilities.MiniSDK.Models.GetJobResult
         [JsonProperty("total")]
         public long Total { get; set; }
 
-        [JsonProperty("tasks")]
-        public TasksTasks Tasks { get; set; }
+        [JsonProperty("customEntityRecognitionTasks")]
+        public GetJobResultCustomEntityRecognitionTask[] CustomEntityRecognitionTasks { get; set; }
     }
-
-    public partial class Details
+    public class GetJobResultDetails
     {
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("lastUpdateDateTime")]
         public DateTimeOffset LastUpdateDateTime { get; set; }
-
-        [JsonProperty("status")]
-        public string Status { get; set; }
-
-        [JsonProperty("results", NullValueHandling = NullValueHandling.Ignore)]
-        public Results Results { get; set; }
     }
 
-    public partial class Results
+    public class GetJobResultCustomEntityRecognitionTask
+    {
+        [JsonProperty("lastUpdateDateTime")]
+        public DateTimeOffset LastUpdateDateTime { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("state")]
+        public string State { get; set; }
+
+        [JsonProperty("results")]
+        public GetJobResultResults Results { get; set; }
+    }
+
+    public class GetJobResultResults
     {
         [JsonProperty("documents")]
-        public Document[] Documents { get; set; }
+        public GetJobResultDocument[] Documents { get; set; }
 
         [JsonProperty("errors")]
         public object[] Errors { get; set; }
 
-        [JsonProperty("statistics")]
-        public Statistics Statistics { get; set; }
+        [JsonProperty("modelVersion")]
+        public DateTimeOffset ModelVersion { get; set; }
     }
 
-    public partial class Document
+    public class GetJobResultDocument
     {
         [JsonProperty("id")]
         public string Id { get; set; }
 
         [JsonProperty("entities")]
-        public Entity[] Entities { get; set; }
+        public GetJobResultEntity[] Entities { get; set; }
 
         [JsonProperty("warnings")]
         public object[] Warnings { get; set; }
     }
 
-    public partial class Entity
+    public class GetJobResultEntity
     {
         [JsonProperty("text")]
         public string Text { get; set; }
@@ -106,26 +114,5 @@ namespace CustomTextUtilities.MiniSDK.Models.GetJobResult
 
         [JsonProperty("confidenceScore")]
         public double ConfidenceScore { get; set; }
-    }
-
-    public partial class Statistics
-    {
-        [JsonProperty("documentsCount")]
-        public long DocumentsCount { get; set; }
-
-        [JsonProperty("validDocumentsCount")]
-        public long ValidDocumentsCount { get; set; }
-
-        [JsonProperty("erroneousDocumentsCount")]
-        public long ErroneousDocumentsCount { get; set; }
-
-        [JsonProperty("transactionsCount")]
-        public long TransactionsCount { get; set; }
-    }
-
-    public partial class TasksTasks
-    {
-        [JsonProperty("customEntityRecognitionTasks")]
-        public Details[] CustomEntityRecognitionTasks { get; set; }
     }
 }

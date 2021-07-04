@@ -1,4 +1,4 @@
-﻿namespace CustomTextAnalytics.MiniSDK.RestClient.Enums
+﻿namespace CustomTextAnalytics.MiniSDK.Client.Enums
 {
     public enum JobDoneStatus
     {
