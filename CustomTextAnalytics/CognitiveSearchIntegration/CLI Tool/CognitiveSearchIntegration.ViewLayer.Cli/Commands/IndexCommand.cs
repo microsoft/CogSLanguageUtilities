@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.CognitiveSearchIntegration.Core.Controllers;
+using Microsoft.CognitiveSearchIntegration.Core.Orchestrators;
 using Microsoft.CognitiveSearchIntegration.Enums.Prediction;
 using Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs;
 using System.ComponentModel.DataAnnotations;
@@ -30,7 +30,7 @@ namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Commands
             // run program
             using (var scope = container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<IndexingController>();
+                var controller = scope.Resolve<IndexingOrchestrator>();
                 await controller.IndexCustomText(Schema, IndexName);
             }
         }

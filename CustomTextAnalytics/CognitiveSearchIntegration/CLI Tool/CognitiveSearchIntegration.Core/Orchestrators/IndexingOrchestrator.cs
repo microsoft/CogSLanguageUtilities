@@ -7,9 +7,9 @@ using Microsoft.CognitiveSearchIntegration.Definitions.Models.CustomText.Schema;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Microsoft.CognitiveSearchIntegration.Core.Controllers
+namespace Microsoft.CognitiveSearchIntegration.Core.Orchestrators
 {
-    public class IndexingController
+    public class IndexingOrchestrator
     {
         private IStorageService _storageService;
         private ICustomTextIndexingService _customTextIndexingService;
@@ -17,7 +17,7 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Controllers
         private ILoggerService _loggerService;
         private IndexerConfigs _indexerConfigs;
 
-        public IndexingController(
+        public IndexingOrchestrator(
             IStorageService storageService,
             ICustomTextIndexingService customTextIndexingService,
             ICognitiveSearchService cognitiveSearchService,

@@ -18,20 +18,13 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             };
             List<Output> outputs = new List<Output>();
 
-            Output classifierOutput = new Output()
-            {
-                name = "Classes",
-                targetName = "Classes"
-            };
 
-            outputs.Add(classifierOutput);
-
-            foreach (CustomTextSchemaModel model in schema.Extractors)
+            foreach (string entityName in schema.EntityNames)
             {
                 Output output = new Output()
                 {
-                    name = model.Name,
-                    targetName = model.Name
+                    name = entityName,
+                    targetName = entityName
                 };
                 outputs.Add(output);
             }
@@ -54,19 +47,12 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
                 IsKey = true
             });
 
-            //classifiers
-            SearchField classifierIndexField = new SearchField("Classes", SearchFieldDataType.String);
-
-            indexFields.Add(classifierIndexField);
-
             // extractors
-            foreach (CustomTextSchemaModel model in schema.Extractors)
+            foreach (string entityName in schema.EntityNames)
             {
                 SearchField indexField = new SearchField(
-                    model.Name,
+                    entityName,
                     SearchFieldDataType.String);
-
-                //ExploreChildren(model.Children, indexField.Fields);
 
                 indexFields.Add(indexField);
             }
@@ -88,12 +74,12 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
             });
 
             // extractors
-            foreach (CustomTextSchemaModel model in schema.Extractors)
+            foreach (string entityName in schema.EntityNames)
             {
                 outputFieldMappings.Add(new IndexerFieldMapping
                 {
-                    SourceFieldName = $"/document/content/{model.Name}",
-                    TargetFieldName = model.Name
+                    SourceFieldName = $"/document/content/{entityName}",
+                    TargetFieldName = entityName
                 });
             }
 
@@ -129,28 +115,6 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
                 Parameters = indexerParameters
             };
             return indexer;
-        }
-
-        private void ExploreChildren(List<CustomTextSchemaModel> children, IList<SearchField> fields)
-        {
-            if (children != null)
-            {
-                foreach (CustomTextSchemaModel child in children)
-                {
-                    var hasChildren = child.Children != null && child.Children.Count > 0;
-                    SearchField field = hasChildren ? new SearchField(child.Name, SearchFieldDataType.Collection(SearchFieldDataType.Complex)) :
-                        new SearchField(child.Name, SearchFieldDataType.Collection(SearchFieldDataType.String))
-                        {
-                            IsFacetable = true,
-                            IsFilterable = true,
-                            IsSearchable = true
-                        };
-
-                    ExploreChildren(child.Children, field.Fields);
-
-                    fields.Add(field);
-                }
-            }
         }
     }
 }

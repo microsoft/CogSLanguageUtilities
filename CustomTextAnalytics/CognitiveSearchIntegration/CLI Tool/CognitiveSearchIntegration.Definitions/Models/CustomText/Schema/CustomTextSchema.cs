@@ -5,10 +5,7 @@ namespace Microsoft.CognitiveSearchIntegration.Definitions.Models.CustomText.Sch
 {
     public class CustomTextSchema
     {
-        [JsonProperty("classifiers")]
-        public List<CustomTextSchemaModel> Classifiers { get; set; }
-
-        [JsonProperty("extractors")]
-        public List<CustomTextSchemaModel> Extractors { get; set; }
+        [JsonProperty("entityNames")]
+        public List<string> EntityNames { get; set; }
     }
 }

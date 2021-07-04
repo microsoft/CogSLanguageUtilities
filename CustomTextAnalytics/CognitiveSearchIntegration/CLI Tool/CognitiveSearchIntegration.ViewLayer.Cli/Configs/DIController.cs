@@ -30,7 +30,7 @@ namespace Microsoft.CognitiveSearchIntegration.ViewLayer.Cli.Configs
             }).As<ICognitiveSearchService>();
             builder.Register(c =>
             {
-                return new IndexingController(
+                return new IndexingOrchestrator(
                     c.Resolve<IStorageService>(),
                     c.Resolve<ICustomTextIndexingService>(),
                     c.Resolve<ICognitiveSearchService>(),
