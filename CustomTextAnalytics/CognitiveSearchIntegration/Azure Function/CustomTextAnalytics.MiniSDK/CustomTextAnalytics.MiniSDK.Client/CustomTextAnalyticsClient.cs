@@ -19,24 +19,24 @@ namespace CustomTextAnalytics.MiniSDK.Client
         public async Task<CustomEntity[]> AnalyzeCustomEntitiesAsync(string documentText, string modelId, int timeoutInSeconds = 0)
         {
             var jobId = await StartAnalyzeCustomEntitiesAsync(documentText, modelId);
-            await WaitForJobUntilDone(jobId, timeoutInSeconds);
+            //await WaitForJobUntilDone(jobId, timeoutInSeconds);
             var jobResult = await GetAnalyzeJobInfo(jobId);
             return jobResult.GetResultEntities();
         }
 
-        private async Task<string> StartAnalyzeCustomEntitiesAsync(string documentText, string modelId)
+        public async Task<string> StartAnalyzeCustomEntitiesAsync(string documentText, string modelId)
         {
             var jobId = await _restClient.StartAnalyzeCustomEntitiesAsync(documentText, modelId);
             return jobId;
         }
 
-        private async Task<AnalyzeJobInfo> GetAnalyzeJobInfo(string jobId)
+        public async Task<AnalyzeJobInfo> GetAnalyzeJobInfo(string jobId)
         {
             var result = await _restClient.GetAnalyzeJobInfo(jobId);
             return AnalyzeJobInfo.FormGenerated(result);
         }
 
-        private async Task<bool> WaitForJobUntilDone(string jobId, int timeoutInSeconds = 0)
+        public async Task<bool> WaitForJobUntilDone(string jobId, int timeoutInSeconds = 0)
         {
             // prepare algorithm
             var doneValuesList = Enum.GetNames(typeof(JobDoneStatus)).Select(value => value.ToLower());
