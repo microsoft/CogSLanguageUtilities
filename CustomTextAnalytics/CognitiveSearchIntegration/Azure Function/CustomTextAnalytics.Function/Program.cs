@@ -52,7 +52,7 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
                         // get result
                         entities.ToList().ForEach(entity =>
                         {
-                            outRecord.Data.Add(entity.Text, entity.Text);
+                            outRecord.Data.Add(entity.Category, entity.Category);
                         });
 
                         outRecord.Data["result"] = "success";
