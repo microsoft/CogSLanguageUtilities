@@ -15,8 +15,8 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
 {
     public static class Program
     {
-        private static readonly string _endpointUrl = Environment.GetEnvironmentVariable("CustomTextEndpointUrl");
-        private static readonly string _serviceKey = Environment.GetEnvironmentVariable("CustomTextApiKey");
+        private static readonly string _endpointUrl = Environment.GetEnvironmentVariable("CustomTextResourceEndpointUrl");
+        private static readonly string _serviceKey = Environment.GetEnvironmentVariable("CustomTextResourceKey");
         private static readonly string _modelId = Environment.GetEnvironmentVariable("CustomTextModelId");
 
         [FunctionName("customtext-extractor")]
@@ -37,17 +37,16 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
             }
             #endregion Input Mapping
 
+            var customTextClient = new CustomTextAnalyticsClient(_endpointUrl, _serviceKey);
+
             WebApiSkillResponse response = WebApiSkillHelpers.ProcessRequestRecords(skillName, requestRecords,
                 (inRecord, outRecord) =>
                 {
-                    // extract input
                     var text = inRecord.Data["text"] as string;
-
                     try
                     {
                         // processing
-                        var client = new CustomTextAnalyticsClient(_endpointUrl, _serviceKey);
-                        var entities = client.AnalyzeCustomEntitiesAsync(text, _modelId).ConfigureAwait(false).GetAwaiter().GetResult();
+                        var entities = customTextClient.AnalyzeCustomEntitiesAsync(text, _modelId).ConfigureAwait(false).GetAwaiter().GetResult();
 
                         // get result
                         entities.ToList().ForEach(entity =>
