@@ -19,7 +19,7 @@ namespace CustomTextAnalytics.MiniSDK.Client
         public async Task<CustomEntity[]> AnalyzeCustomEntitiesAsync(string documentText, string modelId, int timeoutInSeconds = 0)
         {
             var jobId = await StartAnalyzeCustomEntitiesAsync(documentText, modelId);
-            //await WaitForJobUntilDone(jobId, timeoutInSeconds);
+            await WaitForJobUntilDone(jobId, timeoutInSeconds);
             var jobResult = await GetAnalyzeJobInfo(jobId);
             return jobResult.GetResultEntities();
         }

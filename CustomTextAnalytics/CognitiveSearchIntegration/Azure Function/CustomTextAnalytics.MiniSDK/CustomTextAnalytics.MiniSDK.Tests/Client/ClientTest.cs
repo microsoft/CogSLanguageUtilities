@@ -35,6 +35,7 @@ namespace CustomTextAnalytics.MiniSDK.Tests.Client
         public async Task AnalyzeCustomEntitiesAsyncTestAsync(string modelId, string testText)
         {
             var result = await _customTextClient.AnalyzeCustomEntitiesAsync(testText, modelId);
+            Assert.NotNull(result);
         }
 
         public static TheoryData StartAnalyzeCustomEntitiesAsyncTestData()
