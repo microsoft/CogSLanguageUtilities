@@ -1,9 +1,10 @@
 ﻿using CustomTextAnalytics.MiniSDK.Client.Enums;
 using CustomTextAnalytics.MiniSDK.Client.Models;
-using CustomTextUtilities.MiniSDK;
+using CustomTextAnalytics.MiniSDK.RestClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CustomTextAnalytics.MiniSDK.Client
@@ -36,7 +37,7 @@ namespace CustomTextAnalytics.MiniSDK.Client
             return AnalyzeJobInfo.FormGenerated(result);
         }
 
-        public async Task<bool> WaitForJobUntilDone(string jobId, int timeoutInSeconds = 0)
+        public async Task<bool> WaitForJobUntilDone(string jobId, int timeoutInSeconds = 0, int pollingIntervalInSeconds = 5)
         {
             // prepare algorithm
             var doneValuesList = Enum.GetNames(typeof(JobDoneStatus)).Select(value => value.ToLower());
@@ -63,6 +64,9 @@ namespace CustomTextAnalytics.MiniSDK.Client
                         break;
                     }
                 }
+
+                // sleep for a while
+                Thread.Sleep(pollingIntervalInSeconds);
             }
             return false;
         }
