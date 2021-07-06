@@ -66,14 +66,8 @@ namespace Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch
         public Indexer CreateIndexer(CustomTextSchema schema, string indexerName, string dataSourceName, string skillSetName, string indexName)
         {
             var outputFieldMappings = new List<IndexerFieldMapping>();
-            //classifiers
-            outputFieldMappings.Add(new IndexerFieldMapping
-            {
-                SourceFieldName = "/document/content/Classes",
-                TargetFieldName = "Classes"
-            });
 
-            // extractors
+            // entities
             foreach (string entityName in schema.EntityNames)
             {
                 outputFieldMappings.Add(new IndexerFieldMapping

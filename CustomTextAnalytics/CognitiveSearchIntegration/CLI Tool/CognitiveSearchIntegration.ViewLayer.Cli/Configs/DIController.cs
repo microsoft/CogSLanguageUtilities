@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using Microsoft.CognitiveSearchIntegration.Core.Controllers;
 using Microsoft.CognitiveSearchIntegration.Core.Helpers;
+using Microsoft.CognitiveSearchIntegration.Core.Orchestrators;
 using Microsoft.CognitiveSearchIntegration.Core.Services.CognitiveSearch;
 using Microsoft.CognitiveSearchIntegration.Core.Services.Logger;
 using Microsoft.CognitiveSearchIntegration.Core.Services.Storage;
