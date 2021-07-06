@@ -44,7 +44,7 @@ Using the indexing cli tool, run the 'index' command
  - Run the index command
 	 - Run the index command, and wait till process finishes
 ```console
-clutils index --schema <path/to/your/schema> --index-name <name-your-index-here>
+indexer index --schema <path/to/your/schema> --index-name <name-your-index-here>
 ```
 - Check process success
 	- check your cognitive search resource for the created index, and make sure the indexer runs without errors
