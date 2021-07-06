@@ -33,7 +33,7 @@ After that, simply deploy the function. See article [here](https://docs.microsof
 
 
 ## Third: Run the 'Index' command
-
+Using the indexing cli tool, run the 'index' command
  - Configs file
 	 - Fill the [configs.json](./Docs/Assets/configs.json) file with your service secrets (that you already provisioned)
 	 - This configs file needs to be placed next to the cli tool to read it
@@ -48,7 +48,7 @@ clutils index --schema <path/to/your/schema> --index-name <name-your-index-here>
 	- check your cognitive search resource for the created index, and make sure the indexer runs without errors
     - please file any issues [here](https://github.com/microsoft/CogSLanguageUtilities/issues) if you have any troubles
 
-## Search your app
-Use the SearchClient sdk (see docs [here](https://docs.microsoft.com/en-us/azure/search/search-howto-dotnet-sdk#run-queries))
+## Finally: Search your app
+Use the SearchClient sdk to search your app (see docs [here](https://docs.microsoft.com/en-us/azure/search/search-howto-dotnet-sdk#run-queries))
 
 
