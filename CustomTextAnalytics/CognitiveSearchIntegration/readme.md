@@ -14,6 +14,8 @@ For examples, search for documents that mentioned some company or person, etc.
 ## First: Prepare Your Resources
 
 You need to provision the following resources:
+ - Custom Text app
+   - This is the app you want to integrate with Cognitive Search
  - Blob Container Data Store
 	 - which contains your Custom Text documents (read more [here](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction))
  - Cognitive Search Service
@@ -24,9 +26,9 @@ You need to provision the following resources:
 
 
 ## Second: Deploy the Azure Function
-We created the Azure function for you. You can find the required project [here](.\CustomTextAzureFunction\CustomTextAnalyticsFunction.sln).
+We created the Azure function for you. You can find the required project [here](https://github.com/microsoft/CogSLanguageUtilities/tree/custom-text/cognitive-search-integration/dev/CustomTextAnalytics/CognitiveSearchIntegration/CustomTextAzureFunction).
 
-Replace the secrets in the [Program.cs](.\CustomTextAzureFunction\CustomTextAnalytics.Function\Program.cs) file with yours
+Replace the secrets in the [Program.cs](https://github.com/microsoft/CogSLanguageUtilities/tree/custom-text/cognitive-search-integration/dev/CustomTextAnalytics/CognitiveSearchIntegration/CustomTextAzureFunction/CustomTextAnalytics.Function) file with yours
 (CustomText app endpoint, key, modelId)
 
 After that, simply deploy the function. See article [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-develop-vs#publish-to-azure).
@@ -35,10 +37,10 @@ After that, simply deploy the function. See article [here](https://docs.microsof
 ## Third: Run the 'Index' command
 Using the indexing cli tool, run the 'index' command
  - Configs file
-	 - Fill the [configs.json](./Docs/Assets/configs.json) file with your service secrets (that you already provisioned)
+	 - Fill the [configs.json](https://github.com/microsoft/CogSLanguageUtilities/blob/custom-text/cognitive-search-integration/dev/CustomTextAnalytics/CognitiveSearchIntegration/Docs/Assets/configs.json) file with your service secrets (that you already provisioned)
 	 - This configs file needs to be placed next to the cli tool to read it
  - Application Schema
-	 - Provide your Custom Text application [schema.json](./Docs/Assets/app-schema.json) in the same provided format
+	 - Provide your Custom Text application [schema.json](https://github.com/microsoft/CogSLanguageUtilities/blob/custom-text/cognitive-search-integration/dev/CustomTextAnalytics/CognitiveSearchIntegration/Docs/Assets/app-schema.json) in the same provided format
  - Run the index command
 	 - Run the index command, and wait till process finishes
 ```console
