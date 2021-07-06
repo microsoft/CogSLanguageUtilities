@@ -10,26 +10,21 @@ using System.Web;
 
 namespace CustomTextAnalytics.MiniSDK.RestClient.Pipeline
 {
-    internal class HttpPipeline
+    internal class HttpHandler
     {
-        private static readonly HttpClient _httpClient = new HttpClient();
+        private static HttpClient _httpClient = new HttpClient();
 
         internal async Task<HttpResponseMessage> SendHttpRequestAsync<T>(HttpRequestMethod method, string url, Dictionary<string, string> urlParameters, Dictionary<string, string> headers, T body = default)
         {
             var requestMethod = GetHttpRequestMethod(method);
             var fullUrl = CreateUrlWithParameters(url, urlParameters);
-            try
+            using (var requestMessage = new HttpRequestMessage(requestMethod, fullUrl))
             {
-                var requestMessage = new HttpRequestMessage(requestMethod, fullUrl);
                 PopulateRequestMessageHeaders(headers, requestMessage);
                 var requestBodyAsJson = JsonConvert.SerializeObject(body);
                 requestMessage.Content = new StringContent(requestBodyAsJson, Encoding.UTF8, "application/json");
                 var response = await _httpClient.SendAsync(requestMessage);
                 return response;
-            }
-            catch (Exception e)
-            {
-                return null;
             }
         }
 

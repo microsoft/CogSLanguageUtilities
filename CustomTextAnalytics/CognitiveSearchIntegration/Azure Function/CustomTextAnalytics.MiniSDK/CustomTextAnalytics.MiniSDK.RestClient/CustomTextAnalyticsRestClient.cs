@@ -6,13 +6,12 @@ using CustomTextAnalytics.MiniSDK.RestClient.Utilities;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static CustomTextAnalytics.MiniSDK.RestClient.Pipeline.HttpPipeline;
 
-namespace CustomTextUtilities.MiniSDK
+namespace CustomTextAnalytics.MiniSDK.RestClient
 {
     public class CustomTextAnalyticsRestClient
     {
-        private static readonly HttpPipeline _httpClient = new HttpPipeline();
+        private static HttpHandler _httpHandler = new HttpHandler();
         private string _endpointUrl;
         private string _serviceKey;
         private readonly string _customTextAnalyticsBaseUrl = "text/analytics/v3.1-preview.ct.1";
@@ -35,10 +34,10 @@ namespace CustomTextUtilities.MiniSDK
             var body = new AnalyzeApiRequestBody(documentText, modelId);
 
             // make network call
-            var response = await _httpClient.SendHttpRequestAsync(method: HttpRequestMethod.POST, url: url, urlParameters: null, headers: headers, body);
+            var response = await _httpHandler.SendHttpRequestAsync<AnalyzeApiRequestBody>(method: HttpRequestMethod.POST, url: url, urlParameters: null, headers: headers, body);
 
             // extract job id from header
-            var operationLocationHeader = GetHeaderValue(response, "operation-location");
+            var operationLocationHeader = HttpHandler.GetHeaderValue(response, "operation-location");
             var jobId = Helpers.ExtractJobIdFromLocationHeader(operationLocationHeader);
 
             return jobId;
@@ -54,7 +53,7 @@ namespace CustomTextUtilities.MiniSDK
             };
 
             // make network call
-            var response = await _httpClient.SendHttpRequestAsync<object>(method: HttpRequestMethod.GET, url: url, urlParameters: null, headers: headers);
+            var response = await _httpHandler.SendHttpRequestAsync<object>(method: HttpRequestMethod.GET, url: url, urlParameters: null, headers: headers);
 
             // parse result
             var result = JsonConvert.DeserializeObject<GetJobResultApiResponse>(await response.Content.ReadAsStringAsync());
