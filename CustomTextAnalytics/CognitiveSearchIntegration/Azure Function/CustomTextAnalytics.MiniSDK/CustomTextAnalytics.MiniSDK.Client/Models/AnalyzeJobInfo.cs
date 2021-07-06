@@ -21,10 +21,24 @@ namespace CustomTextAnalytics.MiniSDK.Client.Models
 
         internal static AnalyzeJobInfo FormGenerated(GetJobResultApiResponse getJobResultApiResponse)
         {
-            var taskResult = getJobResultApiResponse?.Tasks.CustomEntityRecognitionTasks?.First()?.Results;
+            var taskResult = getJobResultApiResponse?.Tasks?.CustomEntityRecognitionTasks?.First()?.Results;
+
             var CustomEntityRecognitionTaskErrors = taskResult?.Errors;
             var documentId = taskResult?.Documents.First().Id;
-            var entities = taskResult?.Documents.First().Entities;
+            var entities = taskResult?.Documents?.First()?.Entities;
+
+            var resultEntities = entities == null ? null : entities.Select(entity =>
+                {
+                    return new CustomEntity()
+                    {
+                        Category = entity.Category,
+                        ConfidenceScore = entity.ConfidenceScore,
+                        Length = entity.Length,
+                        Offset = entity.Offset,
+                        Text = entity.Text
+                    };
+                }).ToArray();
+
             return new AnalyzeJobInfo()
             {
                 JobId = getJobResultApiResponse.JobId,
@@ -36,17 +50,7 @@ namespace CustomTextAnalytics.MiniSDK.Client.Models
                     Document = new AnalyzeJobResultDocument
                     {
                         Id = documentId,
-                        Entities = entities.Select(entity =>
-                        {
-                            return new CustomEntity()
-                            {
-                                Category = entity.Category,
-                                ConfidenceScore = entity.ConfidenceScore,
-                                Length = entity.Length,
-                                Offset = entity.Offset,
-                                Text = entity.Text
-                            };
-                        }).ToArray()
+                        Entities = resultEntities
                     }
                 }
             };
