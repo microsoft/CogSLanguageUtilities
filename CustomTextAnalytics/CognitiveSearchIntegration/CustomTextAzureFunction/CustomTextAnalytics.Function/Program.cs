@@ -15,9 +15,9 @@ namespace AzureCognitiveSearch.PowerSkills.Text.LUISExtractor
 {
     public static class Program
     {
-        private static readonly string _endpointUrl = Environment.GetEnvironmentVariable("CustomTextResourceEndpointUrl");
-        private static readonly string _serviceKey = Environment.GetEnvironmentVariable("CustomTextResourceKey");
-        private static readonly string _modelId = Environment.GetEnvironmentVariable("CustomTextModelId");
+        private static readonly string _endpointUrl = "https://cognitivesearchintegrationcustomtextresource.cognitiveservices.azure.com";
+        private static readonly string _serviceKey = "0a6b7248fa794016bcbeed4442fbdbed";
+        private static readonly string _modelId = "a0b4c4c0-ec29-418d-967f-0e59a29b0dac_Extraction_latest";
 
         [FunctionName("customtext-extractor")]
         public static async Task<IActionResult> Run(
